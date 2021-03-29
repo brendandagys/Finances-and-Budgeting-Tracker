@@ -4,15 +4,9 @@ import { Navbar, Nav, Container } from 'react-bootstrap'
 const Header = () => {
   return (
     <header>
-      <Navbar
-        bg='primary'
-        variant='dark'
-        expand='lg'
-        fixed='top'
-        collapseOnSelect
-      >
+      <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
         <Container>
-          <Navbar.Brand href='#home'>Finances</Navbar.Brand>
+          <Navbar.Brand href='/'>Finances</Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
