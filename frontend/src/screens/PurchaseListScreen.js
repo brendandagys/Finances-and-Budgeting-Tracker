@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import Purchase from '../components/Purchase'
 
 const PurchaseListScreen = () => {
+  const [purchases, setPurchases] = useState([])
+
+  useEffect(() => {
+    const fetchPurchases = async () => {
+      const { data } = await axios.get('/api/purchases')
+      setPurchases(data)
+    }
+
+    fetchPurchases()
+  }, [])
+
   return (
     <>
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
+      {console.log(purchases)}
       <Purchase />
       <Purchase />
       <Purchase />

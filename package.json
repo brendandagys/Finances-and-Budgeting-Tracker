@@ -1,0 +1,14 @@
+{
+  "name": "finances",
+  "version": "1.0.0",
+  "description": "Finance tracking application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "author": "Brendan Dagys",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
