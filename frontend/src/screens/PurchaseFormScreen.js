@@ -1,27 +1,7 @@
 import React from 'react'
-import Purchase from '../components/Purchase'
 
 const PurchaseFormScreen = () => {
-  return (
-    <>
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-    </>
-  )
+  return <></>
 }
 
 export default PurchaseFormScreen
