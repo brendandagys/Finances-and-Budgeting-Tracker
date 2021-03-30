@@ -1,13 +1,18 @@
 import express from 'express'
+import connectDB from './config/db.js'
+import configPassport from './config/passport.js'
+import authRoutes from './routes/authRoutes.js'
 import dotenv from 'dotenv'
 import colors from 'colors'
-import connectDB from './config/db.js'
 
 dotenv.config()
 
 connectDB()
+configPassport()
 
 const app = express()
+
+authRoutes(app)
 
 app.get('/', (req, res) => {
   res.send('Server is running!')
