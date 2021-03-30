@@ -1,7 +1,9 @@
 import passport from 'passport'
 import GoogleStrategy from 'passport-google-oauth20'
+import mongoose from 'mongoose'
+import User from '../models/User.js'
 
-export default () =>
+const configPassport = () =>
   passport.use(
     new GoogleStrategy.Strategy(
       {
@@ -16,9 +18,16 @@ export default () =>
         callbackURL: '/auth/google/callback',
       },
       (accessToken, refreshToken, profile, done) => {
-        console.log('Access token:', accessToken)
-        console.log('Refresh token:', refreshToken)
-        console.log('Profile:', profile)
+        // console.log('Access token:', accessToken)
+        // console.log('Refresh token:', refreshToken)
+        // console.log('Profile:', profile)
+        new User({
+          googleId: profile.id,
+          name: profile.name,
+          email: profile.email,
+        }).save()
       }
     )
   )
+
+export default configPassport

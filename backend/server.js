@@ -8,6 +8,7 @@ import colors from 'colors'
 dotenv.config()
 
 connectDB()
+
 configPassport()
 
 const app = express()
