@@ -28,6 +28,7 @@ export default () =>
             ? process.env.GOOGLE_CLIENT_SECRET_PROD
             : process.env.GOOGLE_CLIENT_SECRET_DEV,
         callbackURL: '/auth/google/callback',
+        proxy: true,
       },
       async (accessToken, refreshToken, profile, done) => {
         // console.log('Access token:', accessToken)
