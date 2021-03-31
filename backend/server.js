@@ -29,9 +29,9 @@ app.use(passport.session()) // Authenticate session for passport that we created
 
 authRoutes(app)
 
-app.get('/', (req, res) => {
-  res.send('Server is running!')
-})
+// app.get('/', (req, res) => {
+//   res.send('Server is running!')
+// })
 
 app.get('/api/purchases', (req, res) => {
   res.json([
