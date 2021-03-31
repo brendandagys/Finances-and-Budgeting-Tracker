@@ -7,7 +7,7 @@ import configPassport from './config/passport.js'
 import authRoutes from './routes/authRoutes.js'
 import dotenv from 'dotenv'
 import colors from 'colors'
-import path from 'path'
+import path, { dirname } from 'path'
 
 dotenv.config()
 
@@ -42,7 +42,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('frontend/build'))
   // Express will serve up the index.html file if it doesn't recognize the route
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+    res.sendFile(path.resolve(dirname, 'frontend', 'build', 'index.html'))
   })
 }
 
