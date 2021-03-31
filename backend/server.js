@@ -29,10 +29,6 @@ app.use(passport.session()) // Authenticate session for passport that we created
 
 authRoutes(app)
 
-// app.get('/', (req, res) => {
-//   res.send('Server is running!')
-// })
-
 app.get('/api/purchases', (req, res) => {
   res.json([
     { purchase_1: 'Bread' },
@@ -43,10 +39,10 @@ app.get('/api/purchases', (req, res) => {
 
 if (process.env.NODE_ENV === 'production') {
   // Express will serve up production assets like our main.js or main.css file
-  app.use(express.static('client/build'))
+  app.use(express.static('frontend/build'))
   // Express will serve up the index.html file if it doesn't recognize the route
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
   })
 }
 
