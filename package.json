@@ -4,6 +4,10 @@
   "description": "Finance tracking application",
   "main": "server.js",
   "type": "module",
+  "engines": {
+    "node": "14.15.5",
+    "npm": "7.5.4"
+  },
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",
