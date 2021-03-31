@@ -1,5 +1,8 @@
 import express from 'express'
 import connectDB from './config/db.js'
+import cookieSession from 'cookie-session'
+import passport from 'passport'
+import './models/User.js'
 import configPassport from './config/passport.js'
 import authRoutes from './routes/authRoutes.js'
 import dotenv from 'dotenv'
@@ -12,6 +15,16 @@ connectDB()
 configPassport()
 
 const app = express()
+
+app.use(
+  cookieSession({
+    maxAge: 3 * 24 * 60 * 60 * 1000,
+    keys: [process.env.COOKIE_KEY],
+  })
+)
+
+app.use(passport.initialize())
+app.use(passport.session()) // Authenticate session for passport that we created
 
 authRoutes(app)
 
