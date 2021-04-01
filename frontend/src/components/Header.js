@@ -13,25 +13,17 @@ const Header = () => {
         return
       case false:
         return (
-          <>
-            <LinkContainer to='/auth/google'>
-              <Nav.Link>
-                {/* <img src={googleSignInButton} alt='Google Sign In Button' /> */}
-                <i className='fab fa-google'></i> Log In with Google
-              </Nav.Link>
-            </LinkContainer>
-          </>
+          <Nav.Link href='/auth/google'>
+            {/* <img src={googleSignInButton} alt='Google Sign In Button' /> */}
+            <i className='fab fa-google'></i> Log In with Google
+          </Nav.Link>
         )
       default:
         return (
-          <>
-            <LinkContainer to='/api/logout'>
-              <Nav.Link>
-                {/* <img src={googleSignInButton} alt='Google Sign In Button' /> */}
-                <i className='fab fa-google'></i> Log Out
-              </Nav.Link>
-            </LinkContainer>
-          </>
+          <Nav.Link href='/api/logout'>
+            {/* <img src={googleSignInButton} alt='Google Sign In Button' /> */}
+            <i className='fab fa-google'></i> Log Out
+          </Nav.Link>
         )
     }
   }
