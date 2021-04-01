@@ -1,26 +1,24 @@
+import express from 'express'
+const router = express.Router()
+
 import passport from 'passport'
 
-export default (app) => {
-  app.get(
-    '/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
-  )
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+)
 
-  app.get(
-    '/auth/google/callback',
-    passport.authenticate('google'),
-    (req, res) => {
-      res.redirect('/')
-    }
-  )
+router.get('/google/callback', passport.authenticate('google'), (req, res) => {
+  res.redirect('/')
+})
 
-  app.get('/api/logout', (req, res) => {
-    req.logout(), // passport attaches this function to the request object
-      // res.send(req.user)
-      res.redirect('/')
-  })
+router.get('/logout', (req, res) => {
+  req.logout(), // passport attaches this function to the request object
+    res.redirect('/')
+})
 
-  app.get('/api/current_user', (req, res) => {
-    res.send(req.user)
-  })
-}
+router.get('/current_user', (req, res) => {
+  res.send(req.user)
+})
+
+export default router

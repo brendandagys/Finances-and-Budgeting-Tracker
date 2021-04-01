@@ -24,7 +24,7 @@ const Header = () => {
         )
       default:
         return (
-          <Nav.Link href='/api/logout'>
+          <Nav.Link href='/auth/logout'>
             <i className='fab fa-google'></i> Log Out
           </Nav.Link>
         )

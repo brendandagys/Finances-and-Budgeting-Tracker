@@ -3,11 +3,14 @@ import connectDB from './config/db.js'
 import cookieSession from 'cookie-session'
 import passport from 'passport'
 import './models/User.js'
+import './models/Purchase.js'
 import configPassport from './config/passport.js'
 import authRoutes from './routes/authRoutes.js'
+import purchaseRoutes from './routes/purchaseRoutes.js'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import path from 'path'
+import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
 dotenv.config()
 
@@ -27,15 +30,13 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session()) // Authenticate session for passport that we created
 
-authRoutes(app)
+app.use('/auth', authRoutes)
 
-app.get('/api/purchases', (req, res) => {
-  res.json([
-    { purchase_1: 'Bread' },
-    { purchase_2: 'Eggs' },
-    { purchase_3: 'Milk' },
-  ])
-})
+app.use('/api/purchases', purchaseRoutes)
+
+// Custom error middleware
+app.use(notFound)
+app.use(errorHandler)
 
 const __dirname = path.resolve()
 
