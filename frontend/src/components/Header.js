@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container } from 'react-bootstrap'
-// import googleSignInButton from '../images/btn_google_signin_light_normal_web.png'
+import googleSignInButton from '../images/googleSignInWhite.png'
 
 const Header = () => {
   const auth = useSelector((state) => state.auth)
@@ -13,15 +13,18 @@ const Header = () => {
         return
       case false:
         return (
-          <Nav.Link href='/auth/google'>
-            {/* <img src={googleSignInButton} alt='Google Sign In Button' /> */}
-            <i className='fab fa-google'></i> Log In with Google
-          </Nav.Link>
+          <Navbar.Brand href='/auth/google'>
+            <img
+              alt='Google Sign In Button'
+              src={googleSignInButton}
+              // height='80%'
+              className='d-inline-block align-bottom'
+            />
+          </Navbar.Brand>
         )
       default:
         return (
           <Nav.Link href='/api/logout'>
-            {/* <img src={googleSignInButton} alt='Google Sign In Button' /> */}
             <i className='fab fa-google'></i> Log Out
           </Nav.Link>
         )
@@ -39,27 +42,27 @@ const Header = () => {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
               <LinkContainer to='/'>
-                <Nav.Link>
+                <Nav.Link className='my-auto'>
                   <i className='fas fa-keyboard'></i> Purchase Entry
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to='/purchases'>
-                <Nav.Link>
+                <Nav.Link className='my-auto'>
                   <i className='fas fa-list'></i> Purchase List
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to='/accounts'>
-                <Nav.Link>
+                <Nav.Link className='my-auto'>
                   <i className='fas fa-money-check-alt'></i> Account Updates
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to='/dashboard'>
-                <Nav.Link href='/dashboard'>
+                <Nav.Link className='my-auto'>
                   <i className='fas fa-tachometer-alt'></i> Dashboard
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to='/moods'>
-                <Nav.Link>
+                <Nav.Link className='my-auto'>
                   <i className='fas fa-cloud-moon'></i> Mood Tracker
                 </Nav.Link>
               </LinkContainer>
