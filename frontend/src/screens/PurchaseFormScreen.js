@@ -1,7 +1,12 @@
 import React from 'react'
+import PurchaseForm from '../components/PurchaseForm'
 
 const PurchaseFormScreen = () => {
-  return <></>
+  return (
+    <>
+      <PurchaseForm />
+    </>
+  )
 }
 
 export default PurchaseFormScreen
