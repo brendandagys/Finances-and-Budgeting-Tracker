@@ -6,7 +6,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import PurchaseFormScreen from './screens/PurchaseFormScreen'
 import PurchaseListScreen from './screens/PurchaseListScreen'
-import { fetchUser } from './actions'
+import { fetchUser } from './actions/authActions'
 
 const App = () => {
   const dispatch = useDispatch()

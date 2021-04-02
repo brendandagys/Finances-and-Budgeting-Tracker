@@ -1,31 +1,46 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { listPurchases } from '../actions/purchaseActions'
 import Purchase from '../components/Purchase'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
 
 const PurchaseListScreen = () => {
-  const [purchases, setPurchases] = useState([])
+  const dispatch = useDispatch()
+
+  const { loading, error, purchases } = useSelector(
+    (state) => state.purchaseList
+  )
 
   useEffect(() => {
-    const fetchPurchases = async () => {
-      const { data } = await axios.get('/api/purchases')
-      setPurchases(data)
-    }
-
-    fetchPurchases()
-  }, [])
+    dispatch(listPurchases())
+  }, [dispatch])
 
   return (
     <>
-      {console.log(purchases)}
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
-      <Purchase />
+      {/* {console.log(purchases)} */}
+      <h1>Purchases</h1>
+      {loading ? (
+        <h2>
+          <Loader />
+        </h2>
+      ) : error ? (
+        <h3>
+          <Message variant='secondary'>{error}</Message>
+        </h3>
+      ) : (
+        <>
+          <Purchase />
+          <Purchase />
+          <Purchase />
+          <Purchase />
+          <Purchase />
+          <Purchase />
+          <Purchase />
+          <Purchase />
+          <Purchase />
+        </>
+      )}
     </>
   )
 }
