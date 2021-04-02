@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler'
+
 import mongoose from 'mongoose'
 const Purchase = mongoose.model('Purchase')
 
@@ -6,7 +7,7 @@ const Purchase = mongoose.model('Purchase')
 // @route   GET /api/purchases
 // @access  Public
 const getPurchases = asyncHandler(async (req, res) => {
-  const purchases = await Purchase.find({})
+  const purchases = await Purchase.find({ user: req.user.id })
   res.json(purchases)
 })
 
