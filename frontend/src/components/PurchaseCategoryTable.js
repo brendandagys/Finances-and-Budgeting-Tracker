@@ -67,17 +67,17 @@ const PurchaseCategoryTable = () => {
         </>
       ) : (
         <>
+          <div className='m-auto' style={{ maxWidth: '600px' }}>
+            <h2>Purchase Categories</h2>
+          </div>
           <Table
             striped
             bordered
             hover
             responsive
             className='table-sm mx-auto'
-            style={{ maxWidth: '500px' }}
+            style={{ maxWidth: '600px' }}
           >
-            <thead>
-              <h2>Purchase Categories</h2>
-            </thead>
             <tbody>
               {purchaseCategories.map((purchaseCategory) => (
                 <tr key={purchaseCategory._id}>
@@ -100,7 +100,7 @@ const PurchaseCategoryTable = () => {
               ))}
             </tbody>
           </Table>
-          <div className='mx-auto' style={{ maxWidth: '500px' }}>
+          <div className='mx-auto' style={{ maxWidth: '600px' }}>
             <Button variant='light' className='btn-sm' onClick={toggleShow}>
               <i className='fas fa-plus'></i>
             </Button>

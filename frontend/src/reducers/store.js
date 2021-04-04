@@ -12,7 +12,9 @@ import {
 import {
   accountCreateReducer,
   accountDeleteReducer,
+  accountDetailsReducer,
   accountListReducer,
+  accountUpdateReducer,
 } from './accountReducers'
 
 const reducers = combineReducers({
@@ -23,7 +25,9 @@ const reducers = combineReducers({
   purchaseCategoryCreate: purchaseCategoryCreateReducer,
   purchaseCategoryDelete: purchaseCategoryDeleteReducer,
   accountList: accountListReducer,
+  accountDetails: accountDetailsReducer,
   accountCreate: accountCreateReducer,
+  accountUpdate: accountUpdateReducer,
   accountDelete: accountDeleteReducer,
 })
 

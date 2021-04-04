@@ -8,14 +8,30 @@ import { MyInput, MyCheckbox } from '../fields'
 import { Table, Button, Modal } from 'react-bootstrap'
 import {
   getAccounts,
+  getAccountDetails,
   createAccount,
+  updateAccount,
   deleteAccount,
 } from '../actions/accountActions.js'
-import { ACCOUNT_CREATE_RESET, ACCOUNT_DELETE_RESET } from '../actions/types'
+import {
+  ACCOUNT_CREATE_RESET,
+  ACCOUNT_DELETE_RESET,
+  ACCOUNT_DETAILS_RESET,
+} from '../actions/types'
 
 const AccountTable = () => {
   const [show, setShow] = useState(false)
   const toggleShow = () => setShow((show) => !show)
+
+  const addHandler = () => {
+    dispatch({ type: ACCOUNT_DETAILS_RESET })
+    toggleShow()
+  }
+
+  const editHandler = async (id) => {
+    await dispatch(getAccountDetails(id))
+    toggleShow()
+  }
 
   const deleteHandler = (id) => {
     dispatch(deleteAccount(id))
@@ -24,14 +40,24 @@ const AccountTable = () => {
   const resetHandler = () => {
     dispatch({ type: ACCOUNT_CREATE_RESET })
     dispatch({ type: ACCOUNT_DELETE_RESET })
+    dispatch({ type: ACCOUNT_DETAILS_RESET })
   }
 
   const dispatch = useDispatch()
 
   const { loading, error, accounts } = useSelector((state) => state.accountList)
 
+  const {
+    error: errorDetails,
+    account: { _id, name, credit, allowPurchases },
+  } = useSelector((state) => state.accountDetails)
+
   const { success: successCreate, error: errorCreate } = useSelector(
     (state) => state.accountCreate
+  )
+
+  const { success: successUpdate, error: errorUpdate } = useSelector(
+    (state) => state.accountUpdate
   )
 
   const { success: successDelete, error: errorDelete } = useSelector(
@@ -41,38 +67,35 @@ const AccountTable = () => {
   useEffect(() => {
     dispatch(getAccounts())
     // console.log(accounts)
-  }, [dispatch, successCreate, successDelete])
+  }, [dispatch, successCreate, successUpdate, successDelete])
 
   return (
     <>
       {loading ? (
         <Loader />
-      ) : error || errorCreate || errorDelete ? (
+      ) : error || errorCreate || errorUpdate || errorDelete || errorDetails ? (
         <>
           <Message variant='secondary'>
-            {error || errorCreate || errorDelete}
+            {error || errorCreate || errorUpdate || errorDelete || errorDetails}
           </Message>
-          <Button
-            variant='info'
-            className='btn-sm'
-            onClick={() => resetHandler()}
-          >
+          <Button variant='info' className='btn-sm' onClick={resetHandler}>
             <i className='fas fa-redo-alt'></i> Try again
           </Button>
         </>
       ) : (
         <>
+          <div className='m-auto' style={{ maxWidth: '600px' }}>
+            <h2>Accounts</h2>
+          </div>
           <Table
             striped
             bordered
             hover
             responsive
             className='table-sm mx-auto'
-            style={{ maxWidth: '500px', textAlign: 'center' }}
+            style={{ maxWidth: '600px', textAlign: 'center' }}
           >
             <thead>
-              <h2>Accounts</h2>
-
               <tr>
                 <th style={{ verticalAlign: 'middle' }}>Name</th>
                 <th style={{ verticalAlign: 'middle' }}>Credit?</th>
@@ -98,7 +121,7 @@ const AccountTable = () => {
                         id={account._id}
                         variant='info'
                         className='btn-sm m-1'
-                        // onClick={editHandler.bind(this, account._id)}
+                        onClick={editHandler.bind(this, account._id)}
                       >
                         <i className='fas fa-user-edit'></i>
                       </Button>
@@ -116,8 +139,8 @@ const AccountTable = () => {
               ))}
             </tbody>
           </Table>
-          <div className='mx-auto' style={{ maxWidth: '500px' }}>
-            <Button variant='light' className='btn-sm' onClick={toggleShow}>
+          <div className='mx-auto' style={{ maxWidth: '600px' }}>
+            <Button variant='light' className='btn-sm' onClick={addHandler}>
               <i className='fas fa-plus'></i>
             </Button>
           </div>
@@ -126,21 +149,28 @@ const AccountTable = () => {
 
       <Modal show={show} onHide={toggleShow}>
         <Modal.Header closeButton>
-          <Modal.Title>Add a new Account!</Modal.Title>
+          <Modal.Title>
+            {name ? 'Update Account!' : 'Add a new Account!'}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
             initialValues={{
-              name: '',
-              credit: false,
-              allowPurchases: true,
+              name: name || '',
+              credit: credit === undefined ? false : credit,
+              allowPurchases:
+                allowPurchases === undefined ? true : allowPurchases,
             }}
             validationSchema={Yup.object({
               name: Yup.string().required('Required'),
             })}
             onSubmit={(values) => {
               // console.log(values)
-              dispatch(createAccount(values))
+              if (name) {
+                dispatch(updateAccount({ _id, ...values }))
+              } else {
+                dispatch(createAccount(values))
+              }
               toggleShow()
             }}
           >

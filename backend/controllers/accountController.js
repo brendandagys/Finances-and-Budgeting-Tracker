@@ -13,6 +13,20 @@ const getAccounts = asyncHandler(async (req, res) => {
   )
 })
 
+// @desc    Fetch single account
+// @route   GET /api/accounts/:id
+// @access  Private
+const getAccountById = asyncHandler(async (req, res) => {
+  const account = await Account.findById(req.params.id)
+
+  if (account) {
+    res.json(account)
+  } else {
+    res.status(404)
+    throw new Error('Account not found')
+  }
+})
+
 // @desc    Create an account
 // @route   POST /api/accounts
 // @access  Private
@@ -40,6 +54,27 @@ const createAccount = asyncHandler(async (req, res) => {
   res.status(201).json(account)
 })
 
+// @desc    Update an account
+// @route   PATCH /api/accounts
+// @access  Private
+const updateAccount = asyncHandler(async (req, res) => {
+  const { name, credit, allowPurchases } = req.body
+
+  const account = await Account.findById(req.params.id)
+
+  if (account) {
+    account.name = name
+    account.credit = credit
+    account.allowPurchases = allowPurchases
+
+    const updatedAccount = await account.save()
+    res.json(updatedAccount)
+  } else {
+    res.status(404)
+    throw new Error('Account not found')
+  }
+})
+
 // @desc    Delete an account
 // @route   DELETE /api/accounts/:id
 // @access  Private
@@ -55,4 +90,10 @@ const deleteAccount = asyncHandler(async (req, res) => {
   }
 })
 
-export { getAccounts, createAccount, deleteAccount }
+export {
+  getAccounts,
+  getAccountById,
+  createAccount,
+  updateAccount,
+  deleteAccount,
+}
