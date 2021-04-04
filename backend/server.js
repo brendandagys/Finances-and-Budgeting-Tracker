@@ -4,9 +4,11 @@ import cookieSession from 'cookie-session'
 import passport from 'passport'
 import './models/User.js'
 import './models/Purchase.js'
+import './models/PurchaseCategory.js'
 import configPassport from './config/passport.js'
 import authRoutes from './routes/authRoutes.js'
 import purchaseRoutes from './routes/purchaseRoutes.js'
+import purchaseCategoryRoutes from './routes/purchaseCategoryRoutes.js'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import path from 'path'
@@ -19,6 +21,9 @@ connectDB()
 configPassport()
 
 const app = express()
+
+// Body parser: fixes req.body === undefined
+app.use(express.json())
 
 app.use(
   cookieSession({
@@ -33,6 +38,7 @@ app.use(passport.session()) // Authenticate session for passport that we created
 app.use('/auth', authRoutes)
 
 app.use('/api/purchases', purchaseRoutes)
+app.use('/api/purchase-categories', purchaseCategoryRoutes)
 
 const __dirname = path.resolve()
 

@@ -1,48 +1,12 @@
-import React from 'react'
-import { Formik, Form, useField } from 'formik'
+import React, { useEffect } from 'react'
+import Loader from './Loader'
+import Message from './Message'
+import { useDispatch, useSelector } from 'react-redux'
+import { Formik, Form } from 'formik'
+import { MyInput, MySelect, MyTextArea } from '../fields'
 import * as Yup from 'yup'
-
-const MyInput = ({ label, ...props }) => {
-  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-  // which we can spread on <input>. We can use field meta to show an error
-  // message if the field is invalid and it has been touched (i.e. visited)
-  const [field, meta] = useField(props)
-  return (
-    <div className='form-group'>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <input {...field} {...props} className='form-control' />
-      {meta.touched && meta.error ? (
-        <small className='error'>{meta.error}</small>
-      ) : null}
-    </div>
-  )
-}
-
-const MySelect = ({ label, ...props }) => {
-  const [field, meta] = useField(props)
-  return (
-    <div className='form-group'>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <select {...field} {...props} className='form-control' />
-      {meta.touched && meta.error ? (
-        <small className='error'>{meta.error}</small>
-      ) : null}
-    </div>
-  )
-}
-
-const MyTextArea = ({ label, ...props }) => {
-  const [field, meta] = useField(props)
-  return (
-    <div className='form-group'>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <textarea {...field} {...props} className='form-control' />
-      {meta.touched && meta.error ? (
-        <small className='error'>{meta.error}</small>
-      ) : null}
-    </div>
-  )
-}
+import { createPurchase } from '../actions/purchaseActions'
+import { PURCHASE_CREATE_RESET } from '../actions/types'
 
 const getCurrentDate = () => {
   let today = new Date()
@@ -59,9 +23,20 @@ const getCurrentTime = () =>
   new Date().toTimeString().split(' ')[0].substring(0, 5)
 
 const SignupForm = () => {
+  const dispatch = useDispatch()
+  const purchaseCreate = useSelector((state) => state.purchaseCreate)
+  const { loading, error, success } = purchaseCreate
+
+  useEffect(() => {
+    if (success) {
+      dispatch({ type: PURCHASE_CREATE_RESET })
+    }
+  }, [dispatch, success])
+
   return (
     <>
       <h1>Enter a Purchase!</h1>
+
       <Formik
         initialValues={{
           date: getCurrentDate(),
@@ -79,61 +54,81 @@ const SignupForm = () => {
           amount: Yup.number()
             .positive('Must be positive')
             .required('Required'),
-          description: Yup.string().required('Required'),
+          description: Yup.string(),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-            setSubmitting(false)
-          }, 400)
+          console.log(values)
+          dispatch(createPurchase(values))
         }}
       >
-        <Form>
-          <MyInput label='Date' name='date' type='date' placeholder='Date...' />
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant='secondary'>{error}</Message>
+        ) : (
+          <Form>
+            <MyInput
+              label='Date'
+              name='date'
+              type='date'
+              placeholder='Date...'
+            />
 
-          <MyInput label='Time' name='time' type='time' placeholder='Time...' />
+            <MyInput
+              label='Time'
+              name='time'
+              type='time'
+              placeholder='Time...'
+            />
 
-          <MySelect label='Category' name='category'>
-            <option value=''>Select a category</option>
-            <option value='coffee'>Coffee</option>
-            <option value='fooddrinks'>Food/Drinks</option>
-            <option value='groceries'>Groceries</option>
-            <option value='householditems'>Household Items</option>
-            <option value='clothes'>Clothes</option>
-          </MySelect>
+            <MySelect label='Category' name='category'>
+              <option value=''>Select a category</option>
+              <option value='coffee'>Coffee</option>
+              <option value='fooddrinks'>Food/Drinks</option>
+              <option value='groceries'>Groceries</option>
+              <option value='householditems'>Household Items</option>
+              <option value='clothes'>Clothes</option>
+            </MySelect>
 
-          <MyInput
-            label='Item(s)'
-            name='item'
-            type='text'
-            placeholder='Item(s)...'
-          />
+            <MyInput
+              label='Item(s)'
+              name='item'
+              autoFocus
+              type='text'
+              placeholder='Item(s)...'
+            />
 
-          <MyInput
-            label='Amount'
-            name='amount'
-            type='number'
-            placeholder='Amount...'
-          />
+            <MyInput
+              label='Amount'
+              name='amount'
+              type='number'
+              placeholder='Amount...'
+            />
 
-          <MyTextArea
-            label='Description'
-            name='description'
-            placeholder='Description...'
-            rows='3'
-          />
+            <MyTextArea
+              label='Description'
+              name='description'
+              placeholder='Description...'
+              rows='3'
+            />
 
-          <MyInput
-            label='Receipt'
-            name='receipt'
-            type='file'
-            accept='image/png, image/jpeg'
-          />
+            <MyInput
+              label='Receipt'
+              name='receipt'
+              type='file'
+              style={{ height: '44px' }}
+              accept='image/png, image/jpeg'
+            />
 
-          <button className='form-control btn-primary' type='submit'>
-            Submit
-          </button>
-        </Form>
+            <button
+              className='form-control btn-primary'
+              type='submit'
+              disabled={Formik.isSubmitting}
+            >
+              Submit
+            </button>
+          </Form>
+        )}
       </Formik>
     </>
   )

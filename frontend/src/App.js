@@ -6,6 +6,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import PurchaseFormScreen from './screens/PurchaseFormScreen'
 import PurchaseListScreen from './screens/PurchaseListScreen'
+import SettingsScreen from './screens/SettingsScreen'
 import { fetchUser } from './actions/authActions'
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
           {/* <Route path='/accounts' component={AccountsScreen} exact /> */}
           {/* <Route path='/dashboard' component={DashboardScreen} exact /> */}
           {/* <Route path='/moods' component={MoodsScreen} exact /> */}
+          <Route path='/settings' component={SettingsScreen} />
         </Container>
       </main>
       <Footer />

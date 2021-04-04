@@ -48,12 +48,12 @@ const Header = () => {
               </LinkContainer>
               <LinkContainer to='/purchases'>
                 <Nav.Link className='my-auto'>
-                  <i className='fas fa-list'></i> Purchase List
+                  <i className='fas fa-list'></i> Purchases
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to='/accounts'>
                 <Nav.Link className='my-auto'>
-                  <i className='fas fa-money-check-alt'></i> Account Updates
+                  <i className='fas fa-money-check-alt'></i> Accounts
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to='/dashboard'>
@@ -63,7 +63,12 @@ const Header = () => {
               </LinkContainer>
               <LinkContainer to='/moods'>
                 <Nav.Link className='my-auto'>
-                  <i className='fas fa-cloud-moon'></i> Mood Tracker
+                  <i className='fas fa-cloud-moon'></i> Moods
+                </Nav.Link>
+              </LinkContainer>
+              <LinkContainer to='/settings'>
+                <Nav.Link className='my-auto'>
+                  <i className='fas fa-cogs'></i> Settings
                 </Nav.Link>
               </LinkContainer>
               {renderAuthButton()}

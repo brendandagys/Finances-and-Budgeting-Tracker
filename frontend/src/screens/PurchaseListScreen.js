@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { listPurchases } from '../actions/purchaseActions'
+import { getPurchases } from '../actions/purchaseActions'
 import Purchase from '../components/Purchase'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -13,7 +13,7 @@ const PurchaseListScreen = () => {
   )
 
   useEffect(() => {
-    dispatch(listPurchases())
+    dispatch(getPurchases())
   }, [dispatch])
 
   return (
