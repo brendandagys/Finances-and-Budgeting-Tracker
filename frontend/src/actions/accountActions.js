@@ -1,0 +1,71 @@
+import axios from 'axios'
+
+import {
+  ACCOUNT_LIST_REQUEST,
+  ACCOUNT_LIST_SUCCESS,
+  ACCOUNT_LIST_FAIL,
+  ACCOUNT_CREATE_REQUEST,
+  ACCOUNT_CREATE_SUCCESS,
+  ACCOUNT_CREATE_FAIL,
+  ACCOUNT_DELETE_REQUEST,
+  ACCOUNT_DELETE_SUCCESS,
+  ACCOUNT_DELETE_FAIL,
+} from './types'
+
+export const getAccounts = () => async (dispatch) => {
+  try {
+    dispatch({ type: ACCOUNT_LIST_REQUEST })
+
+    const { data } = await axios.get('/api/accounts')
+
+    dispatch({ type: ACCOUNT_LIST_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: ACCOUNT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const createAccount = (account) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ACCOUNT_CREATE_REQUEST,
+    })
+
+    const { data } = await axios.post('/api/accounts', account)
+
+    dispatch({ type: ACCOUNT_CREATE_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: ACCOUNT_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const deleteAccount = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ACCOUNT_DELETE_REQUEST,
+    })
+
+    await axios.delete(`/api/accounts/${id}`)
+
+    dispatch({ type: ACCOUNT_DELETE_SUCCESS })
+  } catch (error) {
+    dispatch({
+      type: ACCOUNT_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}

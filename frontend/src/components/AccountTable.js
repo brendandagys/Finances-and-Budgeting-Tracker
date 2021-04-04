@@ -4,48 +4,43 @@ import Message from './Message'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import { MyInput } from '../fields'
+import { MyInput, MyCheckbox } from '../fields'
 import { Table, Button, Modal } from 'react-bootstrap'
 import {
-  getPurchaseCategories,
-  createPurchaseCategory,
-  deletePurchaseCategory,
-} from '../actions/purchaseCategoryActions.js'
-import {
-  PURCHASE_CATEGORY_CREATE_RESET,
-  PURCHASE_CATEGORY_DELETE_RESET,
-} from '../actions/types'
+  getAccounts,
+  createAccount,
+  deleteAccount,
+} from '../actions/accountActions.js'
+import { ACCOUNT_CREATE_RESET, ACCOUNT_DELETE_RESET } from '../actions/types'
 
-const PurchaseCategoryTable = () => {
+const AccountTable = () => {
   const [show, setShow] = useState(false)
   const toggleShow = () => setShow((show) => !show)
 
   const deleteHandler = (id) => {
-    dispatch(deletePurchaseCategory(id))
+    dispatch(deleteAccount(id))
   }
 
   const resetHandler = () => {
-    dispatch({ type: PURCHASE_CATEGORY_CREATE_RESET })
-    dispatch({ type: PURCHASE_CATEGORY_DELETE_RESET })
+    dispatch({ type: ACCOUNT_CREATE_RESET })
+    dispatch({ type: ACCOUNT_DELETE_RESET })
   }
 
   const dispatch = useDispatch()
 
-  const { loading, error, purchaseCategories } = useSelector(
-    (state) => state.purchaseCategoryList
-  )
+  const { loading, error, accounts } = useSelector((state) => state.accountList)
 
   const { success: successCreate, error: errorCreate } = useSelector(
-    (state) => state.purchaseCategoryCreate
+    (state) => state.accountCreate
   )
 
   const { success: successDelete, error: errorDelete } = useSelector(
-    (state) => state.purchaseCategoryDelete
+    (state) => state.accountDelete
   )
 
   useEffect(() => {
-    dispatch(getPurchaseCategories())
-    // console.log(purchaseCategories)
+    dispatch(getAccounts())
+    // console.log(accounts)
   }, [dispatch, successCreate, successDelete])
 
   return (
@@ -73,24 +68,45 @@ const PurchaseCategoryTable = () => {
             hover
             responsive
             className='table-sm mx-auto'
-            style={{ maxWidth: '500px' }}
+            style={{ maxWidth: '500px', textAlign: 'center' }}
           >
             <thead>
-              <h2>Purchase Categories</h2>
+              <h2>Accounts</h2>
+
+              <tr>
+                <th style={{ verticalAlign: 'middle' }}>Name</th>
+                <th style={{ verticalAlign: 'middle' }}>Credit?</th>
+                <th style={{ verticalAlign: 'middle' }}>Allow Purchases?</th>
+                <th></th>
+              </tr>
             </thead>
             <tbody>
-              {purchaseCategories.map((purchaseCategory) => (
-                <tr key={purchaseCategory._id}>
+              {accounts.map((account) => (
+                <tr key={account._id}>
                   <td style={{ verticalAlign: 'middle', paddingLeft: '15px' }}>
-                    {purchaseCategory.name}
+                    {account.name}
+                  </td>
+                  <td style={{ verticalAlign: 'middle' }}>
+                    {account.credit ? 'Yes' : 'No'}
+                  </td>
+                  <td style={{ verticalAlign: 'middle' }}>
+                    {account.allowPurchases ? 'Yes' : 'No'}
                   </td>
                   <td style={{ textAlign: 'center' }}>
                     <span>
                       <Button
-                        id={purchaseCategory._id}
+                        id={account._id}
+                        variant='info'
+                        className='btn-sm m-1'
+                        // onClick={editHandler.bind(this, account._id)}
+                      >
+                        <i className='fas fa-user-edit'></i>
+                      </Button>
+                      <Button
+                        id={account._id}
                         variant='secondary'
-                        className='btn-sm'
-                        onClick={deleteHandler.bind(this, purchaseCategory._id)}
+                        className='btn-sm m-1'
+                        onClick={deleteHandler.bind(this, account._id)}
                       >
                         <i className='fas fa-trash'></i>
                       </Button>
@@ -110,29 +126,35 @@ const PurchaseCategoryTable = () => {
 
       <Modal show={show} onHide={toggleShow}>
         <Modal.Header closeButton>
-          <Modal.Title>Add a new Purchase Category!</Modal.Title>
+          <Modal.Title>Add a new Account!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
             initialValues={{
               name: '',
+              credit: false,
+              allowPurchases: true,
             }}
             validationSchema={Yup.object({
               name: Yup.string().required('Required'),
             })}
             onSubmit={(values) => {
               // console.log(values)
-              dispatch(createPurchaseCategory(values))
+              dispatch(createAccount(values))
               toggleShow()
             }}
           >
-            <Form id='purchase-category-form'>
+            <Form id='account-form'>
               <MyInput
                 label=''
                 name='name'
                 type='text'
-                placeholder='Purchase Category...'
+                placeholder='Account...'
               />
+
+              <MyCheckbox name='credit'>Credit?</MyCheckbox>
+
+              <MyCheckbox name='allowPurchases'>Allow Purchases?</MyCheckbox>
             </Form>
           </Formik>
         </Modal.Body>
@@ -140,7 +162,7 @@ const PurchaseCategoryTable = () => {
           <Button variant='secondary' onClick={toggleShow}>
             Cancel
           </Button>
-          <Button type='submit' form='purchase-category-form' variant='primary'>
+          <Button type='submit' form='account-form' variant='primary'>
             Add
           </Button>
         </Modal.Footer>
@@ -149,4 +171,4 @@ const PurchaseCategoryTable = () => {
   )
 }
 
-export default PurchaseCategoryTable
+export default AccountTable

@@ -42,7 +42,7 @@ const createPurchaseCategory = asyncHandler(async (req, res) => {
 })
 
 // @desc    Delete a purchase category
-// @route   DELETE /api/purchase_category/:id
+// @route   DELETE /api/purchase_categories/:id
 // @access  Private
 const deletePurchaseCategory = asyncHandler(async (req, res) => {
   const purchaseCategory = await PurchaseCategory.findById(req.params.id)

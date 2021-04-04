@@ -9,6 +9,11 @@ import {
   purchaseCategoryDeleteReducer,
   purchaseCategoryListReducer,
 } from './purchaseCategoryReducers'
+import {
+  accountCreateReducer,
+  accountDeleteReducer,
+  accountListReducer,
+} from './accountReducers'
 
 const reducers = combineReducers({
   auth: authReducer,
@@ -17,6 +22,9 @@ const reducers = combineReducers({
   purchaseCategoryList: purchaseCategoryListReducer,
   purchaseCategoryCreate: purchaseCategoryCreateReducer,
   purchaseCategoryDelete: purchaseCategoryDeleteReducer,
+  accountList: accountListReducer,
+  accountCreate: accountCreateReducer,
+  accountDelete: accountDeleteReducer,
 })
 
 const initialState = {}
