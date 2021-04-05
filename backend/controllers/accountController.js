@@ -45,7 +45,7 @@ const createAccount = asyncHandler(async (req, res) => {
 
   const account = new Account({
     user: req.user._id,
-    name,
+    name: name.trim(),
     credit,
     allowPurchases,
   })
@@ -63,7 +63,7 @@ const updateAccount = asyncHandler(async (req, res) => {
   const account = await Account.findById(req.params.id)
 
   if (account) {
-    account.name = name
+    account.name = name.trim()
     account.credit = credit
     account.allowPurchases = allowPurchases
 

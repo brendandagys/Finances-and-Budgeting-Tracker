@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react'
 import Loader from './Loader'
 import Message from './Message'
+import { Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form } from 'formik'
 import { MyInput, MySelect, MyTextArea } from '../fields'
 import * as Yup from 'yup'
 import { createPurchase } from '../actions/purchaseActions'
+import { getPurchaseCategories } from '../actions/purchaseCategoryActions'
+import { getAccounts } from '../actions/accountActions'
 import { PURCHASE_CREATE_RESET } from '../actions/types'
 
 const getCurrentDate = () => {
@@ -24,10 +27,21 @@ const getCurrentTime = () =>
 
 const SignupForm = () => {
   const dispatch = useDispatch()
-  const purchaseCreate = useSelector((state) => state.purchaseCreate)
-  const { loading, error, success } = purchaseCreate
+
+  const { loading, error, success } = useSelector(
+    (state) => state.purchaseCreate
+  )
+
+  const { purchaseCategories } = useSelector(
+    (state) => state.purchaseCategoryList
+  )
+
+  const { accounts } = useSelector((state) => state.accountList)
 
   useEffect(() => {
+    dispatch(getPurchaseCategories())
+    dispatch(getAccounts())
+
     if (success) {
       dispatch({ type: PURCHASE_CREATE_RESET })
     }
@@ -56,78 +70,118 @@ const SignupForm = () => {
             .required('Required'),
           description: Yup.string(),
         })}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           console.log(values)
           dispatch(createPurchase(values))
+          resetForm()
         }}
       >
         {loading ? (
           <Loader />
         ) : error ? (
-          <Message variant='secondary'>{error}</Message>
-        ) : (
-          <Form>
-            <MyInput
-              label='Date'
-              name='date'
-              type='date'
-              placeholder='Date...'
-            />
-
-            <MyInput
-              label='Time'
-              name='time'
-              type='time'
-              placeholder='Time...'
-            />
-
-            <MySelect label='Category' name='category'>
-              <option value=''>Select a category</option>
-              <option value='coffee'>Coffee</option>
-              <option value='fooddrinks'>Food/Drinks</option>
-              <option value='groceries'>Groceries</option>
-              <option value='householditems'>Household Items</option>
-              <option value='clothes'>Clothes</option>
-            </MySelect>
-
-            <MyInput
-              label='Item(s)'
-              name='item'
-              autoFocus
-              type='text'
-              placeholder='Item(s)...'
-            />
-
-            <MyInput
-              label='Amount'
-              name='amount'
-              type='number'
-              placeholder='Amount...'
-            />
-
-            <MyTextArea
-              label='Description'
-              name='description'
-              placeholder='Description...'
-              rows='3'
-            />
-
-            <MyInput
-              label='Receipt'
-              name='receipt'
-              type='file'
-              style={{ height: '44px' }}
-              accept='image/png, image/jpeg'
-            />
-
-            <button
-              className='form-control btn-primary'
-              type='submit'
-              disabled={Formik.isSubmitting}
+          <>
+            <Message variant='secondary'>{error}</Message>
+            <Button
+              variant='info'
+              className='btn-sm'
+              onClick={() => dispatch({ type: PURCHASE_CREATE_RESET })}
             >
-              Submit
-            </button>
-          </Form>
+              <i className='fas fa-redo-alt'></i> Try again
+            </Button>
+          </>
+        ) : (
+          ({ setFieldValue }) => {
+            return (
+              <Form>
+                <MyInput
+                  label='Date'
+                  name='date'
+                  type='date'
+                  placeholder='Date...'
+                />
+
+                <MyInput
+                  label='Time'
+                  name='time'
+                  type='time'
+                  placeholder='Time...'
+                />
+
+                <MySelect
+                  label='Category'
+                  name='category'
+                  onChange={(e) => setFieldValue('category', e.target.value)}
+                >
+                  <option value=''></option>
+                  {purchaseCategories
+                    .filter((category) => category.active)
+                    .map((category) => {
+                      return (
+                        <option key={category._id} value={category._id}>
+                          {category.name}
+                        </option>
+                      )
+                    })}
+                </MySelect>
+
+                <MyInput
+                  label='Item(s)'
+                  name='item'
+                  autoFocus
+                  type='text'
+                  placeholder='Item(s)...'
+                />
+
+                <MyInput
+                  label='Amount'
+                  name='amount'
+                  type='number'
+                  placeholder='Amount...'
+                  inputMode='decimal'
+                />
+
+                <MyTextArea
+                  label='Description'
+                  name='description'
+                  placeholder='Description...'
+                  rows='3'
+                />
+
+                <MySelect
+                  label='Account'
+                  name='account'
+                  onChange={(e) => setFieldValue('account', e.target.value)}
+                >
+                  <option value=''></option>
+                  {accounts
+                    .filter((account) => account.allowPurchases)
+                    .map((account) => {
+                      return (
+                        <option key={account._id} value={account._id}>
+                          {account.name}
+                        </option>
+                      )
+                    })}
+                </MySelect>
+
+                <MyInput
+                  label='Receipt'
+                  name='receipt'
+                  type='file'
+                  style={{ height: '44px' }}
+                  accept='image/png, image/jpeg'
+                />
+
+                <button
+                  className='form-control btn-primary'
+                  type='submit'
+                  disabled={Formik.isSubmitting}
+                >
+                  Submit
+                </button>
+              </Form>
+            )
+          }
         )}
       </Formik>
     </>

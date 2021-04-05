@@ -85,7 +85,7 @@ const AccountTable = () => {
       ) : (
         <>
           <div className='m-auto' style={{ maxWidth: '600px' }}>
-            <h2>Accounts</h2>
+            <h2 style={{ textAlign: 'center' }}>Accounts</h2>
           </div>
           <Table
             striped

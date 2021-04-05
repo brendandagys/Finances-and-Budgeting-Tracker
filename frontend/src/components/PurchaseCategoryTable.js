@@ -68,7 +68,7 @@ const PurchaseCategoryTable = () => {
       ) : (
         <>
           <div className='m-auto' style={{ maxWidth: '600px' }}>
-            <h2>Purchase Categories</h2>
+            <h2 style={{ textAlign: 'center' }}>Purchase Categories</h2>
           </div>
           <Table
             striped
