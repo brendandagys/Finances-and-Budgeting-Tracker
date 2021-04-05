@@ -25,17 +25,9 @@ const PurchaseListScreen = () => {
       ) : error ? (
         <Message variant='secondary'>{error}</Message>
       ) : (
-        <>
-          <Purchase />
-          <Purchase />
-          <Purchase />
-          <Purchase />
-          <Purchase />
-          <Purchase />
-          <Purchase />
-          <Purchase />
-          <Purchase />
-        </>
+        purchases.map((purchase) => {
+          return <Purchase key={purchase._id} {...purchase} />
+        })
       )}
     </>
   )

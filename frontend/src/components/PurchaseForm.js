@@ -102,7 +102,7 @@ const SignupForm = () => {
                   name='date'
                   type='date'
                   placeholder='Date...'
-                  hideLabel
+                  hidelabel='true'
                 />
 
                 <MyInput
@@ -110,7 +110,7 @@ const SignupForm = () => {
                   name='time'
                   type='time'
                   placeholder='Time...'
-                  hideLabel
+                  hidelabel='true'
                 />
 
                 <MySelect
@@ -135,7 +135,7 @@ const SignupForm = () => {
                   name='item'
                   type='text'
                   placeholder='Item(s)...'
-                  hideLabel
+                  hidelabel='true'
                 />
 
                 <MyInput
@@ -144,7 +144,21 @@ const SignupForm = () => {
                   type='number'
                   placeholder='Amount...'
                   inputMode='decimal'
-                  hideLabel
+                  hidelabel='true'
+                  onKeyUp={(e) => {
+                    if (
+                      e.target.value.split('.')[1] &&
+                      e.target.value.split('.')[1].length === 2
+                    ) {
+                      e.target.blur()
+                    } else if (
+                      e.target.value.split('.')[1] &&
+                      e.target.value.split('.')[1].length > 2
+                    ) {
+                      setFieldValue('amount', e.target.value.slice(0, -1))
+                      e.target.blur()
+                    }
+                  }}
                 />
 
                 <MyTextArea
@@ -152,7 +166,7 @@ const SignupForm = () => {
                   name='description'
                   placeholder='Description...'
                   rows='3'
-                  hideLabel
+                  hidelabel='true'
                 />
 
                 <MySelect

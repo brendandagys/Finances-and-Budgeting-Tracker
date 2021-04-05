@@ -7,7 +7,7 @@ export const MyInput = ({ label, ...props }) => {
   const [field, meta] = useField(props)
   return (
     <div className='form-group'>
-      {props.hideLabel || (
+      {props.hidelabel === 'true' || (
         <label htmlFor={props.id || props.name}>{label}</label>
       )}
       <input
@@ -51,7 +51,7 @@ export const MyTextArea = ({ label, ...props }) => {
   const [field, meta] = useField(props)
   return (
     <div className='form-group'>
-      {props.hideLabel || (
+      {props.hidelabel === 'true' || (
         <label htmlFor={props.id || props.name}>{label}</label>
       )}
       <textarea
