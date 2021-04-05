@@ -129,6 +129,7 @@ const AccountTable = () => {
                         id={account._id}
                         variant='secondary'
                         className='btn-sm m-1'
+                        style={{ width: '35.5px' }}
                         onClick={deleteHandler.bind(this, account._id)}
                       >
                         <i className='fas fa-trash'></i>
@@ -148,7 +149,7 @@ const AccountTable = () => {
       )}
 
       <Modal show={show} onHide={toggleShow}>
-        <Modal.Header closeButton>
+        <Modal.Header style={{ backgroundColor: '#F0F0F0' }} closeButton>
           <Modal.Title>
             {name ? 'Update Account!' : 'Add a new Account!'}
           </Modal.Title>
@@ -188,12 +189,12 @@ const AccountTable = () => {
             </Form>
           </Formik>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer style={{ backgroundColor: '#F5F5F5' }}>
           <Button variant='secondary' onClick={toggleShow}>
             Cancel
           </Button>
           <Button type='submit' form='account-form' variant='primary'>
-            Add
+            {name ? 'Update' : 'Add'}
           </Button>
         </Modal.Footer>
       </Modal>

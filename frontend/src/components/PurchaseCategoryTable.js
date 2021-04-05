@@ -84,12 +84,13 @@ const PurchaseCategoryTable = () => {
                   <td style={{ verticalAlign: 'middle', paddingLeft: '15px' }}>
                     {purchaseCategory.name}
                   </td>
-                  <td style={{ textAlign: 'center' }}>
+                  <td style={{ textAlign: 'center', width: '65px' }}>
                     <span>
                       <Button
                         id={purchaseCategory._id}
                         variant='secondary'
                         className='btn-sm'
+                        style={{ width: '35.5px' }}
                         onClick={deleteHandler.bind(this, purchaseCategory._id)}
                       >
                         <i className='fas fa-trash'></i>
@@ -109,7 +110,7 @@ const PurchaseCategoryTable = () => {
       )}
 
       <Modal show={show} onHide={toggleShow}>
-        <Modal.Header closeButton>
+        <Modal.Header style={{ backgroundColor: '#F0F0F0' }} closeButton>
           <Modal.Title>Add a new Purchase Category!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -136,7 +137,7 @@ const PurchaseCategoryTable = () => {
             </Form>
           </Formik>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer style={{ backgroundColor: '#F5F5F5' }}>
           <Button variant='secondary' onClick={toggleShow}>
             Cancel
           </Button>

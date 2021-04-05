@@ -7,7 +7,9 @@ export const MyInput = ({ label, ...props }) => {
   const [field, meta] = useField(props)
   return (
     <div className='form-group'>
-      <label htmlFor={props.id || props.name}>{label}</label>
+      {props.hideLabel || (
+        <label htmlFor={props.id || props.name}>{label}</label>
+      )}
       <input
         {...field}
         {...props}
@@ -16,7 +18,9 @@ export const MyInput = ({ label, ...props }) => {
         }`}
       />
       {meta.touched && meta.error ? (
-        <small className='error'>{meta.error}</small>
+        <small style={{ color: 'red' }} className='error'>
+          {meta.error}
+        </small>
       ) : null}
     </div>
   )
@@ -35,7 +39,9 @@ export const MySelect = ({ label, ...props }) => {
         }`}
       />
       {meta.touched && meta.error ? (
-        <small className='error'>{meta.error}</small>
+        <small style={{ color: 'red' }} className='error'>
+          {meta.error}
+        </small>
       ) : null}
     </div>
   )
@@ -45,7 +51,9 @@ export const MyTextArea = ({ label, ...props }) => {
   const [field, meta] = useField(props)
   return (
     <div className='form-group'>
-      <label htmlFor={props.id || props.name}>{label}</label>
+      {props.hideLabel || (
+        <label htmlFor={props.id || props.name}>{label}</label>
+      )}
       <textarea
         {...field}
         {...props}
@@ -54,7 +62,9 @@ export const MyTextArea = ({ label, ...props }) => {
         }`}
       />
       {meta.touched && meta.error ? (
-        <small className='error'>{meta.error}</small>
+        <small style={{ color: 'red' }} className='error'>
+          {meta.error}
+        </small>
       ) : null}
     </div>
   )
@@ -73,14 +83,16 @@ export const MyCheckbox = ({ children, ...props }) => {
           type='checkbox'
           {...field}
           {...props}
-          className={`form-control ${
+          className={`form-control mb-1 ${
             meta.touched && meta.error ? 'is-invalid' : ''
           }`}
         />
-        {children}
+        <small>{children}</small>
       </label>
       {meta.touched && meta.error ? (
-        <small className='error'>{meta.error}</small>
+        <small style={{ color: 'red' }} className='error'>
+          {meta.error}
+        </small>
       ) : null}
     </div>
   )

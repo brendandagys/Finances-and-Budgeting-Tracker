@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container } from 'react-bootstrap'
-import googleSignInButton from '../images/googleSignInWhite.png'
+import googleSignInButton from '../images/googleSignInWhiteLarge.png'
 
 const Header = () => {
   const auth = useSelector((state) => state.auth)
@@ -17,7 +17,7 @@ const Header = () => {
             <img
               alt='Google Sign In Button'
               src={googleSignInButton}
-              // height='80%'
+              height='46px'
               className='d-inline-block align-bottom'
             />
           </Navbar.Brand>

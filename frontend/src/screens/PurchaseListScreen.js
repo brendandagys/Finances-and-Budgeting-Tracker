@@ -21,13 +21,9 @@ const PurchaseListScreen = () => {
       {/* {console.log(purchases)} */}
       <h1>Purchases</h1>
       {loading ? (
-        <h2>
-          <Loader />
-        </h2>
+        <Loader />
       ) : error ? (
-        <h3>
-          <Message variant='secondary'>{error}</Message>
-        </h3>
+        <Message variant='secondary'>{error}</Message>
       ) : (
         <>
           <Purchase />

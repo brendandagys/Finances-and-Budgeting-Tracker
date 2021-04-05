@@ -32,11 +32,13 @@ const SignupForm = () => {
     (state) => state.purchaseCreate
   )
 
-  const { purchaseCategories } = useSelector(
+  const { purchaseCategories, error: purchaseCategoryError } = useSelector(
     (state) => state.purchaseCategoryList
   )
 
-  const { accounts } = useSelector((state) => state.accountList)
+  const { accounts, error: accountError } = useSelector(
+    (state) => state.accountList
+  )
 
   useEffect(() => {
     dispatch(getPurchaseCategories())
@@ -50,7 +52,7 @@ const SignupForm = () => {
   return (
     <>
       <h1>Enter a Purchase!</h1>
-
+      <br />
       <Formik
         initialValues={{
           date: getCurrentDate(),
@@ -78,9 +80,11 @@ const SignupForm = () => {
       >
         {loading ? (
           <Loader />
-        ) : error ? (
+        ) : error || purchaseCategoryError || accountError ? (
           <>
-            <Message variant='secondary'>{error}</Message>
+            <Message variant='secondary'>
+              {error || purchaseCategoryError || accountError}
+            </Message>
             <Button
               variant='info'
               className='btn-sm'
@@ -98,6 +102,7 @@ const SignupForm = () => {
                   name='date'
                   type='date'
                   placeholder='Date...'
+                  hideLabel
                 />
 
                 <MyInput
@@ -105,6 +110,7 @@ const SignupForm = () => {
                   name='time'
                   type='time'
                   placeholder='Time...'
+                  hideLabel
                 />
 
                 <MySelect
@@ -129,6 +135,7 @@ const SignupForm = () => {
                   name='item'
                   type='text'
                   placeholder='Item(s)...'
+                  hideLabel
                 />
 
                 <MyInput
@@ -137,6 +144,7 @@ const SignupForm = () => {
                   type='number'
                   placeholder='Amount...'
                   inputMode='decimal'
+                  hideLabel
                 />
 
                 <MyTextArea
@@ -144,6 +152,7 @@ const SignupForm = () => {
                   name='description'
                   placeholder='Description...'
                   rows='3'
+                  hideLabel
                 />
 
                 <MySelect
