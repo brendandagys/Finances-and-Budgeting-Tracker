@@ -127,7 +127,6 @@ const SignupForm = () => {
                 <MyInput
                   label='Item(s)'
                   name='item'
-                  autoFocus
                   type='text'
                   placeholder='Item(s)...'
                 />
