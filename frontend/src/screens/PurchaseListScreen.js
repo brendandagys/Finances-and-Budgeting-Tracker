@@ -20,6 +20,7 @@ const PurchaseListScreen = () => {
     <>
       {/* {console.log(purchases)} */}
       <h1>Purchases</h1>
+      <br />
       {loading ? (
         <Loader />
       ) : error ? (

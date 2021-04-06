@@ -34,9 +34,10 @@ const Purchase = ({
         <Card.Title>{item}</Card.Title>
         <Card.Text>{description}</Card.Text>
         <Button variant='primary'>View Receipt</Button>
-        <Button className='ml-1' variant='secondary'>
-          Delete
+        <Button className='mx-2' variant='info'>
+          Edit
         </Button>
+        <Button variant='secondary'>Delete</Button>
       </Card.Body>
       <Card.Footer className='py-1'>
         <small className='text-muted'>
