@@ -12,6 +12,8 @@ const PurchaseListScreen = () => {
     (state) => state.purchaseList
   )
 
+  const { deleted } = useSelector((state) => state.purchaseDelete)
+
   useEffect(() => {
     dispatch(getPurchases())
   }, [dispatch])
@@ -21,14 +23,21 @@ const PurchaseListScreen = () => {
       {/* {console.log(purchases)} */}
       <h1>Purchases</h1>
       <br />
+
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant='secondary'>{error}</Message>
+      ) : purchases.length === 0 ? (
+        <Message variant='info'>You have not yet entered any purchases</Message>
       ) : (
-        purchases.map((purchase) => {
-          return <Purchase key={purchase._id} {...purchase} />
-        })
+        purchases
+          .filter((purchase) => !deleted.includes(purchase._id))
+          .map((purchase) => {
+            return (
+              <Purchase id={purchase._id} key={purchase._id} {...purchase} />
+            )
+          })
       )}
     </>
   )

@@ -7,6 +7,9 @@ import {
   PURCHASE_CREATE_REQUEST,
   PURCHASE_CREATE_SUCCESS,
   PURCHASE_CREATE_FAIL,
+  PURCHASE_DELETE_REQUEST,
+  PURCHASE_DELETE_SUCCESS,
+  PURCHASE_DELETE_FAIL,
 } from './types'
 
 export const getPurchases = () => async (dispatch) => {
@@ -39,6 +42,26 @@ export const createPurchase = (purchase) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PURCHASE_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const deletePurchase = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PURCHASE_DELETE_REQUEST,
+    })
+
+    await axios.delete(`/api/purchases/${id}`)
+
+    dispatch({ type: PURCHASE_DELETE_SUCCESS, payload: id })
+  } catch (error) {
+    dispatch({
+      type: PURCHASE_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

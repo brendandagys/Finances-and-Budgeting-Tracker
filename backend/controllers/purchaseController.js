@@ -73,4 +73,19 @@ const createPurchase = asyncHandler(async (req, res) => {
   res.status(201).json(createdPurchase)
 })
 
-export { getPurchases, getPurchaseById, createPurchase }
+// @desc    Delete a purchase
+// @route   DELETE /api/purchases/:id
+// @access  Private
+const deletePurchase = asyncHandler(async (req, res) => {
+  const purchase = await Purchase.findById(req.params.id)
+
+  if (purchase) {
+    await purchase.remove()
+    res.json({ id: req.params.id })
+  } else {
+    res.status(404)
+    throw new Error('Purchase not found')
+  }
+})
+
+export { getPurchases, getPurchaseById, createPurchase, deletePurchase }

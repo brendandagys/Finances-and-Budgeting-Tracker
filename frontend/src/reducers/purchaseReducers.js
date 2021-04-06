@@ -6,6 +6,10 @@ import {
   PURCHASE_CREATE_SUCCESS,
   PURCHASE_CREATE_FAIL,
   PURCHASE_CREATE_RESET,
+  PURCHASE_DELETE_REQUEST,
+  PURCHASE_DELETE_SUCCESS,
+  PURCHASE_DELETE_FAIL,
+  PURCHASE_DELETE_RESET,
 } from '../actions/types'
 
 export const purchaseListReducer = (state = { purchases: [] }, action) => {
@@ -30,6 +34,22 @@ export const purchaseCreateReducer = (state = {}, action) => {
     case PURCHASE_CREATE_FAIL:
       return { loading: false, error: action.payload }
     case PURCHASE_CREATE_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const purchaseDeleteReducer = (state = { deleted: [] }, action) => {
+  switch (action.type) {
+    case PURCHASE_DELETE_REQUEST:
+      return { loading: true, deleted: [...state.deleted] }
+    case PURCHASE_DELETE_SUCCESS:
+      console.log(state)
+      return { loading: false, deleted: [...state.deleted, action.payload] }
+    case PURCHASE_DELETE_FAIL:
+      return { loading: false, error: action.payload }
+    case PURCHASE_DELETE_RESET:
       return {}
     default:
       return state

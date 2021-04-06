@@ -3,7 +3,11 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import { authReducer } from './authReducers'
-import { purchaseCreateReducer, purchaseListReducer } from './purchaseReducers'
+import {
+  purchaseCreateReducer,
+  purchaseListReducer,
+  purchaseDeleteReducer,
+} from './purchaseReducers'
 import {
   purchaseCategoryCreateReducer,
   purchaseCategoryDeleteReducer,
@@ -21,6 +25,7 @@ const reducers = combineReducers({
   auth: authReducer,
   purchaseList: purchaseListReducer,
   purchaseCreate: purchaseCreateReducer,
+  purchaseDelete: purchaseDeleteReducer,
   purchaseCategoryList: purchaseCategoryListReducer,
   purchaseCategoryCreate: purchaseCategoryCreateReducer,
   purchaseCategoryDelete: purchaseCategoryDeleteReducer,
