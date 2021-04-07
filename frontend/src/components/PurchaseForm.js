@@ -87,10 +87,11 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
           console.log(values)
           if (purchase) {
             dispatch(updatePurchase({ _id: purchase._id, ...values }))
+            toggleShow()
           } else {
             dispatch(createPurchase(values))
+            resetForm()
           }
-          toggleShow()
         }}
       >
         {loadingCreate || loadingUpdate ? (
