@@ -68,9 +68,9 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
           time: Yup.string().required('Required'),
           category: Yup.string().required('Required'),
           item: Yup.string().required('Required'),
-          // amount: Yup.number()
-          //   .positive('Must be positive')
-          //   .required('Required'),
+          amount: Yup.number()
+            .positive('Must be positive')
+            .required('Required'),
           description: Yup.string(),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -157,24 +157,25 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
                   label='Amount'
                   name='amount'
                   type='number'
+                  step='0.01'
                   placeholder='Amount...'
                   inputMode='decimal'
                   hidelabel='true'
-                  // onFocus={(e) => setFieldValue('amount', '')}
-                  // onKeyUp={(e) => {
-                  //   if (
-                  //     e.target.value.split('.')[1] &&
-                  //     e.target.value.split('.')[1].length === 2
-                  //   ) {
-                  //     e.target.blur()
-                  //   } else if (
-                  //     e.target.value.split('.')[1] &&
-                  //     e.target.value.split('.')[1].length > 2
-                  //   ) {
-                  //     setFieldValue('amount', e.target.value.slice(0, -1))
-                  //     e.target.blur()
-                  //   }
-                  // }}
+                  onFocus={(e) => setFieldValue('amount', '')}
+                  onKeyUp={(e) => {
+                    if (
+                      e.target.value.split('.')[1] &&
+                      e.target.value.split('.')[1].length === 2
+                    ) {
+                      e.target.blur()
+                    } else if (
+                      e.target.value.split('.')[1] &&
+                      e.target.value.split('.')[1].length > 2
+                    ) {
+                      setFieldValue('amount', e.target.value.slice(0, -1))
+                      e.target.blur()
+                    }
+                  }}
                 />
 
                 <MyTextArea
