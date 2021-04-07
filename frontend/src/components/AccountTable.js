@@ -99,7 +99,7 @@ const AccountTable = () => {
               <tr>
                 <th style={{ verticalAlign: 'middle' }}>Name</th>
                 <th style={{ verticalAlign: 'middle' }}>Credit?</th>
-                <th style={{ verticalAlign: 'middle' }}>Allow Purchases?</th>
+                <th style={{ verticalAlign: 'middle' }}>For Purchases?</th>
                 <th></th>
               </tr>
             </thead>
@@ -185,7 +185,7 @@ const AccountTable = () => {
 
               <MyCheckbox name='credit'>Credit?</MyCheckbox>
 
-              <MyCheckbox name='allowPurchases'>Allow Purchases?</MyCheckbox>
+              <MyCheckbox name='allowPurchases'>For Purchases?</MyCheckbox>
             </Form>
           </Formik>
         </Modal.Body>
