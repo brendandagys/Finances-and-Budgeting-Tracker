@@ -6,10 +6,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form } from 'formik'
 import { MyInput, MySelect, MyTextArea } from '../fields'
 import * as Yup from 'yup'
-import { createPurchase } from '../actions/purchaseActions'
+import { createPurchase, updatePurchase } from '../actions/purchaseActions'
 import { getPurchaseCategories } from '../actions/purchaseCategoryActions'
 import { getAccounts } from '../actions/accountActions'
-import { PURCHASE_CREATE_RESET } from '../actions/types'
+import {
+  PURCHASE_CREATE_RESET,
+  PURCHASE_UPDATE_RESET,
+  PURCHASE_DETAILS_RESET,
+} from '../actions/types'
 
 const getCurrentDate = () => {
   let today = new Date()
@@ -25,11 +29,15 @@ const getCurrentDate = () => {
 const getCurrentTime = () =>
   new Date().toTimeString().split(' ')[0].substring(0, 5)
 
-const SignupForm = () => {
+const PurchaseForm = ({ purchase, toggleShow }) => {
   const dispatch = useDispatch()
 
-  const { loading, error, success } = useSelector(
+  const { loadingCreate, errorCreate, successCreate } = useSelector(
     (state) => state.purchaseCreate
+  )
+
+  const { loadingUpdate, errorUpdate, successUpdate } = useSelector(
+    (state) => state.purchaseUpdate
   )
 
   const { purchaseCategories, error: purchaseCategoryError } = useSelector(
@@ -44,23 +52,26 @@ const SignupForm = () => {
     dispatch(getPurchaseCategories())
     dispatch(getAccounts())
 
-    if (success) {
+    if (successCreate || successUpdate) {
       dispatch({ type: PURCHASE_CREATE_RESET })
+      dispatch({ type: PURCHASE_UPDATE_RESET })
+      dispatch({ type: PURCHASE_DETAILS_RESET })
     }
-  }, [dispatch, success])
+  }, [dispatch, successCreate, successUpdate])
 
   return (
     <>
-      <h1>Enter a Purchase!</h1>
+      {!purchase && <h1>Enter a Purchase!</h1>}
       <br />
       <Formik
         initialValues={{
           date: getCurrentDate(),
           time: getCurrentTime(),
-          category: '',
-          item: '',
-          amount: '',
-          description: '',
+          category: (purchase && purchase.category_id) || '',
+          item: (purchase && purchase.item) || '',
+          amount: (purchase && purchase.amount) || '',
+          description: (purchase && purchase.description) || '',
+          account: (purchase && purchase.account_id) || '',
         }}
         validationSchema={Yup.object({
           date: Yup.string().required('Required'),
@@ -74,21 +85,34 @@ const SignupForm = () => {
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           console.log(values)
-          dispatch(createPurchase(values))
-          resetForm()
+          if (purchase) {
+            dispatch(updatePurchase({ _id: purchase._id, ...values }))
+          } else {
+            dispatch(createPurchase(values))
+          }
+          toggleShow()
         }}
       >
-        {loading ? (
+        {loadingCreate || loadingUpdate ? (
           <Loader />
-        ) : error || purchaseCategoryError || accountError ? (
+        ) : errorCreate ||
+          errorUpdate ||
+          purchaseCategoryError ||
+          accountError ? (
           <>
             <Message variant='secondary'>
-              {error || purchaseCategoryError || accountError}
+              {errorCreate ||
+                errorUpdate ||
+                purchaseCategoryError ||
+                accountError}
             </Message>
             <Button
               variant='info'
               className='btn-sm'
-              onClick={() => dispatch({ type: PURCHASE_CREATE_RESET })}
+              onClick={() => {
+                dispatch({ type: PURCHASE_CREATE_RESET })
+                dispatch({ type: PURCHASE_UPDATE_RESET })
+              }}
             >
               <i className='fas fa-redo-alt'></i> Try again
             </Button>
@@ -96,7 +120,7 @@ const SignupForm = () => {
         ) : (
           ({ setFieldValue }) => {
             return (
-              <Form>
+              <Form id='purchase-form'>
                 <MyInput
                   label='Date'
                   name='date'
@@ -145,6 +169,7 @@ const SignupForm = () => {
                   placeholder='Amount...'
                   inputMode='decimal'
                   hidelabel='true'
+                  onFocus={(e) => setFieldValue('amount', '')}
                   onKeyUp={(e) => {
                     if (
                       e.target.value.split('.')[1] &&
@@ -193,14 +218,15 @@ const SignupForm = () => {
                   style={{ height: '44px' }}
                   accept='image/png, image/jpeg'
                 />
-
-                <button
-                  className='form-control btn-primary'
-                  type='submit'
-                  disabled={Formik.isSubmitting}
-                >
-                  Submit
-                </button>
+                {!purchase && (
+                  <button
+                    className='form-control btn-primary'
+                    type='submit'
+                    disabled={Formik.isSubmitting}
+                  >
+                    Submit
+                  </button>
+                )}
               </Form>
             )
           }
@@ -210,4 +236,4 @@ const SignupForm = () => {
   )
 }
 
-export default SignupForm
+export default PurchaseForm

@@ -5,8 +5,10 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { authReducer } from './authReducers'
 import {
   purchaseCreateReducer,
-  purchaseListReducer,
   purchaseDeleteReducer,
+  purchaseDetailsReducer,
+  purchaseListReducer,
+  purchaseUpdateReducer,
 } from './purchaseReducers'
 import {
   purchaseCategoryCreateReducer,
@@ -24,7 +26,9 @@ import {
 const reducers = combineReducers({
   auth: authReducer,
   purchaseList: purchaseListReducer,
+  purchaseDetails: purchaseDetailsReducer,
   purchaseCreate: purchaseCreateReducer,
+  purchaseUpdate: purchaseUpdateReducer,
   purchaseDelete: purchaseDeleteReducer,
   purchaseCategoryList: purchaseCategoryListReducer,
   purchaseCategoryCreate: purchaseCategoryCreateReducer,

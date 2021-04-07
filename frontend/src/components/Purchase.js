@@ -12,6 +12,7 @@ const Purchase = ({
   amount,
   description,
   account,
+  editHandler,
 }) => {
   const dispatch = useDispatch()
 
@@ -46,7 +47,11 @@ const Purchase = ({
             <Card.Title>{item}</Card.Title>
             <Card.Text>{description}</Card.Text>
             <Button variant='primary'>View Receipt</Button>
-            <Button className='mx-2' variant='info'>
+            <Button
+              className='mx-2'
+              variant='info'
+              onClick={() => editHandler(id)}
+            >
               Edit
             </Button>
             <Button

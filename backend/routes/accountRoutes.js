@@ -15,7 +15,7 @@ router.route('/').get(protect, getAccounts).post(protect, createAccount)
 router
   .route('/:id')
   .get(protect, getAccountById)
-  .delete(protect, deleteAccount)
   .patch(protect, updateAccount)
+  .delete(protect, deleteAccount)
 
 export default router

@@ -7,9 +7,15 @@ import {
   PURCHASE_CREATE_REQUEST,
   PURCHASE_CREATE_SUCCESS,
   PURCHASE_CREATE_FAIL,
+  PURCHASE_UPDATE_REQUEST,
+  PURCHASE_UPDATE_SUCCESS,
+  PURCHASE_UPDATE_FAIL,
   PURCHASE_DELETE_REQUEST,
   PURCHASE_DELETE_SUCCESS,
   PURCHASE_DELETE_FAIL,
+  PURCHASE_DETAILS_REQUEST,
+  PURCHASE_DETAILS_SUCCESS,
+  PURCHASE_DETAILS_FAIL,
 } from './types'
 
 export const getPurchases = () => async (dispatch) => {
@@ -30,6 +36,24 @@ export const getPurchases = () => async (dispatch) => {
   }
 }
 
+export const getPurchaseDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: PURCHASE_DETAILS_REQUEST })
+
+    const { data } = await axios.get(`/api/purchases/${id}`)
+
+    dispatch({ type: PURCHASE_DETAILS_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: PURCHASE_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
 export const createPurchase = (purchase) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -42,6 +66,29 @@ export const createPurchase = (purchase) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PURCHASE_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const updatePurchase = (purchase) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PURCHASE_UPDATE_REQUEST,
+    })
+
+    const { data } = await axios.patch(
+      `/api/purchases/${purchase._id}`,
+      purchase
+    )
+
+    dispatch({ type: PURCHASE_UPDATE_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: PURCHASE_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

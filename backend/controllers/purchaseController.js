@@ -9,7 +9,9 @@ const Account = mongoose.model('Account')
 // @route   GET /api/purchases
 // @access  Private
 const getPurchases = asyncHandler(async (req, res) => {
-  const purchases = await Purchase.find({ user: req.user.id })
+  const purchases = await Purchase.find({ user: req.user.id }).sort({
+    timestamp: -1,
+  })
   res.json(purchases)
 })
 
@@ -73,6 +75,46 @@ const createPurchase = asyncHandler(async (req, res) => {
   res.status(201).json(createdPurchase)
 })
 
+// @desc    Update a purchase
+// @route   PATCH /api/purchases
+// @access  Private
+const updatePurchase = asyncHandler(async (req, res) => {
+  const {
+    date,
+    time,
+    item,
+    category: category_id,
+    amount,
+    description,
+    account: account_id,
+  } = req.body
+
+  const purchase = await Purchase.findById(req.params.id)
+
+  if (purchase) {
+    const { name: category } = await PurchaseCategory.findById(category_id)
+
+    purchase.timestamp = Date.parse(`${date}T${time}`)
+    purchase.category_id = category_id
+    purchase.category = category
+    purchase.item = item.trim()
+    purchase.amount = amount
+    purchase.description = description.trim()
+
+    if (account_id) {
+      const { name: account } = await Account.findById(account_id)
+      purchase.account_id = account_id
+      purchase.account = account
+    }
+
+    const updatedPurchase = await purchase.save()
+    res.json(updatedPurchase)
+  } else {
+    res.status(404)
+    throw new Error('Purchase not found')
+  }
+})
+
 // @desc    Delete a purchase
 // @route   DELETE /api/purchases/:id
 // @access  Private
@@ -88,4 +130,10 @@ const deletePurchase = asyncHandler(async (req, res) => {
   }
 })
 
-export { getPurchases, getPurchaseById, createPurchase, deletePurchase }
+export {
+  getPurchases,
+  getPurchaseById,
+  createPurchase,
+  updatePurchase,
+  deletePurchase,
+}

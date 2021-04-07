@@ -6,10 +6,18 @@ import {
   PURCHASE_CREATE_SUCCESS,
   PURCHASE_CREATE_FAIL,
   PURCHASE_CREATE_RESET,
+  PURCHASE_UPDATE_REQUEST,
+  PURCHASE_UPDATE_SUCCESS,
+  PURCHASE_UPDATE_FAIL,
+  PURCHASE_UPDATE_RESET,
   PURCHASE_DELETE_REQUEST,
   PURCHASE_DELETE_SUCCESS,
   PURCHASE_DELETE_FAIL,
   PURCHASE_DELETE_RESET,
+  PURCHASE_DETAILS_REQUEST,
+  PURCHASE_DETAILS_SUCCESS,
+  PURCHASE_DETAILS_FAIL,
+  PURCHASE_DETAILS_RESET,
 } from '../actions/types'
 
 export const purchaseListReducer = (state = { purchases: [] }, action) => {
@@ -25,6 +33,21 @@ export const purchaseListReducer = (state = { purchases: [] }, action) => {
   }
 }
 
+export const purchaseDetailsReducer = (state = { purchase: {} }, action) => {
+  switch (action.type) {
+    case PURCHASE_DETAILS_REQUEST:
+      return { loading: true, ...state }
+    case PURCHASE_DETAILS_SUCCESS:
+      return { loading: false, purchase: action.payload }
+    case PURCHASE_DETAILS_FAIL:
+      return { loading: false, error: action.payload }
+    case PURCHASE_DETAILS_RESET:
+      return { purchase: {} }
+    default:
+      return state
+  }
+}
+
 export const purchaseCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case PURCHASE_CREATE_REQUEST:
@@ -35,6 +58,21 @@ export const purchaseCreateReducer = (state = {}, action) => {
       return { loading: false, error: action.payload }
     case PURCHASE_CREATE_RESET:
       return {}
+    default:
+      return state
+  }
+}
+
+export const purchaseUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PURCHASE_UPDATE_REQUEST:
+      return { loading: true }
+    case PURCHASE_UPDATE_SUCCESS:
+      return { loading: false, success: true, purchase: action.payload }
+    case PURCHASE_UPDATE_FAIL:
+      return { loading: false, error: action.payload }
+    case PURCHASE_UPDATE_RESET:
+      return { purchase: {} }
     default:
       return state
   }
