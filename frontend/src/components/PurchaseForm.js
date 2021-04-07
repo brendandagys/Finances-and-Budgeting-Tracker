@@ -170,21 +170,21 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
                   placeholder='Amount...'
                   inputMode='decimal'
                   hidelabel='true'
-                  onFocus={(e) => setFieldValue('amount', '')}
-                  onKeyUp={(e) => {
-                    if (
-                      e.target.value.split('.')[1] &&
-                      e.target.value.split('.')[1].length === 2
-                    ) {
-                      e.target.blur()
-                    } else if (
-                      e.target.value.split('.')[1] &&
-                      e.target.value.split('.')[1].length > 2
-                    ) {
-                      setFieldValue('amount', e.target.value.slice(0, -1))
-                      e.target.blur()
-                    }
-                  }}
+                  // onFocus={(e) => setFieldValue('amount', '')}
+                  // onKeyUp={(e) => {
+                  //   if (
+                  //     e.target.value.split('.')[1] &&
+                  //     e.target.value.split('.')[1].length === 2
+                  //   ) {
+                  //     e.target.blur()
+                  //   } else if (
+                  //     e.target.value.split('.')[1] &&
+                  //     e.target.value.split('.')[1].length > 2
+                  //   ) {
+                  //     setFieldValue('amount', e.target.value.slice(0, -1))
+                  //     e.target.blur()
+                  //   }
+                  // }}
                 />
 
                 <MyTextArea

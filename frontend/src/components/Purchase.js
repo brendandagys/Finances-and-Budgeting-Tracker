@@ -42,6 +42,9 @@ const Purchase = ({
         <Card className='my-3'>
           <Card.Header as='h6'>
             {category} | ${amount}
+            {amount.toString().split('.')[1] &&
+              amount.toString().split('.')[1].length === 1 &&
+              '0'}
           </Card.Header>
           <Card.Body>
             <Card.Title>{item}</Card.Title>

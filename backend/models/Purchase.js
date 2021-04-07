@@ -6,6 +6,7 @@ const purchaseSchema = mongoose.Schema({
     required: true,
     ref: 'User',
   },
+  userName: { type: String, required: true },
   timestamp: { type: Date, required: true },
   category_id: {
     type: mongoose.Schema.Types.ObjectId,

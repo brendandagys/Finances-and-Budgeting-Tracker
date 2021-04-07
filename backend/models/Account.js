@@ -6,6 +6,7 @@ const accountSchema = mongoose.Schema({
     required: true,
     ref: 'User',
   },
+  userName: { type: String, required: true },
   name: { type: String, required: true },
   credit: { type: Boolean, required: true, default: false },
   allowPurchases: { type: Boolean, required: true, default: true },

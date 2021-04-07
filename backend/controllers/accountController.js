@@ -45,6 +45,7 @@ const createAccount = asyncHandler(async (req, res) => {
 
   const account = new Account({
     user: req.user._id,
+    userName: req.user.name,
     name: name.trim(),
     credit,
     allowPurchases,

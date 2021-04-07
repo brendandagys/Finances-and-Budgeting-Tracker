@@ -33,6 +33,7 @@ const createPurchaseCategory = asyncHandler(async (req, res) => {
 
   const purchaseCategory = new PurchaseCategory({
     user: req.user._id,
+    userName: req.user.name,
     name: name.trim(),
     active,
   })

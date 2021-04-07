@@ -50,6 +50,7 @@ const createPurchase = asyncHandler(async (req, res) => {
 
     var purchase = new Purchase({
       user: req.user._id,
+      userName: req.user.name,
       timestamp: Date.parse(`${date}T${time}`),
       category_id,
       category,
@@ -62,6 +63,7 @@ const createPurchase = asyncHandler(async (req, res) => {
   } else {
     var purchase = new Purchase({
       user: req.user._id,
+      userName: req.user.name,
       timestamp: Date.parse(`${date}T${time}`),
       category_id,
       category,
