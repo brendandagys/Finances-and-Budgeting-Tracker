@@ -9,11 +9,7 @@ import * as Yup from 'yup'
 import { createPurchase, updatePurchase } from '../actions/purchaseActions'
 import { getPurchaseCategories } from '../actions/purchaseCategoryActions'
 import { getAccounts } from '../actions/accountActions'
-import {
-  PURCHASE_CREATE_RESET,
-  PURCHASE_UPDATE_RESET,
-  PURCHASE_DETAILS_RESET,
-} from '../actions/types'
+import { PURCHASE_CREATE_RESET, PURCHASE_UPDATE_RESET } from '../actions/types'
 
 const getCurrentDate = () => {
   let today = new Date()
@@ -32,11 +28,11 @@ const getCurrentTime = () =>
 const PurchaseForm = ({ purchase, toggleShow }) => {
   const dispatch = useDispatch()
 
-  const { loadingCreate, errorCreate, successCreate } = useSelector(
+  const { loadingCreate, errorCreate } = useSelector(
     (state) => state.purchaseCreate
   )
 
-  const { loadingUpdate, errorUpdate, successUpdate } = useSelector(
+  const { loadingUpdate, errorUpdate } = useSelector(
     (state) => state.purchaseUpdate
   )
 
@@ -51,13 +47,7 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
   useEffect(() => {
     dispatch(getPurchaseCategories())
     dispatch(getAccounts())
-
-    if (successCreate || successUpdate) {
-      dispatch({ type: PURCHASE_CREATE_RESET })
-      dispatch({ type: PURCHASE_UPDATE_RESET })
-      dispatch({ type: PURCHASE_DETAILS_RESET })
-    }
-  }, [dispatch, successCreate, successUpdate])
+  }, [dispatch])
 
   return (
     <>
@@ -78,9 +68,9 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
           time: Yup.string().required('Required'),
           category: Yup.string().required('Required'),
           item: Yup.string().required('Required'),
-          amount: Yup.number()
-            .positive('Must be positive')
-            .required('Required'),
+          // amount: Yup.number()
+          //   .positive('Must be positive')
+          //   .required('Required'),
           description: Yup.string(),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
