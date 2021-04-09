@@ -23,7 +23,7 @@ const createPurchaseCategory = asyncHandler(async (req, res) => {
 
   const purchaseCategoryExists = await PurchaseCategory.findOne({
     user: req.user.id,
-    name,
+    name: name.trim(),
   })
 
   if (purchaseCategoryExists) {

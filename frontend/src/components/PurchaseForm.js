@@ -11,7 +11,7 @@ import { getPurchaseCategories } from '../actions/purchaseCategoryActions'
 import { getAccounts } from '../actions/accountActions'
 import { PURCHASE_CREATE_RESET, PURCHASE_UPDATE_RESET } from '../actions/types'
 
-const getCurrentDate = () => {
+export const getCurrentDate = () => {
   let today = new Date()
   let date = today.getDate()
   let month = today.getMonth() + 1
@@ -118,6 +118,7 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
                   type='date'
                   placeholder='Date...'
                   hidelabel='true'
+                  centertext='true'
                 />
 
                 <MyInput
@@ -126,6 +127,7 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
                   type='time'
                   placeholder='Time...'
                   hidelabel='true'
+                  centertext='true'
                 />
 
                 <MySelect

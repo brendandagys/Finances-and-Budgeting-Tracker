@@ -22,6 +22,12 @@ import {
   accountListReducer,
   accountUpdateReducer,
 } from './accountReducers'
+import {
+  accountUpdateListReducer,
+  accountUpdateCreateReducer,
+  accountUpdateUpdateReducer,
+  accountUpdateDeleteReducer,
+} from './accountUpdateReducers'
 
 const reducers = combineReducers({
   auth: authReducer,
@@ -38,6 +44,10 @@ const reducers = combineReducers({
   accountCreate: accountCreateReducer,
   accountUpdate: accountUpdateReducer,
   accountDelete: accountDeleteReducer,
+  accountUpdateList: accountUpdateListReducer,
+  accountUpdateCreate: accountUpdateCreateReducer,
+  accountUpdateUpdate: accountUpdateUpdateReducer,
+  accountUpdateDelete: accountUpdateDeleteReducer,
 })
 
 const initialState = {}

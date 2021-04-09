@@ -15,7 +15,7 @@ export const MyInput = ({ label, ...props }) => {
         {...props}
         className={`form-control ${
           meta.touched && meta.error ? 'is-invalid' : ''
-        }`}
+        } ${props.centertext ? 'text-center' : ''}`}
       />
       {meta.touched && meta.error ? (
         <small style={{ color: 'red' }} className='error'>

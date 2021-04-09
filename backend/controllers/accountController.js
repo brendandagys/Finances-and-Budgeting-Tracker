@@ -35,7 +35,7 @@ const createAccount = asyncHandler(async (req, res) => {
 
   const accountExists = await Account.findOne({
     user: req.user.id,
-    name,
+    name: name.trim(),
   })
 
   if (accountExists) {
