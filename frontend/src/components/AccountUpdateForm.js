@@ -6,7 +6,7 @@ import { createAccountUpdate } from '../actions/accountUpdateActions'
 
 const AccountUpdateForm = React.forwardRef(
   ({ accountId, name, value, dateFilter, updateTotal }, ref) => {
-    const [updated, setUpdated] = useState(false)
+    const [updated, setUpdated] = useState('false')
 
     const dispatch = useDispatch()
 
@@ -44,7 +44,7 @@ const AccountUpdateForm = React.forwardRef(
                   !e.target.value.includes('-')
                 ) {
                   updateTotal()
-                  setUpdated(true)
+                  setUpdated('true')
                   dispatch(
                     createAccountUpdate(
                       dateFilter,

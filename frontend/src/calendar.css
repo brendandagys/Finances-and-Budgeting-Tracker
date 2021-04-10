@@ -1,0 +1,76 @@
+:root {
+  --radial-background: radial-gradient(
+      circle at 50% 0,
+      rgba(255, 0, 0, 0.5),
+      rgba(255, 0, 0, 0) 70.71%
+    ),
+    radial-gradient(
+      circle at 6.7% 75%,
+      rgba(0, 0, 255, 0.5),
+      rgba(0, 0, 255, 0) 70.71%
+    ),
+    radial-gradient(
+        circle at 93.3% 75%,
+        rgba(0, 255, 0, 0.5),
+        rgba(0, 255, 0, 0) 70.71%
+      )
+      beige;
+
+  --hover-cell-background: linear-gradient(45deg, white, #00ffc38f);
+
+  /* --selected-background: linear-gradient(135deg, #00ff80ab, #ffc0c0bd); */
+}
+
+.calendar-container {
+  user-select: none;
+  font-size: 1.2rem;
+  font-family: sans-serif;
+  color: #392e2e;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-radius: 10px;
+  box-shadow: 0 3px 6px #ddd;
+  padding: 5px;
+  background: var(--radial-background);
+  text-align: center;
+  vertical-align: middle;
+
+}
+
+.header {
+  grid-column: 1 / -1
+}
+
+.weekrow {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #ffffff3b;
+  margin: 7px 0 10px;
+  border-radius: 5px;
+}
+
+.weekday {
+  height: 35px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.day {
+  background: #ffffff6b;
+  padding: 1px;
+  border-radius: 5px;
+  background-clip: content-box;
+  cursor: pointer;
+}
+
+.day:hover {
+  background: var(--hover-cell-background)
+}

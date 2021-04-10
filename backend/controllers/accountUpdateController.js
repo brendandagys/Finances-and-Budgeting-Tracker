@@ -23,9 +23,10 @@ export const getAccountUpdates = asyncHandler(async (req, res) => {
       let accountUpdate = await AccountUpdate.findOne(
         {
           account_id: account.id,
-          timestamp: req.params.date,
+          timestamp: { $lte: req.params.date },
         },
-        { value: 1 }
+        { value: 1 },
+        { sort: { timestamp: -1 } }
       )
 
       return { ...account, value: accountUpdate && accountUpdate.value }
