@@ -1,6 +1,7 @@
+import React from 'react'
 import { useField } from 'formik'
 
-export const MyInput = ({ label, ...props }) => {
+export const MyInput = React.forwardRef(({ label, ...props }, ref) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input>. We can use field meta to show an error
   // message if the field is invalid and it has been touched (i.e. visited)
@@ -13,6 +14,7 @@ export const MyInput = ({ label, ...props }) => {
       <input
         {...field}
         {...props}
+        ref={ref}
         className={`form-control ${
           meta.touched && meta.error ? 'is-invalid' : ''
         } ${props.centertext ? 'text-center' : ''}`}
@@ -24,7 +26,7 @@ export const MyInput = ({ label, ...props }) => {
       ) : null}
     </div>
   )
-}
+})
 
 export const MySelect = ({ label, ...props }) => {
   const [field, meta] = useField(props)

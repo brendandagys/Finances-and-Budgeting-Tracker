@@ -61,7 +61,7 @@ export const createAccountUpdate = asyncHandler(async (req, res) => {
 
   if (lastUpdateToday) {
     lastUpdateToday.value = value
-    lastUpdateToday.timestamp = Date.now()
+    lastUpdateToday.timestamp = endDate
 
     await lastUpdateToday.save()
     res.status(201).json(lastUpdateToday)
@@ -72,6 +72,7 @@ export const createAccountUpdate = asyncHandler(async (req, res) => {
       account_id,
       account: name,
       value,
+      timestamp: endDate,
     })
 
     await firstUpdateToday.save()
