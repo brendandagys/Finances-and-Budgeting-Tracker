@@ -39,7 +39,7 @@ const PurchaseListScreen = () => {
   return (
     <>
       {/* {console.log(purchases)} */}
-      <h1>Purchases</h1>
+      <h1 className='text-center'>Purchases</h1>
       <br />
 
       {loading || loadingUpdate ? (

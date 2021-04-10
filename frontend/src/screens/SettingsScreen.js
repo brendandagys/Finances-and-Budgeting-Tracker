@@ -4,6 +4,8 @@ import AccountTable from '../components/AccountTable'
 const SettingsScreen = ({ match, history }) => {
   return (
     <>
+      <h1 className='text-center'>Settings</h1>
+      <br />
       <div className='my-3'>
         <PurchaseCategoryTable />
       </div>

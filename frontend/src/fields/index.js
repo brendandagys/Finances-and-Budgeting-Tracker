@@ -17,7 +17,9 @@ export const MyInput = React.forwardRef(({ label, ...props }, ref) => {
         ref={ref}
         className={`form-control ${
           meta.touched && meta.error ? 'is-invalid' : ''
-        } ${props.centertext ? 'text-center' : ''}`}
+        } ${props.centertext ? 'text-center' : ''} ${
+          props.updated ? 'is-valid' : ''
+        }`}
       />
       {meta.touched && meta.error ? (
         <small style={{ color: 'red' }} className='error'>

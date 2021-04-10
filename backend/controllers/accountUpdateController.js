@@ -4,25 +4,16 @@ import mongoose from 'mongoose'
 const AccountUpdate = mongoose.model('Account Update')
 const Account = mongoose.model('Account')
 
-function convertDateStringToUTCString(dateString, millisecondsForward) {
-  let date = new Date(dateString)
-  let unixTimestamp = date.setTime(date.getTime() + millisecondsForward)
-  return new Date(unixTimestamp).toISOString()
-}
+// function convertDateStringToUTCString(dateString, millisecondsForward = 0) {
+//   let date = new Date(dateString)
+//   let unixTimestamp = date.setTime(date.getTime() + millisecondsForward)
+//   return new Date(unixTimestamp).toISOString()
+// }
 
 // @desc    Fetch all account updates
 // @route   GET /api/account-updates
 // @access  Private
 export const getAccountUpdates = asyncHandler(async (req, res) => {
-  const startDate = convertDateStringToUTCString(
-    req.params.date,
-    4 * 60 * 60 * 1000
-  )
-  const endDate = convertDateStringToUTCString(
-    req.params.date,
-    28 * 60 * 60 * 1000
-  )
-
   var accounts = await Account.find({ user: req.user.id }) // Array of objects
 
   accounts = accounts.map(({ id, name, credit }) => ({ id, name, credit })) // Get just the id and name
@@ -32,7 +23,7 @@ export const getAccountUpdates = asyncHandler(async (req, res) => {
       let accountUpdate = await AccountUpdate.findOne(
         {
           account_id: account.id,
-          timestamp: { $gte: startDate, $lt: endDate },
+          timestamp: req.params.date,
         },
         { value: 1 }
       )
@@ -50,18 +41,14 @@ export const getAccountUpdates = asyncHandler(async (req, res) => {
 export const createAccountUpdate = asyncHandler(async (req, res) => {
   const { date, account_id, name, value } = req.body
 
-  const startDate = convertDateStringToUTCString(date, 4 * 60 * 60 * 1000)
-  const endDate = convertDateStringToUTCString(date, 28 * 60 * 60 * 1000)
-
   // console.log(req.body)
   const lastUpdateToday = await AccountUpdate.findOne({
     account_id,
-    timestamp: { $gte: startDate, $lt: endDate },
+    timestamp: date,
   })
 
   if (lastUpdateToday) {
     lastUpdateToday.value = value
-    lastUpdateToday.timestamp = endDate
 
     await lastUpdateToday.save()
     res.status(201).json(lastUpdateToday)
@@ -72,7 +59,7 @@ export const createAccountUpdate = asyncHandler(async (req, res) => {
       account_id,
       account: name,
       value,
-      timestamp: endDate,
+      timestamp: date,
     })
 
     await firstUpdateToday.save()

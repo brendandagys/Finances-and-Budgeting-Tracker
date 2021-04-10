@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Loader from './Loader'
 import Message from './Message'
-import { Button } from 'react-bootstrap'
+// import { Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form } from 'formik'
 import { MyInput, MySelect, MyTextArea } from '../fields'
@@ -9,7 +9,7 @@ import * as Yup from 'yup'
 import { createPurchase, updatePurchase } from '../actions/purchaseActions'
 import { getPurchaseCategories } from '../actions/purchaseCategoryActions'
 import { getAccounts } from '../actions/accountActions'
-import { PURCHASE_CREATE_RESET, PURCHASE_UPDATE_RESET } from '../actions/types'
+// import { PURCHASE_CREATE_RESET, PURCHASE_UPDATE_RESET } from '../actions/types'
 
 export const getCurrentDate = () => {
   let today = new Date()
@@ -51,7 +51,7 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
 
   return (
     <>
-      {!purchase && <h1>Enter a Purchase!</h1>}
+      {!purchase && <h1 className='text-center'>Enter a Purchase!</h1>}
       <br />
       <Formik
         initialValues={{
@@ -97,7 +97,7 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
                 purchaseCategoryError ||
                 accountError}
             </Message>
-            <Button
+            {/* <Button
               variant='info'
               className='btn-sm'
               onClick={() => {
@@ -106,7 +106,7 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
               }}
             >
               <i className='fas fa-redo-alt'></i> Try again
-            </Button>
+            </Button> */}
           </>
         ) : (
           ({ setFieldValue }) => {
