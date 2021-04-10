@@ -13,7 +13,7 @@ const accountUpdateSchema = mongoose.Schema({
     ref: 'Account',
   },
   account: { type: String, required: true },
-  amount: { type: Number, required: true },
+  value: { type: Number, required: true },
   timestamp: { type: Date, required: true, default: Date.now },
 })
 

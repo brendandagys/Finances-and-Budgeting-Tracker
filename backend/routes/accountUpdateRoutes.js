@@ -4,19 +4,11 @@ const router = express.Router()
 import {
   getAccountUpdates,
   createAccountUpdate,
-  updateAccountUpdate,
-  deleteAccountUpdate,
 } from '../controllers/accountUpdateController.js'
 import { protect } from '../middleware/authMiddleware.js'
 
-router
-  .route('/')
-  .get(protect, getAccountUpdates)
-  .post(protect, createAccountUpdate)
+router.route('/:date').get(protect, getAccountUpdates)
 
-router
-  .route('/:id')
-  .patch(protect, updateAccountUpdate)
-  .delete(protect, deleteAccountUpdate)
+router.post('/', protect, createAccountUpdate)
 
 export default router

@@ -7,19 +7,13 @@ import {
   ACCOUNTUPDATE_CREATE_REQUEST,
   ACCOUNTUPDATE_CREATE_SUCCESS,
   ACCOUNTUPDATE_CREATE_FAIL,
-  ACCOUNTUPDATE_DELETE_REQUEST,
-  ACCOUNTUPDATE_DELETE_SUCCESS,
-  ACCOUNTUPDATE_DELETE_FAIL,
-  ACCOUNTUPDATE_UPDATE_REQUEST,
-  ACCOUNTUPDATE_UPDATE_SUCCESS,
-  ACCOUNTUPDATE_UPDATE_FAIL,
 } from './types'
 
-export const getAccountUpdates = () => async (dispatch) => {
+export const getAccountUpdates = (date) => async (dispatch) => {
   try {
     dispatch({ type: ACCOUNTUPDATE_LIST_REQUEST })
 
-    const { data } = await axios.get('/api/account-updates')
+    const { data } = await axios.get(`/api/account-updates/${date}`)
 
     dispatch({ type: ACCOUNTUPDATE_LIST_SUCCESS, payload: data })
   } catch (error) {
@@ -33,7 +27,7 @@ export const getAccountUpdates = () => async (dispatch) => {
   }
 }
 
-export const createAccountUpdate = (accountUpdate) => async (
+export const createAccountUpdate = (date, account_id, name, value) => async (
   dispatch,
   getState
 ) => {
@@ -42,58 +36,17 @@ export const createAccountUpdate = (accountUpdate) => async (
       type: ACCOUNTUPDATE_CREATE_REQUEST,
     })
 
-    const { data } = await axios.post('/api/account-updates', accountUpdate)
+    const { data } = await axios.post('/api/account-updates', {
+      date,
+      account_id,
+      name,
+      value,
+    })
 
     dispatch({ type: ACCOUNTUPDATE_CREATE_SUCCESS, payload: data })
   } catch (error) {
     dispatch({
       type: ACCOUNTUPDATE_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
-  }
-}
-
-export const updateAccountUpdate = (accountUpdate) => async (
-  dispatch,
-  getState
-) => {
-  try {
-    dispatch({
-      type: ACCOUNTUPDATE_UPDATE_REQUEST,
-    })
-
-    const { data } = await axios.patch(
-      `/api/account-updates/${accountUpdate._id}`,
-      accountUpdate
-    )
-
-    dispatch({ type: ACCOUNTUPDATE_UPDATE_SUCCESS, payload: data })
-  } catch (error) {
-    dispatch({
-      type: ACCOUNTUPDATE_UPDATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
-  }
-}
-
-export const deleteAccountUpdate = (id) => async (dispatch) => {
-  try {
-    dispatch({
-      type: ACCOUNTUPDATE_DELETE_REQUEST,
-    })
-
-    await axios.delete(`/api/account-updates/${id}`)
-
-    dispatch({ type: ACCOUNTUPDATE_DELETE_SUCCESS })
-  } catch (error) {
-    dispatch({
-      type: ACCOUNTUPDATE_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
