@@ -14,7 +14,7 @@ const accountUpdateSchema = mongoose.Schema({
   },
   account: { type: String, required: true },
   value: { type: Number, required: true },
-  timestamp: { type: Date, required: true, default: Date.now },
+  timestamp: { type: Date, required: true },
 })
 
 const AccountUpdate = mongoose.model('Account Update', accountUpdateSchema)

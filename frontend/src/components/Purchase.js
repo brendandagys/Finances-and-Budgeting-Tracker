@@ -20,19 +20,15 @@ const Purchase = ({
 
   var date = new Date(timestamp)
   const year = date.getFullYear()
-  const month = (date.getMonth() + 1).toString()
-  const day = date.getDate().toString()
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const day = date.getDate().toString().padStart(2, '0')
 
-  const hour = date.getHours().toString()
-  const minute = date.getMinutes().toString()
+  const hour = date.getHours().toString().padStart(2, '0')
+  const minute = date.getMinutes().toString().padStart(2, '0')
 
-  const time = `${hour.length === 1 ? '0' + hour : hour}:${
-    minute.length === 1 ? '0' + minute : minute
-  }`
+  const time = `${hour}:${minute}`
 
-  date = `${year}-${month.length === 1 ? '0' + month : month}-${
-    day.length === 1 ? '0' + day : day
-  }`
+  date = `${year}-${month}-${day}`
 
   return (
     <>

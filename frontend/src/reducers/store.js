@@ -25,9 +25,8 @@ import {
 import {
   accountUpdateListReducer,
   accountUpdateCreateReducer,
-  accountUpdateUpdateReducer,
-  accountUpdateDeleteReducer,
 } from './accountUpdateReducers'
+import { moodListReducer, moodCreateReducer } from './moodReducers'
 
 const reducers = combineReducers({
   auth: authReducer,
@@ -46,8 +45,8 @@ const reducers = combineReducers({
   accountDelete: accountDeleteReducer,
   accountUpdateList: accountUpdateListReducer,
   accountUpdateCreate: accountUpdateCreateReducer,
-  accountUpdateUpdate: accountUpdateUpdateReducer,
-  accountUpdateDelete: accountUpdateDeleteReducer,
+  moodList: moodListReducer,
+  moodCreate: moodCreateReducer,
 })
 
 const initialState = {}

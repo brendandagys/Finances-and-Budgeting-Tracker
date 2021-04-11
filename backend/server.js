@@ -7,12 +7,14 @@ import './models/Purchase.js'
 import './models/PurchaseCategory.js'
 import './models/Account.js'
 import './models/AccountUpdate.js'
+import './models/Mood.js'
 import configPassport from './config/passport.js'
 import authRoutes from './routes/authRoutes.js'
 import purchaseRoutes from './routes/purchaseRoutes.js'
 import purchaseCategoryRoutes from './routes/purchaseCategoryRoutes.js'
 import accountRoutes from './routes/accountRoutes.js'
 import accountUpdateRoutes from './routes/accountUpdateRoutes.js'
+import moodRoutes from './routes/moodRoutes.js'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import path from 'path'
@@ -45,6 +47,7 @@ app.use('/api/purchases', purchaseRoutes)
 app.use('/api/purchase-categories', purchaseCategoryRoutes)
 app.use('/api/accounts', accountRoutes)
 app.use('/api/account-updates', accountUpdateRoutes)
+app.use('/api/moods', moodRoutes)
 
 const __dirname = path.resolve()
 
