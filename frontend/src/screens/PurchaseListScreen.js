@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button, Row, Col } from 'react-bootstrap'
 import { getPurchases, getPurchaseDetails } from '../actions/purchaseActions'
 import Purchase from '../components/Purchase'
 import Loader from '../components/Loader'
@@ -49,18 +49,22 @@ const PurchaseListScreen = () => {
       ) : purchases.length === 0 ? (
         <Message variant='info'>You have not yet entered any purchases</Message>
       ) : (
-        purchases
-          .filter((purchase) => !deleted.includes(purchase._id))
-          .map((purchase) => {
-            return (
-              <Purchase
-                editHandler={editHandler}
-                id={purchase._id}
-                key={purchase._id}
-                {...purchase}
-              />
-            )
-          })
+        <Row>
+          {purchases
+            .filter((purchase) => !deleted.includes(purchase._id))
+            .map((purchase) => {
+              return (
+                <Col md={6} xl={4}>
+                  <Purchase
+                    key={purchase._id}
+                    id={purchase._id}
+                    editHandler={editHandler}
+                    {...purchase}
+                  />
+                </Col>
+              )
+            })}
+        </Row>
       )}
 
       <Modal show={show} onHide={toggleShow}>
