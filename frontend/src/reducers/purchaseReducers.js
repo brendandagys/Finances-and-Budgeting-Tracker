@@ -83,7 +83,6 @@ export const purchaseDeleteReducer = (state = { deleted: [] }, action) => {
     case PURCHASE_DELETE_REQUEST:
       return { loading: true, deleted: [...state.deleted] }
     case PURCHASE_DELETE_SUCCESS:
-      console.log(state)
       return { loading: false, deleted: [...state.deleted, action.payload] }
     case PURCHASE_DELETE_FAIL:
       return { loading: false, error: action.payload }
