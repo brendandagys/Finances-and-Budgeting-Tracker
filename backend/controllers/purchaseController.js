@@ -41,6 +41,7 @@ const createPurchase = asyncHandler(async (req, res) => {
     amount,
     description,
     account: account_id,
+    receiptUrl,
   } = req.body
 
   const { name: category } = await PurchaseCategory.findById(category_id)
@@ -59,6 +60,7 @@ const createPurchase = asyncHandler(async (req, res) => {
       description: description.trim(),
       account_id,
       account,
+      receiptUrl,
     })
   } else {
     var purchase = new Purchase({
@@ -70,6 +72,7 @@ const createPurchase = asyncHandler(async (req, res) => {
       item: item.trim(),
       amount,
       description: description.trim(),
+      receiptUrl,
     })
   }
 
@@ -89,6 +92,7 @@ const updatePurchase = asyncHandler(async (req, res) => {
     amount,
     description,
     account: account_id,
+    receiptUrl,
   } = req.body
 
   const purchase = await Purchase.findById(req.params.id)
@@ -102,6 +106,7 @@ const updatePurchase = asyncHandler(async (req, res) => {
     purchase.item = item.trim()
     purchase.amount = amount
     purchase.description = description.trim()
+    purchase.receiptUrl = receiptUrl
 
     if (account_id) {
       const { name: account } = await Account.findById(account_id)

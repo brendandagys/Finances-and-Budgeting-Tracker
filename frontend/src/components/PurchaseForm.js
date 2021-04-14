@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import axios from 'axios'
 import Loader from './Loader'
 import Message from './Message'
-// import { Button } from 'react-bootstrap'
+import { Spinner } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form } from 'formik'
 import { MyInput, MySelect, MyTextArea } from '../fields'
@@ -26,6 +27,33 @@ const getCurrentTime = () =>
   new Date().toTimeString().split(' ')[0].substring(0, 5)
 
 const PurchaseForm = ({ purchase, toggleShow }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const fileRef = useRef(null)
+
+  const handleUpload = async () => {
+    const file = fileRef.current.files[0]
+
+    const {
+      data: {
+        data: { returnData },
+      },
+    } = await axios.post('/api/s3', {
+      fileName: `receipts/${auth.email}/${file.name.split('.')[0]}`,
+      fileType: file.name.split('.')[1],
+    })
+
+    console.log('Signed request for file upload: ' + returnData.signedRequest)
+
+    const options = {
+      headers: { 'Content-Type': file.name.split('.')[1] },
+    }
+
+    await axios.put(returnData.signedRequest, file, options)
+
+    return returnData.receiptUrl
+  }
+
   const dispatch = useDispatch()
 
   const { loadingCreate, errorCreate } = useSelector(
@@ -43,6 +71,8 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
   const { accounts, error: accountError } = useSelector(
     (state) => state.accountList
   )
+
+  const auth = useSelector((state) => state.auth)
 
   useEffect(() => {
     dispatch(getPurchaseCategories())
@@ -73,15 +103,23 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
             .required('Required'),
           description: Yup.string(),
         })}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          console.log(values)
+        onSubmit={async (values, { resetForm }) => {
+          setIsSubmitting(true)
+          if (fileRef.current.files.length > 0) {
+            var receiptUrl = await handleUpload()
+          }
+          // console.log(values)
           if (purchase) {
-            dispatch(updatePurchase({ _id: purchase._id, ...values }))
+            dispatch(
+              updatePurchase({ _id: purchase._id, receiptUrl, ...values })
+            )
             toggleShow()
           } else {
-            dispatch(createPurchase(values))
+            dispatch(createPurchase({ receiptUrl, ...values }))
             resetForm()
           }
+
+          setIsSubmitting(false)
         }}
       >
         {loadingCreate || loadingUpdate ? (
@@ -205,19 +243,34 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
                     })}
                 </MySelect>
 
-                <MyInput
-                  label='Receipt'
-                  name='receipt'
-                  type='file'
-                  style={{ height: '44px' }}
-                  accept='image/png, image/jpeg'
-                />
-                {!purchase && (
-                  <button
-                    className='form-control btn-primary'
-                    type='submit'
-                    disabled={Formik.isSubmitting}
+                <div className='form-group'>
+                  <label htmlFor='receipt'>Receipt</label>
+                  <input
+                    ref={fileRef}
+                    type='file'
+                    name='receipt'
+                    className='form-control'
+                    style={{ height: '44px' }}
+                    accept='image/png, image/jpeg'
+                  />
+                </div>
+                {isSubmitting && (
+                  <Spinner
+                    animation='border'
+                    variant='primary'
+                    role='status'
+                    style={{
+                      width: '50px',
+                      height: '50px',
+                      margin: '10px auto 19px auto',
+                      display: 'block',
+                    }}
                   >
+                    <span className='sr-only'>Loading...</span>
+                  </Spinner>
+                )}
+                {!purchase && (
+                  <button className='form-control btn-primary' type='submit'>
                     Submit
                   </button>
                 )}

@@ -18,6 +18,7 @@
   "author": "Brendan Dagys",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.886.0",
     "colors": "^1.4.0",
     "cookie-session": "^1.4.0",
     "dotenv": "^8.2.0",

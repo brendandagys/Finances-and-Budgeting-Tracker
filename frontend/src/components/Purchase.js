@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import { Card, Button } from 'react-bootstrap'
 import Message from './Message'
 import { deletePurchase } from '../actions/purchaseActions'
@@ -13,6 +14,7 @@ const Purchase = ({
   description,
   account,
   editHandler,
+  receiptUrl,
 }) => {
   const dispatch = useDispatch()
 
@@ -45,7 +47,14 @@ const Purchase = ({
           <Card.Body>
             <Card.Title>{item}</Card.Title>
             <Card.Text>{description}</Card.Text>
-            <Button variant='primary'>View Receipt</Button>
+            <Button
+              variant='primary'
+              disabled={receiptUrl ? false : true}
+              href={receiptUrl ? receiptUrl : ''}
+              target='_blank'
+            >
+              View Receipt
+            </Button>
             <Button
               className='mx-2'
               variant='info'
@@ -55,7 +64,17 @@ const Purchase = ({
             </Button>
             <Button
               variant='secondary'
-              onClick={() => dispatch(deletePurchase(id))}
+              onClick={async () => {
+                dispatch(deletePurchase(id))
+
+                if (receiptUrl) {
+                  await axios.delete('/api/s3', {
+                    data: {
+                      key: receiptUrl.split('s3.amazonaws.com/')[1],
+                    },
+                  })
+                }
+              }}
             >
               Delete
             </Button>

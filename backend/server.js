@@ -15,6 +15,8 @@ import purchaseCategoryRoutes from './routes/purchaseCategoryRoutes.js'
 import accountRoutes from './routes/accountRoutes.js'
 import accountUpdateRoutes from './routes/accountUpdateRoutes.js'
 import moodRoutes from './routes/moodRoutes.js'
+import { s3Upload, s3Delete } from './controllers/s3Controller.js'
+import { protect } from './middleware/authMiddleware.js'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import path from 'path'
@@ -48,6 +50,9 @@ app.use('/api/purchase-categories', purchaseCategoryRoutes)
 app.use('/api/accounts', accountRoutes)
 app.use('/api/account-updates', accountUpdateRoutes)
 app.use('/api/moods', moodRoutes)
+
+app.post('/api/s3', protect, s3Upload)
+app.delete('/api/s3', protect, s3Delete)
 
 const __dirname = path.resolve()
 

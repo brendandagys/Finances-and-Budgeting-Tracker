@@ -22,6 +22,7 @@ const purchaseSchema = mongoose.Schema({
     ref: 'Account',
   },
   account: String,
+  receiptUrl: String,
 })
 
 const Purchase = mongoose.model('Purchase', purchaseSchema)
