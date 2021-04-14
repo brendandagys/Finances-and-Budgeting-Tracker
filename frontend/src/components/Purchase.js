@@ -39,7 +39,8 @@ const Purchase = ({
       ) : (
         <Card className='my-3'>
           <Card.Header as='h6'>
-            {category} | ${amount}
+            {category} | $
+            {amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             {amount.toString().split('.')[1] &&
               amount.toString().split('.')[1].length === 1 &&
               '0'}

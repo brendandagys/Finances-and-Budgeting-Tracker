@@ -118,7 +118,7 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
             dispatch(createPurchase({ receiptUrl, ...values }))
             resetForm()
           }
-
+          fileRef.current.value = null
           setIsSubmitting(false)
         }}
       >
