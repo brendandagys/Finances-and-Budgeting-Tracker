@@ -44,7 +44,7 @@ const AccountUpdateScreen = () => {
 
   return (
     <>
-      <h1 className='text-center'>Account Updates</h1>
+      <h1 className='text-center'>Accounts</h1>
       <br />
       {loading ? (
         <Loader />

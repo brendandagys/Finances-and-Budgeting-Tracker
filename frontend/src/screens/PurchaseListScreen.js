@@ -57,27 +57,33 @@ const PurchaseListScreen = () => {
 
   useEffect(() => {
     setApplicablePurchases(
-      purchases.filter((purchase) => {
-        let date = new Date(purchase.timestamp)
-        const year = date.getFullYear()
-        const month = (date.getMonth() + 1).toString().padStart(2, '0')
-        const day = date.getDate().toString().padStart(2, '0')
+      purchases &&
+        purchases.filter((purchase) => {
+          let date = new Date(purchase.timestamp)
+          const year = date.getFullYear()
+          const month = (date.getMonth() + 1).toString().padStart(2, '0')
+          const day = date.getDate().toString().padStart(2, '0')
 
-        date = `${year}-${month}-${day}`
+          date = `${year}-${month}-${day}`
 
-        // console.log(fromDate)
-        // console.log(toDate)
-        // console.log(date)
-        return (
-          !deleted.includes(purchase._id) && date >= fromDate && date <= toDate
-        )
-      })
+          // console.log(fromDate)
+          // console.log(toDate)
+          // console.log(date)
+          return (
+            !deleted.includes(purchase._id) &&
+            date >= fromDate &&
+            date <= toDate
+          )
+        })
     )
   }, [purchases, deleted, fromDate, toDate])
 
   useEffect(() => {
     let tempArray = []
-    applicablePurchases.forEach((purchase) => tempArray.push(purchase.category))
+    applicablePurchases &&
+      applicablePurchases.forEach((purchase) =>
+        tempArray.push(purchase.category)
+      )
     // console.log([...new Set(tempArray)])
     setApplicableCategories([...new Set(tempArray)])
     if (selectedCategories.length === 0)
@@ -87,11 +93,12 @@ const PurchaseListScreen = () => {
   }, [applicablePurchases])
 
   useEffect(() => {
-    setFinalPurchases(
-      applicablePurchases.filter((purchase) =>
-        selectedCategories.includes(purchase.category)
+    applicablePurchases &&
+      setFinalPurchases(
+        applicablePurchases.filter((purchase) =>
+          selectedCategories.includes(purchase.category)
+        )
       )
-    )
   }, [applicablePurchases, selectedCategories])
 
   useEffect(() => {
