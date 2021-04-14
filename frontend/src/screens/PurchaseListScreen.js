@@ -8,13 +8,17 @@ import Message from '../components/Message'
 import PurchaseForm from '../components/PurchaseForm'
 
 const PurchaseListScreen = () => {
-  const [fromDate, setFromDate] = useState(() =>
-    new Date(new Date().getFullYear(), new Date().getMonth(), 1)
-      .toISOString()
-      .slice(0, 10)
+  const [fromDate, setFromDate] = useState(
+    () =>
+      `${new Date().getFullYear()}-${(new Date().getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}-01`
   )
-  const [toDate, setToDate] = useState(() =>
-    new Date().toISOString().slice(0, 10)
+  const [toDate, setToDate] = useState(
+    () =>
+      `${new Date().getFullYear()}-${(new Date().getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}-${new Date().getDate().toString().padStart(2, '0')}`
   )
 
   const [show, setShow] = useState(false)
