@@ -37,6 +37,7 @@ const AccountUpdateForm = React.forwardRef(
                   setFieldValue('value', e.target.value.slice(0, -1))
                   e.target.blur()
                 }
+                updateTotal()
               }}
               onBlur={(e) => {
                 if (
