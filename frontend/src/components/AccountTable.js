@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Loader from './Loader'
 import Message from './Message'
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,6 +20,8 @@ import {
 } from '../actions/types'
 
 const AccountTable = () => {
+  const modalRef = useRef(null)
+
   const [show, setShow] = useState(false)
   const toggleShow = () => setShow((show) => !show)
 
@@ -65,6 +67,11 @@ const AccountTable = () => {
   )
 
   useEffect(() => {
+    if (modalRef.current && modalRef.current.value === '')
+      modalRef.current.focus()
+  })
+
+  useEffect(() => {
     dispatch(getAccounts())
     // console.log(accounts)
   }, [dispatch, successCreate, successUpdate, successDelete])
@@ -87,7 +94,10 @@ const AccountTable = () => {
           <div className='mx-auto mb-4' style={{ maxWidth: '600px' }}>
             <h2 style={{ textAlign: 'center' }}>Accounts</h2>
           </div>
-          <div className='alert alert-light text-center'>
+          <div
+            className='alert alert-light text-center mx-auto'
+            style={{ maxWidth: '600px' }}
+          >
             <small>
               Create accounts and track their value over time. Purchases can
               also be assigned to these.
@@ -183,6 +193,7 @@ const AccountTable = () => {
           >
             <Form id='account-form'>
               <MyInput
+                ref={modalRef}
                 label=''
                 name='name'
                 type='text'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Loader from './Loader'
 import Message from './Message'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,6 +17,8 @@ import {
 } from '../actions/types'
 
 const PurchaseCategoryTable = () => {
+  const modalRef = useRef(null)
+
   const [show, setShow] = useState(false)
   const toggleShow = () => setShow((show) => !show)
 
@@ -42,6 +44,10 @@ const PurchaseCategoryTable = () => {
   const { success: successDelete, error: errorDelete } = useSelector(
     (state) => state.purchaseCategoryDelete
   )
+
+  useEffect(() => {
+    if (modalRef.current) modalRef.current.focus()
+  })
 
   useEffect(() => {
     dispatch(getPurchaseCategories())
@@ -70,7 +76,10 @@ const PurchaseCategoryTable = () => {
           <div className='mx-auto mb-4' style={{ maxWidth: '600px' }}>
             <h2 style={{ textAlign: 'center' }}>Purchase Categories</h2>
           </div>
-          <div className='alert alert-light text-center'>
+          <div
+            className='alert alert-light text-center mx-auto'
+            style={{ maxWidth: '600px' }}
+          >
             <small>
               Enter categories to assign your purchases to. View a breakdown of
               your spending on the Dashboard page.
@@ -135,6 +144,7 @@ const PurchaseCategoryTable = () => {
           >
             <Form id='purchase-category-form'>
               <MyInput
+                ref={modalRef}
                 label=''
                 name='name'
                 type='text'
