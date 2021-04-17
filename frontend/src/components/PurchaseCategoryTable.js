@@ -11,10 +11,10 @@ import {
   createPurchaseCategory,
   deletePurchaseCategory,
 } from '../actions/purchaseCategoryActions.js'
-// import {
-//   PURCHASE_CATEGORY_CREATE_RESET,
-//   PURCHASE_CATEGORY_DELETE_RESET,
-// } from '../actions/types'
+import {
+  PURCHASE_CATEGORY_CREATE_RESET,
+  PURCHASE_CATEGORY_DELETE_RESET,
+} from '../actions/types'
 
 const PurchaseCategoryTable = () => {
   const [show, setShow] = useState(false)
@@ -24,10 +24,10 @@ const PurchaseCategoryTable = () => {
     dispatch(deletePurchaseCategory(id))
   }
 
-  // const resetHandler = () => {
-  //   dispatch({ type: PURCHASE_CATEGORY_CREATE_RESET })
-  //   dispatch({ type: PURCHASE_CATEGORY_DELETE_RESET })
-  // }
+  const resetHandler = () => {
+    dispatch({ type: PURCHASE_CATEGORY_CREATE_RESET })
+    dispatch({ type: PURCHASE_CATEGORY_DELETE_RESET })
+  }
 
   const dispatch = useDispatch()
 
@@ -57,13 +57,13 @@ const PurchaseCategoryTable = () => {
           <Message variant='secondary'>
             {error || errorCreate || errorDelete}
           </Message>
-          {/* <Button
+          <Button
             variant='info'
             className='btn-sm'
             onClick={() => resetHandler()}
           >
             <i className='fas fa-redo-alt'></i> Try again
-          </Button> */}
+          </Button>
         </>
       ) : (
         <>

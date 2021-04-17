@@ -14,8 +14,8 @@ import {
   deleteAccount,
 } from '../actions/accountActions.js'
 import {
-  // ACCOUNT_CREATE_RESET,
-  // ACCOUNT_DELETE_RESET,
+  ACCOUNT_CREATE_RESET,
+  ACCOUNT_DELETE_RESET,
   ACCOUNT_DETAILS_RESET,
 } from '../actions/types'
 
@@ -37,11 +37,11 @@ const AccountTable = () => {
     dispatch(deleteAccount(id))
   }
 
-  // const resetHandler = () => {
-  //   dispatch({ type: ACCOUNT_CREATE_RESET })
-  //   dispatch({ type: ACCOUNT_DELETE_RESET })
-  //   dispatch({ type: ACCOUNT_DETAILS_RESET })
-  // }
+  const resetHandler = () => {
+    dispatch({ type: ACCOUNT_CREATE_RESET })
+    dispatch({ type: ACCOUNT_DELETE_RESET })
+    dispatch({ type: ACCOUNT_DETAILS_RESET })
+  }
 
   const dispatch = useDispatch()
 
@@ -78,9 +78,9 @@ const AccountTable = () => {
           <Message variant='secondary'>
             {error || errorCreate || errorUpdate || errorDelete || errorDetails}
           </Message>
-          {/* <Button variant='info' className='btn-sm' onClick={resetHandler}>
+          <Button variant='info' className='btn-sm' onClick={resetHandler}>
             <i className='fas fa-redo-alt'></i> Try again
-          </Button> */}
+          </Button>
         </>
       ) : (
         <>
