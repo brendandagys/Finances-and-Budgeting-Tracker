@@ -47,34 +47,24 @@ const createPurchase = asyncHandler(async (req, res) => {
   const { name: category } = await PurchaseCategory.findById(category_id)
 
   if (account_id) {
-    const { name: account } = await Account.findById(account_id)
-
-    var purchase = new Purchase({
-      user: req.user._id,
-      userName: req.user.name,
-      timestamp: Date.parse(`${date}T${time}`),
-      category_id,
-      category,
-      item: item.trim(),
-      amount,
-      description: description.trim(),
-      account_id,
-      account,
-      receiptUrl,
-    })
+    var { name: account } = await Account.findById(account_id)
   } else {
-    var purchase = new Purchase({
-      user: req.user._id,
-      userName: req.user.name,
-      timestamp: Date.parse(`${date}T${time}`),
-      category_id,
-      category,
-      item: item.trim(),
-      amount,
-      description: description.trim(),
-      receiptUrl,
-    })
+    var account = undefined
   }
+
+  const purchase = new Purchase({
+    user: req.user._id,
+    userName: req.user.name,
+    timestamp: Date.parse(`${date}T${time}`),
+    category_id,
+    category,
+    item: item.trim(),
+    amount,
+    description: description.trim(),
+    account_id: account_id === '' ? undefined : account_id,
+    account,
+    receiptUrl,
+  })
 
   const createdPurchase = await purchase.save()
   res.status(201).json(createdPurchase)
