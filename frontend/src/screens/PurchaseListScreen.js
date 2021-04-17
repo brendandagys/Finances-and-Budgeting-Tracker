@@ -6,6 +6,7 @@ import Purchase from '../components/Purchase'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import PurchaseForm from '../components/PurchaseForm'
+import PurchaseCategoryPieChart from '../components/PurchaseCategoryPieChart'
 
 const PurchaseListScreen = () => {
   const [fromDate, setFromDate] = useState(
@@ -208,6 +209,11 @@ const PurchaseListScreen = () => {
           </Container>
 
           <hr />
+          <Row style={{ height: '250px' }} className='mb-4'>
+            <Col>
+              <PurchaseCategoryPieChart />
+            </Col>
+          </Row>
           <Row>
             <Col className='text-center'>
               <Card bg={'primary'} text={'white'} className='mb-2'>

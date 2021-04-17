@@ -13,6 +13,8 @@
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/config/dataLoader",
+    "data:destroy": "node backend/config/dataLoader -d",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Brendan Dagys",
