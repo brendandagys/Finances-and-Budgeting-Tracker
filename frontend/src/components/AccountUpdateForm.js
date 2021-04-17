@@ -5,7 +5,7 @@ import { Formik } from 'formik'
 import { createAccountUpdate } from '../actions/accountUpdateActions'
 
 const AccountUpdateForm = React.forwardRef(
-  ({ accountId, name, value, dateFilter, updateTotal }, ref) => {
+  ({ accountId, name, value, dateFilter, updateTotal, credit }, ref) => {
     const [updated, setUpdated] = useState('false')
 
     const dispatch = useDispatch()
@@ -18,6 +18,7 @@ const AccountUpdateForm = React.forwardRef(
               ref={ref}
               name='value'
               label={name}
+              credit={credit}
               type='number'
               step='0.01'
               placeholder=''

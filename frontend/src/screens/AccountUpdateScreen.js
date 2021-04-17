@@ -23,7 +23,13 @@ const AccountUpdateScreen = () => {
     if (!error) {
       itemsRef.current = itemsRef.current.slice(0, accountUpdates.length)
       const checkSum = itemsRef.current.reduce(
-        (a, b) => a + (b['value'] === '' ? 0 : parseFloat(b['value'])),
+        (a, b) =>
+          a +
+          (b.value === ''
+            ? 0
+            : b.attributes.credit.value === 'true'
+            ? -1 * parseFloat(b.value)
+            : parseFloat(b.value)),
         0
       )
       if (!isNaN(checkSum) && checkSum !== 0) {
@@ -70,6 +76,7 @@ const AccountUpdateScreen = () => {
               value={account.value}
               dateFilter={dateFilter}
               updateTotal={updateTotal}
+              credit={account.credit ? 'true' : 'false'}
             />
           ))}
           <div className='mt-5 text-center'>
