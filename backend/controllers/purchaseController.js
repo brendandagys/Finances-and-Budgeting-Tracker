@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 const Purchase = mongoose.model('Purchase')
 const PurchaseCategory = mongoose.model('Purchase Category')
 const Account = mongoose.model('Account')
+const AccountUpdate = mongoose.model('Account Update')
 
 // @desc    Fetch all purchases
 // @route   GET /api/purchases
@@ -47,7 +48,36 @@ const createPurchase = asyncHandler(async (req, res) => {
   const { name: category } = await PurchaseCategory.findById(category_id)
 
   if (account_id) {
-    var { name: account } = await Account.findById(account_id)
+    var { name: account, credit } = await Account.findById(account_id)
+
+    // Save writing duplicate code below
+    const fixedPurchaseAmount = credit ? amount * -1 : amount
+
+    const lastAccountUpdate = await AccountUpdate.findOne({
+      account_id,
+    }).sort({ timestamp: -1 })
+
+    if (
+      lastAccountUpdate &&
+      lastAccountUpdate.timestamp.toISOString().slice(0, 10) === date
+    ) {
+      lastAccountUpdate.value = (
+        lastAccountUpdate.value - fixedPurchaseAmount
+      ).toFixed(2)
+      await lastAccountUpdate.save()
+    } else {
+      var createdAccountUpdate = new AccountUpdate({
+        user: req.user._id,
+        userName: req.user.name,
+        account_id,
+        account: account,
+        value: lastAccountUpdate
+          ? (lastAccountUpdate.value - fixedPurchaseAmount).toFixed(2)
+          : (0 - fixedPurchaseAmount).toFixed(2),
+        timestamp: date,
+      })
+      await createdAccountUpdate.save()
+    }
   } else {
     var account = undefined
   }
