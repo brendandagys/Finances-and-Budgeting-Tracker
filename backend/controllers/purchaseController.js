@@ -41,7 +41,7 @@ const createPurchase = asyncHandler(async (req, res) => {
     amount,
     description,
     account: account_id,
-    receiptUrl,
+    receiptUrl, // undefined if not provided
   } = req.body
 
   const { name: category } = await PurchaseCategory.findById(category_id)
@@ -60,7 +60,7 @@ const createPurchase = asyncHandler(async (req, res) => {
     category,
     item: item.trim(),
     amount,
-    description: description.trim(),
+    description: description.trim() === '' ? undefined : description.trim(),
     account_id: account_id === '' ? undefined : account_id,
     account,
     receiptUrl,
@@ -82,7 +82,6 @@ const updatePurchase = asyncHandler(async (req, res) => {
     amount,
     description,
     account: account_id,
-    receiptUrl,
   } = req.body
 
   const purchase = await Purchase.findById(req.params.id)
@@ -95,14 +94,17 @@ const updatePurchase = asyncHandler(async (req, res) => {
     purchase.category = category
     purchase.item = item.trim()
     purchase.amount = amount
-    purchase.description = description.trim()
-    purchase.receiptUrl = receiptUrl
+    purchase.description =
+      description.trim() === '' ? undefined : description.trim()
+    purchase.account_id = account_id === '' ? undefined : account_id
 
     if (account_id) {
-      const { name: account } = await Account.findById(account_id)
-      purchase.account_id = account_id
-      purchase.account = account
+      var { name: account } = await Account.findById(account_id)
+    } else {
+      var account = undefined
     }
+
+    purchase.account = account
 
     const updatedPurchase = await purchase.save()
     res.json(updatedPurchase)

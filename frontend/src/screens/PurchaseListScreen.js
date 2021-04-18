@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Modal, Button, Row, Col, Container, Card } from 'react-bootstrap'
 import { getPurchases, getPurchaseDetails } from '../actions/purchaseActions'
@@ -51,10 +51,13 @@ const PurchaseListScreen = () => {
 
   const { deleted } = useSelector((state) => state.purchaseDelete)
 
-  const editHandler = async (id) => {
-    await dispatch(getPurchaseDetails(id))
-    toggleShow()
-  }
+  const editHandler = useCallback(
+    async (id) => {
+      await dispatch(getPurchaseDetails(id))
+      toggleShow()
+    },
+    [dispatch]
+  )
 
   useEffect(() => {
     dispatch(getPurchases())
@@ -95,7 +98,7 @@ const PurchaseListScreen = () => {
       // Page load only
       setSelectedCategories([...new Set(tempArray)])
     // console.log(selectedCategories)
-  }, [applicablePurchases])
+  }, [applicablePurchases, selectedCategories.length])
 
   useEffect(() => {
     applicablePurchases &&
@@ -120,7 +123,7 @@ const PurchaseListScreen = () => {
         )
       })
     )
-  }, [finalPurchases])
+  }, [finalPurchases, editHandler])
 
   useEffect(() => {
     setSum(

@@ -105,20 +105,20 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
         })}
         onSubmit={async (values, { resetForm }) => {
           setIsSubmitting(true)
-          if (fileRef.current.files.length > 0) {
-            var receiptUrl = await handleUpload()
-          }
+
           // console.log(values)
           if (purchase) {
-            dispatch(
-              updatePurchase({ _id: purchase._id, receiptUrl, ...values })
-            )
+            dispatch(updatePurchase({ _id: purchase._id, ...values }))
             toggleShow()
           } else {
+            if (fileRef.current.files.length > 0) {
+              var receiptUrl = await handleUpload()
+            }
+
             dispatch(createPurchase({ receiptUrl, ...values }))
             resetForm()
+            fileRef.current.value = null
           }
-          fileRef.current.value = null
           setIsSubmitting(false)
         }}
       >
@@ -243,17 +243,19 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
                     })}
                 </MySelect>
 
-                <div className='form-group'>
-                  <label htmlFor='receipt'>Receipt</label>
-                  <input
-                    ref={fileRef}
-                    type='file'
-                    name='receipt'
-                    className='form-control'
-                    style={{ height: '44px' }}
-                    accept='image/png, image/jpeg'
-                  />
-                </div>
+                {!purchase && (
+                  <div className='form-group'>
+                    <label htmlFor='receipt'>Receipt</label>
+                    <input
+                      ref={fileRef}
+                      type='file'
+                      name='receipt'
+                      className='form-control'
+                      style={{ height: '44px' }}
+                      accept='image/png, image/jpeg'
+                    />
+                  </div>
+                )}
                 {isSubmitting && (
                   <Spinner
                     animation='border'
