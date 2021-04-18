@@ -32,7 +32,7 @@ const Header = () => {
   }
 
   return (
-    <header style={{ marginBottom: '70px' }}>
+    <header style={{ marginBottom: '55px' }}>
       <Navbar
         bg='primary'
         variant='dark'

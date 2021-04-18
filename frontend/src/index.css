@@ -1,3 +1,11 @@
 main {
   min-height: 88vh;
 }
+
+main {
+  background: linear-gradient(
+    270deg,
+    #ECFEF4,
+    white
+    );
+}
