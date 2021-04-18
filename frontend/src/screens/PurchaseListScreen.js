@@ -35,6 +35,8 @@ const PurchaseListScreen = () => {
   const [sum, setSum] = useState(0)
   const [count, setCount] = useState(0)
 
+  const [pieChartData, setPieChartData] = useState([])
+
   const dispatch = useDispatch()
 
   const { loading, error, purchases } = useSelector(
@@ -123,6 +125,22 @@ const PurchaseListScreen = () => {
         )
       })
     )
+
+    var categoryValues = {}
+
+    finalPurchases.forEach(({ category, amount }) =>
+      categoryValues[category]
+        ? (categoryValues[category] = categoryValues[category] + amount)
+        : (categoryValues[category] = amount)
+    )
+
+    var finalChartArray = []
+
+    for (const [key, value] of Object.entries(categoryValues)) {
+      finalChartArray.push({ name: key, value: parseFloat(value.toFixed(2)) })
+    }
+    // console.log(finalChartArray)
+    setPieChartData(finalChartArray)
   }, [finalPurchases, editHandler])
 
   useEffect(() => {
@@ -214,7 +232,7 @@ const PurchaseListScreen = () => {
           <hr />
           <Row style={{ height: '250px' }} className='mb-4'>
             <Col>
-              <PurchaseCategoryPieChart />
+              <PurchaseCategoryPieChart data={pieChartData} />
             </Col>
           </Row>
           <Row>
