@@ -122,6 +122,8 @@ const DashboardScreen = () => {
       var startDateCopy = startDate
 
       while (startDateCopy <= endDate) {
+        console.log(startDate)
+        console.log(startDateCopy)
         datesArray.push(startDateCopy)
 
         startDateCopy = new Date(

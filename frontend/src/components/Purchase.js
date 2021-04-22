@@ -5,6 +5,22 @@ import Message from './Message'
 import { deletePurchase } from '../actions/purchaseActions'
 import { useDispatch, useSelector } from 'react-redux'
 
+const getProperDateAndTime = (timestamp) => {
+  let date = new Date(timestamp)
+  const year = date.getFullYear()
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const day = date.getDate().toString().padStart(2, '0')
+
+  const hour = date.getHours().toString().padStart(2, '0')
+  const minute = date.getMinutes().toString().padStart(2, '0')
+
+  const time = `${hour}:${minute}`
+
+  date = `${year}-${month}-${day}`
+
+  return [date, time]
+}
+
 const Purchase = ({
   id,
   timestamp,
@@ -19,18 +35,6 @@ const Purchase = ({
   const dispatch = useDispatch()
 
   const { error } = useSelector((state) => state.purchaseDelete)
-
-  var date = new Date(timestamp)
-  const year = date.getFullYear()
-  const month = (date.getMonth() + 1).toString().padStart(2, '0')
-  const day = date.getDate().toString().padStart(2, '0')
-
-  const hour = date.getHours().toString().padStart(2, '0')
-  const minute = date.getMinutes().toString().padStart(2, '0')
-
-  const time = `${hour}:${minute}`
-
-  date = `${year}-${month}-${day}`
 
   return (
     <>
@@ -82,7 +86,10 @@ const Purchase = ({
           </Card.Body>
           <Card.Footer className='py-1'>
             <small className='text-muted'>
-              {date + ' | ' + time} {account && '| ' + account}
+              {getProperDateAndTime(timestamp)[0] +
+                ' | ' +
+                getProperDateAndTime(timestamp)[1]}{' '}
+              {account && '| ' + account}
             </small>
           </Card.Footer>
         </Card>
