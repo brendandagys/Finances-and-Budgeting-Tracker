@@ -58,6 +58,16 @@ const PurchaseListScreen = () => {
   }, [dispatch, successUpdate])
 
   useEffect(() => {
+    if (fromDate > toDate) setFromDate(toDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fromDate])
+
+  useEffect(() => {
+    if (fromDate > toDate) setToDate(fromDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toDate])
+
+  useEffect(() => {
     setApplicablePurchases(
       purchases &&
         purchases.filter((purchase) => {
