@@ -30,7 +30,8 @@ const DashboardScreen = () => {
   const [sum, setSum] = useState(0)
   const [count, setCount] = useState(0)
 
-  const [lineChartData, setLineChartData] = useState([])
+  const [lineChartDataDaily, setLineChartDataDaily] = useState([])
+  const [lineChartDataWeekly, setLineChartDataWeekly] = useState([])
 
   const [sortedPurchases, setSortedPurchases] = useState([])
   var [startDate, setStartDate] = useState(null)
@@ -122,28 +123,79 @@ const DashboardScreen = () => {
       var startDateCopy = startDate
 
       while (startDateCopy <= endDate) {
-        console.log(startDate)
-        console.log(startDateCopy)
         datesArray.push(startDateCopy)
 
         startDateCopy = new Date(
-          new Date(startDateCopy).setDate(new Date(startDateCopy).getDate() + 1)
+          new Date(startDateCopy).setDate(
+            new Date(startDateCopy).getDate() + 1
+          ) +
+            60 * 60 * 1000 // Add 1 hour because DST causes infinite loop
         )
           .toISOString()
           .slice(0, 10)
       }
 
-      setLineChartData([])
+      setLineChartDataDaily([])
 
       for (const date of datesArray) {
         const amount = sortedPurchases
-          .filter((purchase) => purchase.timestamp.slice(0, 10) === date)
+          .filter(({ timestamp }) => timestamp.slice(0, 10) === date)
           .reduce((a, b) => a + b.amount, 0)
 
-        setLineChartData((prevState) => {
+        setLineChartDataDaily((prevState) => {
           return [...prevState, { date, Amount: amount }]
         })
       }
+    }
+  }, [startDate, endDate, sortedPurchases])
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      var datesArray = []
+
+      var startDateCopy = startDate
+
+      while (startDateCopy <= endDate) {
+        datesArray.push(startDateCopy)
+        startDateCopy = new Date(
+          new Date(startDateCopy).setDate(
+            new Date(startDateCopy).getDate() + 6
+          ) +
+            60 * 60 * 1000 // Add 1 hour because DST causes infinite loop
+        )
+          .toISOString()
+          .slice(0, 10)
+      }
+
+      setLineChartDataWeekly([])
+
+      datesArray.forEach((date, index) => {
+        const amount = sortedPurchases
+          .filter(({ timestamp }) => {
+            if (datesArray[index + 1] === undefined) {
+              return timestamp.slice(0, 10) >= date
+            } else
+              return (
+                timestamp.slice(0, 10) >= date &&
+                timestamp.slice(0, 10) < datesArray[index + 1]
+              )
+          })
+          .reduce((a, b) => a + b.amount, 0)
+
+        setLineChartDataWeekly((prevState) => {
+          return [
+            ...prevState,
+            {
+              date: `${date} - ${
+                datesArray[index + 1] === undefined
+                  ? endDate
+                  : datesArray[index + 1]
+              }`,
+              Amount: amount,
+            },
+          ]
+        })
+      })
     }
   }, [startDate, endDate, sortedPurchases])
 
@@ -208,10 +260,28 @@ const DashboardScreen = () => {
             </Row>
           </Container>
           <hr />
+          <br />
 
           <Row style={{ height: '400px' }} className='mb-4'>
-            <Col>
-              <PurchaseLineChart data={lineChartData} />
+            <Col className='text-center' xs={12}>
+              <h3>Daily Purchase Trend</h3>
+              <PurchaseLineChart
+                data={lineChartDataDaily}
+                bottomMargin={47}
+                dy={27}
+              />
+            </Col>
+          </Row>
+          <br />
+          <br />
+          <Row style={{ height: '400px' }} className='mb-4'>
+            <Col className='text-center' xs={12}>
+              <h3>Weekly Purchase Trend</h3>
+              <PurchaseLineChart
+                data={lineChartDataWeekly}
+                bottomMargin={120}
+                dy={60}
+              />
             </Col>
           </Row>
         </>

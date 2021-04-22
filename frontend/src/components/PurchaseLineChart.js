@@ -13,7 +13,7 @@ import {
 export default class PurchaseLineChart extends PureComponent {
   render() {
     return (
-      <ResponsiveContainer width='100%' height='100%'>
+      <ResponsiveContainer width='100%' height='90%'>
         <LineChart
           width={500}
           height={300}
@@ -21,12 +21,12 @@ export default class PurchaseLineChart extends PureComponent {
           margin={{
             top: 5,
             right: 10,
-            left: 5,
-            bottom: 5,
+            left: -15,
+            bottom: this.props.bottomMargin,
           }}
         >
           <CartesianGrid strokeDasharray='3 3' />
-          <XAxis dataKey='date' />
+          <XAxis dataKey='date' angle={-40} dy={this.props.dy} />
           <YAxis />
           <Tooltip />
           {/* <Legend /> */}
