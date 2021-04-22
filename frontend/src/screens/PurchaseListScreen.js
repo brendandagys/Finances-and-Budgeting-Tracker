@@ -8,20 +8,11 @@ import Message from '../components/Message'
 import Datepicker from '../components/Datepicker'
 import PurchaseForm from '../components/PurchaseForm'
 import PurchaseCategoryPieChart from '../components/PurchaseCategoryPieChart'
+import moment from 'moment'
 
 const PurchaseListScreen = () => {
-  const [fromDate, setFromDate] = useState(
-    () =>
-      `${new Date().getFullYear()}-${(new Date().getMonth() + 1)
-        .toString()
-        .padStart(2, '0')}-01`
-  )
-  const [toDate, setToDate] = useState(
-    () =>
-      `${new Date().getFullYear()}-${(new Date().getMonth() + 1)
-        .toString()
-        .padStart(2, '0')}-${new Date().getDate().toString().padStart(2, '0')}`
-  )
+  const [fromDate, setFromDate] = useState(() => moment().format('YYYY-MM-01'))
+  const [toDate, setToDate] = useState(() => moment().format('YYYY-MM-DD'))
 
   const [show, setShow] = useState(false)
   const toggleShow = () => setShow((show) => !show)
@@ -70,16 +61,7 @@ const PurchaseListScreen = () => {
     setApplicablePurchases(
       purchases &&
         purchases.filter((purchase) => {
-          let date = new Date(purchase.timestamp)
-          const year = date.getFullYear()
-          const month = (date.getMonth() + 1).toString().padStart(2, '0')
-          const day = date.getDate().toString().padStart(2, '0')
-
-          date = `${year}-${month}-${day}`
-
-          // console.log(fromDate)
-          // console.log(toDate)
-          // console.log(date)
+          let date = moment(purchase.timestamp).format('YYYY-MM-DD')
           return (
             !deleted.includes(purchase._id) &&
             date >= fromDate &&

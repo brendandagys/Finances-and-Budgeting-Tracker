@@ -10,21 +10,12 @@ import * as Yup from 'yup'
 import { createPurchase, updatePurchase } from '../actions/purchaseActions'
 import { getPurchaseCategories } from '../actions/purchaseCategoryActions'
 import { getAccounts } from '../actions/accountActions'
+import moment from 'moment'
 // import { PURCHASE_CREATE_RESET, PURCHASE_UPDATE_RESET } from '../actions/types'
 
-export const getCurrentDate = () => {
-  let today = new Date()
-  let date = today.getDate()
-  let month = today.getMonth() + 1
-  let year = today.getFullYear()
-  if (date < 10) date = `0${date}`
-  if (month < 10) month = `0${month}`
+export const getCurrentDate = () => moment().format('YYYY-MM-DD')
 
-  return `${year}-${month}-${date}`
-}
-
-const getCurrentTime = () =>
-  new Date().toTimeString().split(' ')[0].substring(0, 5)
+const getCurrentTime = () => moment().format('HH:mm')
 
 const PurchaseForm = ({ purchase, toggleShow }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
