@@ -32,7 +32,7 @@ export default class PurchaseLineChart extends PureComponent {
           <Line
             type='monotone'
             dataKey='Amount'
-            stroke='#8884d8'
+            stroke={this.props.stroke}
             activeDot={{ r: 8 }}
           />
           {/* <Line type='monotone' dataKey='uv' stroke='#82ca9d' /> */}

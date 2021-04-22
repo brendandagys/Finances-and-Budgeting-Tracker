@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Container } from 'react-bootstrap'
+import { Row, Col, Container, Card } from 'react-bootstrap'
 import { getPurchases } from '../actions/purchaseActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -287,6 +287,29 @@ const DashboardScreen = () => {
             </Row>
           </Container>
           <hr />
+          <Row>
+            <Col className='text-center'>
+              <Card bg={'primary'} text={'white'} className='mb-2'>
+                <Card.Header style={{ height: '55px' }}>
+                  <h3>Total</h3>
+                </Card.Header>
+                <Card.Body className='pt-2' style={{ height: '42px' }}>
+                  <h4>${sum}</h4>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col className='text-center'>
+              <Card bg={'primary'} text={'white'} className='mb-2'>
+                <Card.Header style={{ height: '55px' }}>
+                  <h3>Count</h3>
+                </Card.Header>
+                <Card.Body className='pt-2' style={{ height: '42px' }}>
+                  <h4>{count}</h4>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+          <br />
           <br />
 
           <Row style={{ height: '400px' }} className='mb-4'>
@@ -294,31 +317,34 @@ const DashboardScreen = () => {
               <h3>Daily Purchase Trend</h3>
               <PurchaseLineChart
                 data={lineChartDataDaily}
+                stroke={'dodgerblue'}
                 bottomMargin={47}
                 dy={27}
               />
             </Col>
           </Row>
           <br />
-          <br />
+          <hr />
           <br />
           <Row style={{ height: '480px' }} className='mb-4'>
             <Col className='text-center' xs={12}>
               <h3>Weekly Purchase Trend</h3>
               <PurchaseLineChart
                 data={lineChartDataWeekly}
+                stroke={'#8884D8'}
                 bottomMargin={120}
                 dy={60}
               />
             </Col>
           </Row>
-          <br />
+          <hr />
           <br />
           <Row style={{ height: '480px' }} className='mb-4'>
             <Col className='text-center' xs={12}>
               <h3>Monthly Purchase Trend</h3>
               <PurchaseLineChart
                 data={lineChartDataMonthly}
+                stroke={'green'}
                 bottomMargin={120}
                 dy={60}
               />
