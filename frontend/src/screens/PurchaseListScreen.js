@@ -156,7 +156,7 @@ const PurchaseListScreen = () => {
         <Loader />
       ) : error || errorUpdate ? (
         <Message variant='secondary'>{error || errorUpdate}</Message>
-      ) : purchases.length === 0 ? (
+      ) : count === 0 ? (
         <Message variant='info'>You have not yet entered any purchases</Message>
       ) : (
         <>

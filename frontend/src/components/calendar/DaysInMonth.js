@@ -14,13 +14,13 @@ const colors = {
   1: '#811701',
   2: '#893101',
   3: '#904F02',
-  4: '#986f02',
-  5: '#a09102',
-  6: '#98a703',
-  7: '#398b34',
-  8: '#2f9b3b',
-  9: '#1bbc4a',
-  10: '#06dd58',
+  4: '#986F02',
+  5: '#A09102',
+  6: '#98A703',
+  7: '#398B34',
+  8: '#2F9B3B',
+  9: '#1BBC4A',
+  10: '#06DD58',
 }
 
 const DaysInMonth = ({
@@ -49,7 +49,7 @@ const DaysInMonth = ({
           setSelectedDate(
             `${year}-${month}-${(day + 1).toString().padStart(2, '0')}`
           )
-          setSelectedValue(values[i + 1] || 5)
+          setSelectedValue((values[i + 1] && values[i + 1].toString()) || '5')
           toggleShow()
         }}
       >

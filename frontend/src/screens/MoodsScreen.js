@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Modal, Button, Form, Row, Col } from 'react-bootstrap'
+import { Modal, Button, Form, Row, Col, Table } from 'react-bootstrap'
 import { getMoods, createMood } from '../actions/moodActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -80,6 +80,69 @@ const MoodsScreen = () => {
   return (
     <>
       <h1 className='text-center'>Moods</h1>
+      <br />
+      <Table striped bordered hover size='sm'>
+        <thead>
+          <tr className='text-center'>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+            <th>8</th>
+            <th>9</th>
+            <th>10</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className='text-center'>
+            <td>
+              <i className='fa-2x fas fa-tired'></i>
+            </td>
+            <td>
+              <i className='fa-2x fas fa-dizzy'></i>
+            </td>
+            <td>
+              <i className='fa-2x fas fa-grimace'></i>
+            </td>
+            <td>
+              <i className='fa-2x fas fa-frown'></i>
+            </td>
+            <td>
+              <i className='fa-2x fas fa-meh'></i>
+            </td>
+            <td>
+              <i className='fa-2x fas fa-smile'></i>
+            </td>
+            <td>
+              <i className='fa-2x fas fa-grin-beam'></i>
+            </td>
+            <td>
+              <i className='fa-2x fas fa-grin-squint'></i>
+            </td>
+            <td>
+              <i className='fa-2x fas fa-laugh-beam'></i>
+            </td>
+            <td>
+              <i className='fa-2x fas fa-grin-stars'></i>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ backgroundColor: '#811701' }}></td>
+            <td style={{ backgroundColor: '#893101' }}></td>
+            <td style={{ backgroundColor: '#904F02' }}></td>
+            <td style={{ backgroundColor: '#986F02' }}></td>
+            <td style={{ backgroundColor: '#A09102' }}></td>
+            <td style={{ backgroundColor: '#98A703' }}></td>
+            <td style={{ backgroundColor: '#398B34' }}></td>
+            <td style={{ backgroundColor: '#2F9B3B' }}></td>
+            <td style={{ backgroundColor: '#1BBC4A' }}></td>
+            <td style={{ backgroundColor: '#06DD58' }}></td>
+          </tr>
+        </tbody>
+      </Table>
       <br />
       {loading ? (
         <Loader />
