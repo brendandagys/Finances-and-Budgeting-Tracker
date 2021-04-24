@@ -152,27 +152,31 @@ const PurchaseListScreen = () => {
       <h1 className='text-center'>Purchases</h1>
       <br />
 
+      <Container>
+        <Row>
+          <Datepicker
+            dateValue={fromDate}
+            setDateValue={setFromDate}
+            label='From'
+          />
+          <Datepicker dateValue={toDate} setDateValue={setToDate} label='To' />
+        </Row>
+      </Container>
+
       {loading || loadingUpdate ? (
         <Loader />
       ) : error || errorUpdate ? (
         <Message variant='secondary'>{error || errorUpdate}</Message>
       ) : count === 0 ? (
-        <Message variant='info'>You have not yet entered any purchases</Message>
+        <>
+          <br />
+          <Message variant='info'>
+            You have not entered any purchases within this date range
+          </Message>
+        </>
       ) : (
         <>
           <Container>
-            <Row>
-              <Datepicker
-                dateValue={fromDate}
-                setDateValue={setFromDate}
-                label='From'
-              />
-              <Datepicker
-                dateValue={toDate}
-                setDateValue={setToDate}
-                label='To'
-              />
-            </Row>
             <Row>
               {applicableCategories.map((name) => (
                 <Col key={name} className='text-center px-0 m-2'>

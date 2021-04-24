@@ -53,6 +53,7 @@ const Purchase = ({
             <Card.Title>{item}</Card.Title>
             <Card.Text>{description}</Card.Text>
             <Button
+              className='mt-2'
               variant='primary'
               disabled={receiptUrl ? false : true}
               href={receiptUrl ? receiptUrl : ''}
@@ -61,15 +62,20 @@ const Purchase = ({
               View Receipt
             </Button>
             <Button
-              className='mx-2'
+              className='mx-2 mt-2'
               variant='info'
               onClick={() => editHandler(id)}
             >
               Edit
             </Button>
             <Button
+              className='mt-2'
               variant='secondary'
-              onClick={async () => {
+              onClick={async (e) => {
+                if (e.target.innerText === 'Delete') {
+                  e.target.innerText = 'Confirm Delete'
+                  return
+                }
                 dispatch(deletePurchase(id))
 
                 if (receiptUrl) {
