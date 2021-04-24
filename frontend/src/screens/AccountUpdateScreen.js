@@ -77,7 +77,12 @@ const AccountUpdateScreen = () => {
               <br />
             </>
           ) : errorAll ? (
-            <Message variant='secondary'>{errorAll}</Message>
+            <Message variant='info'>{errorAll}</Message>
+          ) : accountUpdatesAll === '' ? (
+            <Message variant='info'>
+              Populate some values below to see a line chart of your net worth
+              trend!
+            </Message>
           ) : (
             <Row style={{ height: '480px' }} className='mb-4'>
               <Col className='text-center' xs={12}>

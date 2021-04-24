@@ -26,7 +26,7 @@ export default class MyLineChart extends PureComponent {
         >
           <CartesianGrid strokeDasharray='3 3' />
           <XAxis dataKey='date' angle={-40} dy={this.props.dy} />
-          <YAxis />
+          <YAxis domain={['auto', 'auto']} />
           <Tooltip />
           {/* <Legend /> */}
           <Line

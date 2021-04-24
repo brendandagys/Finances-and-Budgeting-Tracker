@@ -51,6 +51,11 @@ export const getAllAccountUpdates = asyncHandler(async (req, res) => {
     timestamp: 1,
   })
 
+  if (allAccountUpdates.length === 0) {
+    res.json()
+    return
+  }
+
   var startDate = allAccountUpdates[0].timestamp.toISOString().slice(0, 10)
   const endDate = allAccountUpdates
     .slice(-1)[0]
