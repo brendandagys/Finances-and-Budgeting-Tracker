@@ -81,6 +81,7 @@ const MoodsScreen = () => {
     <>
       <h1 className='text-center'>Moods</h1>
       <br />
+
       <Table striped bordered hover size='sm'>
         <thead>
           <tr className='text-center'>
@@ -89,11 +90,6 @@ const MoodsScreen = () => {
             <th>3</th>
             <th>4</th>
             <th>5</th>
-            <th>6</th>
-            <th>7</th>
-            <th>8</th>
-            <th>9</th>
-            <th>10</th>
           </tr>
         </thead>
         <tbody>
@@ -113,6 +109,29 @@ const MoodsScreen = () => {
             <td>
               <i className='fa-2x fas fa-meh'></i>
             </td>
+          </tr>
+          <tr>
+            <td style={{ backgroundColor: '#811701' }}></td>
+            <td style={{ backgroundColor: '#893101' }}></td>
+            <td style={{ backgroundColor: '#904F02' }}></td>
+            <td style={{ backgroundColor: '#986F02' }}></td>
+            <td style={{ backgroundColor: '#A09102' }}></td>
+          </tr>
+        </tbody>
+      </Table>
+
+      <Table striped bordered hover size='sm'>
+        <thead>
+          <tr className='text-center'>
+            <th>6</th>
+            <th>7</th>
+            <th>8</th>
+            <th>9</th>
+            <th>10</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className='text-center'>
             <td>
               <i className='fa-2x fas fa-smile'></i>
             </td>
@@ -130,11 +149,6 @@ const MoodsScreen = () => {
             </td>
           </tr>
           <tr>
-            <td style={{ backgroundColor: '#811701' }}></td>
-            <td style={{ backgroundColor: '#893101' }}></td>
-            <td style={{ backgroundColor: '#904F02' }}></td>
-            <td style={{ backgroundColor: '#986F02' }}></td>
-            <td style={{ backgroundColor: '#A09102' }}></td>
             <td style={{ backgroundColor: '#98A703' }}></td>
             <td style={{ backgroundColor: '#398B34' }}></td>
             <td style={{ backgroundColor: '#2F9B3B' }}></td>
@@ -143,7 +157,9 @@ const MoodsScreen = () => {
           </tr>
         </tbody>
       </Table>
+
       <br />
+
       {loading ? (
         <Loader />
       ) : error ? (

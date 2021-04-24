@@ -134,7 +134,7 @@ const PurchaseCategoryTable = () => {
               name: '',
             }}
             validationSchema={Yup.object({
-              name: Yup.string().required('Required'),
+              name: Yup.string(),
             })}
             onSubmit={(values) => {
               // console.log(values)

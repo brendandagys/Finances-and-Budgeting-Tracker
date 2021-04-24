@@ -179,7 +179,7 @@ const AccountTable = () => {
                 allowPurchases === undefined ? true : allowPurchases,
             }}
             validationSchema={Yup.object({
-              name: Yup.string().required('Required'),
+              name: Yup.string(),
             })}
             onSubmit={(values) => {
               // console.log(values)
