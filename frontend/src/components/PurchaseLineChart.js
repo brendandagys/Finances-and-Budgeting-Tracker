@@ -20,7 +20,7 @@ export default class PurchaseLineChart extends PureComponent {
           margin={{
             top: 5,
             right: 10,
-            left: -15,
+            left: -22,
             bottom: this.props.bottomMargin,
           }}
         >
