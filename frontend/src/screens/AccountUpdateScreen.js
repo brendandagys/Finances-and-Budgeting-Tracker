@@ -1,10 +1,15 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
+import { Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { getAccountUpdates } from '../actions/accountUpdateActions'
+import {
+  getAccountUpdates,
+  getAllAccountUpdates,
+} from '../actions/accountUpdateActions'
 import AccountUpdateForm from '../components/AccountUpdateForm'
 import { getCurrentDate } from '../components/PurchaseForm'
+import MyLineChart from '../components/LineChart'
 
 const AccountUpdateScreen = () => {
   const [dateFilter, setDateFilter] = useState(() => getCurrentDate())
@@ -18,6 +23,12 @@ const AccountUpdateScreen = () => {
   const { loading, error, accountUpdates } = useSelector(
     (state) => state.accountUpdateList
   )
+
+  const {
+    loading: loadingAll,
+    error: errorAll,
+    accountUpdates: accountUpdatesAll,
+  } = useSelector((state) => state.accountUpdateListAll)
 
   const updateTotal = useCallback(() => {
     if (!error) {
@@ -37,6 +48,8 @@ const AccountUpdateScreen = () => {
       } else setSum('')
     }
   }, [accountUpdates, error])
+
+  useEffect(() => dispatch(getAllAccountUpdates()), [dispatch])
 
   useEffect(() => {
     const fetchData = async () => dispatch(getAccountUpdates(dateFilter))
@@ -58,6 +71,29 @@ const AccountUpdateScreen = () => {
         <Message variant='secondary'>{error}</Message>
       ) : (
         <>
+          {loadingAll ? (
+            <>
+              <Loader />
+              <br />
+            </>
+          ) : errorAll ? (
+            <Message variant='secondary'>{errorAll}</Message>
+          ) : (
+            <Row style={{ height: '480px' }} className='mb-4'>
+              <Col className='text-center' xs={12}>
+                <h3>Net Worth</h3>
+                <MyLineChart
+                  data={accountUpdatesAll}
+                  stroke={'green'}
+                  bottomMargin={47}
+                  dy={27}
+                  ml={8}
+                />
+              </Col>
+            </Row>
+          )}
+          <hr />
+
           <input
             type='date'
             className='form-control mb-2 text-center'
@@ -66,7 +102,6 @@ const AccountUpdateScreen = () => {
             onBlur={() => setDateUpdated(true)}
           />
           <hr />
-
           {accountUpdates.map((account, i) => (
             <AccountUpdateForm
               key={account.id}
@@ -77,6 +112,7 @@ const AccountUpdateScreen = () => {
               dateFilter={dateFilter}
               updateTotal={updateTotal}
               credit={account.credit ? 'true' : 'false'}
+              updateChart={getAllAccountUpdates}
             />
           ))}
           <div className='mt-5 text-center'>

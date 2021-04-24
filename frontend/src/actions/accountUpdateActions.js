@@ -7,6 +7,9 @@ import {
   ACCOUNTUPDATE_CREATE_REQUEST,
   ACCOUNTUPDATE_CREATE_SUCCESS,
   ACCOUNTUPDATE_CREATE_FAIL,
+  ACCOUNTUPDATE_LIST_ALL_REQUEST,
+  ACCOUNTUPDATE_LIST_ALL_SUCCESS,
+  ACCOUNTUPDATE_LIST_ALL_FAIL,
 } from './types'
 
 export const getAccountUpdates = (date) => async (dispatch) => {
@@ -19,6 +22,24 @@ export const getAccountUpdates = (date) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ACCOUNTUPDATE_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const getAllAccountUpdates = () => async (dispatch) => {
+  try {
+    dispatch({ type: ACCOUNTUPDATE_LIST_ALL_REQUEST })
+
+    const { data } = await axios.get('/api/account-updates')
+
+    dispatch({ type: ACCOUNTUPDATE_LIST_ALL_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: ACCOUNTUPDATE_LIST_ALL_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

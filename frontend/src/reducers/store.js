@@ -24,6 +24,7 @@ import {
 } from './accountReducers'
 import {
   accountUpdateListReducer,
+  accountUpdateListAllReducer,
   accountUpdateCreateReducer,
 } from './accountUpdateReducers'
 import { moodListReducer, moodCreateReducer } from './moodReducers'
@@ -44,6 +45,7 @@ const reducers = combineReducers({
   accountUpdate: accountUpdateReducer,
   accountDelete: accountDeleteReducer,
   accountUpdateList: accountUpdateListReducer,
+  accountUpdateListAll: accountUpdateListAllReducer,
   accountUpdateCreate: accountUpdateCreateReducer,
   moodList: moodListReducer,
   moodCreate: moodCreateReducer,

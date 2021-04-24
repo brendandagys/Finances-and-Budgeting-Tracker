@@ -139,7 +139,7 @@ const PurchaseListScreen = () => {
   useEffect(() => {
     setSum(
       finalPurchases
-        .reduce((a, b) => a + b['amount'], 0)
+        .reduce((a, b) => a + b.amount, 0)
         .toFixed(2)
         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     )

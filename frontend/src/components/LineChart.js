@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-export default class PurchaseLineChart extends PureComponent {
+export default class MyLineChart extends PureComponent {
   render() {
     return (
       <ResponsiveContainer width='100%' height='90%'>
@@ -20,7 +20,7 @@ export default class PurchaseLineChart extends PureComponent {
           margin={{
             top: 5,
             right: 10,
-            left: -22,
+            left: this.props.ml,
             bottom: this.props.bottomMargin,
           }}
         >

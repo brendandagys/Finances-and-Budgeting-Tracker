@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler'
+import moment from 'moment'
 
 import mongoose from 'mongoose'
 const AccountUpdate = mongoose.model('Account Update')
@@ -11,7 +12,7 @@ const Account = mongoose.model('Account')
 // }
 
 // @desc    Fetch all account updates
-// @route   GET /api/account-updates
+// @route   GET /api/account-updates/:date
 // @access  Private
 export const getAccountUpdates = asyncHandler(async (req, res) => {
   var accounts = await Account.find({ user: req.user.id }) // Array of objects
@@ -34,6 +35,64 @@ export const getAccountUpdates = asyncHandler(async (req, res) => {
   )
 
   res.status(200).json(accountUpdates)
+})
+
+// @desc    Fetch all account updates
+// @route   GET /api/account-updates
+// @access  Private
+export const getAllAccountUpdates = asyncHandler(async (req, res) => {
+  var accounts = await Account.find({ user: req.user.id }) // Array of objects
+
+  accounts = accounts.map(({ id, credit }) => ({ id, credit })) // Get just the id and name
+
+  const allAccountUpdates = await AccountUpdate.find({
+    user: req.user.id,
+  }).sort({
+    timestamp: 1,
+  })
+
+  var startDate = allAccountUpdates[0].timestamp.toISOString().slice(0, 10)
+  const endDate = allAccountUpdates
+    .slice(-1)[0]
+    .timestamp.toISOString()
+    .slice(0, 10)
+
+  var chartData = []
+
+  while (startDate <= endDate) {
+    var dateArray = []
+
+    accounts.forEach(({ id, credit }) => {
+      var lastAccountValues = allAccountUpdates
+        .filter((accountUpdate) => {
+          return (
+            accountUpdate.timestamp.toISOString().slice(0, 10) <= startDate &&
+            accountUpdate.account_id.toString() === id
+          )
+        })
+        .sort((a, b) =>
+          a.timestamp < b.timestamp ? 1 : b.timestamp < a.timestamp ? -1 : 0
+        )
+
+      if (lastAccountValues.length > 0) {
+        dateArray = [
+          ...dateArray,
+          credit ? -1 * lastAccountValues[0].value : lastAccountValues[0].value,
+        ]
+      }
+    })
+
+    let amount = dateArray.reduce((a, b) => a + b, 0)
+
+    chartData = [
+      ...chartData,
+      { date: startDate, Amount: parseFloat(amount.toFixed(2)) },
+    ]
+
+    startDate = moment(startDate).add(1, 'day').format('YYYY-MM-DD')
+  }
+
+  res.json(chartData)
 })
 
 // @desc    Create or update an Account Update

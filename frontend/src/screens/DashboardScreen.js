@@ -5,7 +5,7 @@ import { getPurchases } from '../actions/purchaseActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Datepicker from '../components/Datepicker'
-import PurchaseLineChart from '../components/PurchaseLineChart'
+import MyLineChart from '../components/LineChart'
 import moment from 'moment'
 
 const DashboardScreen = () => {
@@ -85,7 +85,7 @@ const DashboardScreen = () => {
   useEffect(() => {
     setSum(
       finalPurchases
-        .reduce((a, b) => a + b['amount'], 0)
+        .reduce((a, b) => a + b.amount, 0)
         .toFixed(2)
         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     )
@@ -134,7 +134,7 @@ const DashboardScreen = () => {
           .reduce((a, b) => a + b.amount, 0)
 
         setLineChartDataDaily((prevState) => {
-          return [...prevState, { date, Amount: amount }]
+          return [...prevState, { date, Amount: parseFloat(amount.toFixed(2)) }]
         })
       }
     }
@@ -182,7 +182,7 @@ const DashboardScreen = () => {
                       .add(-1, 'day')
                       .format('YYYY-MM-DD')
               }`,
-              Amount: amount,
+              Amount: parseFloat(amount.toFixed(2)),
             },
           ]
         })
@@ -228,7 +228,7 @@ const DashboardScreen = () => {
                       .add(-1, 'day')
                       .format('YYYY-MM-DD')
               }`,
-              Amount: amount,
+              Amount: parseFloat(amount.toFixed(2)),
             },
           ]
         })
@@ -325,11 +325,12 @@ const DashboardScreen = () => {
           <Row style={{ height: '400px' }} className='mb-4'>
             <Col className='text-center' xs={12}>
               <h3>Daily Purchase Trend</h3>
-              <PurchaseLineChart
+              <MyLineChart
                 data={lineChartDataDaily}
                 stroke={'dodgerblue'}
                 bottomMargin={47}
                 dy={27}
+                ml={-22}
               />
             </Col>
           </Row>
@@ -339,11 +340,12 @@ const DashboardScreen = () => {
           <Row style={{ height: '480px' }} className='mb-4'>
             <Col className='text-center' xs={12}>
               <h3>Weekly</h3>
-              <PurchaseLineChart
+              <MyLineChart
                 data={lineChartDataWeekly}
                 stroke={'#8884D8'}
                 bottomMargin={120}
                 dy={60}
+                ml={-22}
               />
             </Col>
           </Row>
@@ -352,11 +354,12 @@ const DashboardScreen = () => {
           <Row style={{ height: '480px' }} className='mb-4'>
             <Col className='text-center' xs={12}>
               <h3>Monthly</h3>
-              <PurchaseLineChart
+              <MyLineChart
                 data={lineChartDataMonthly}
                 stroke={'green'}
                 bottomMargin={120}
                 dy={60}
+                ml={-22}
               />
             </Col>
           </Row>

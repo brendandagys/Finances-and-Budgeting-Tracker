@@ -2,6 +2,9 @@ import {
   ACCOUNTUPDATE_LIST_REQUEST,
   ACCOUNTUPDATE_LIST_SUCCESS,
   ACCOUNTUPDATE_LIST_FAIL,
+  ACCOUNTUPDATE_LIST_ALL_REQUEST,
+  ACCOUNTUPDATE_LIST_ALL_SUCCESS,
+  ACCOUNTUPDATE_LIST_ALL_FAIL,
   ACCOUNTUPDATE_CREATE_REQUEST,
   ACCOUNTUPDATE_CREATE_SUCCESS,
   ACCOUNTUPDATE_CREATE_FAIL,
@@ -18,6 +21,22 @@ export const accountUpdateListReducer = (
     case ACCOUNTUPDATE_LIST_SUCCESS:
       return { loading: false, accountUpdates: action.payload }
     case ACCOUNTUPDATE_LIST_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const accountUpdateListAllReducer = (
+  state = { accountUpdates: [] },
+  action
+) => {
+  switch (action.type) {
+    case ACCOUNTUPDATE_LIST_ALL_REQUEST:
+      return { loading: true, accountUpdates: [] }
+    case ACCOUNTUPDATE_LIST_ALL_SUCCESS:
+      return { loading: false, accountUpdates: action.payload }
+    case ACCOUNTUPDATE_LIST_ALL_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state
