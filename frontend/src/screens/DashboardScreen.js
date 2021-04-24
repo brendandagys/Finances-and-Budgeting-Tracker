@@ -338,7 +338,7 @@ const DashboardScreen = () => {
           <br />
           <Row style={{ height: '480px' }} className='mb-4'>
             <Col className='text-center' xs={12}>
-              <h3>Weekly Purchase Trend</h3>
+              <h3>Weekly</h3>
               <PurchaseLineChart
                 data={lineChartDataWeekly}
                 stroke={'#8884D8'}
@@ -351,7 +351,7 @@ const DashboardScreen = () => {
           <br />
           <Row style={{ height: '480px' }} className='mb-4'>
             <Col className='text-center' xs={12}>
-              <h3>Monthly Purchase Trend</h3>
+              <h3>Monthly</h3>
               <PurchaseLineChart
                 data={lineChartDataMonthly}
                 stroke={'green'}
