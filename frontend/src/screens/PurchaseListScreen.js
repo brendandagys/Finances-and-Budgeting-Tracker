@@ -152,6 +152,13 @@ const PurchaseListScreen = () => {
       <h1 className='text-center'>Purchases</h1>
       <br />
 
+      <div className='alert alert-light text-center mx-auto'>
+        <small>
+          Filter and view all of your purchases! See a breakdown of what you're
+          spending your money on.
+        </small>
+      </div>
+
       <Container>
         <Row>
           <Datepicker
@@ -164,7 +171,10 @@ const PurchaseListScreen = () => {
       </Container>
 
       {loading || loadingUpdate ? (
-        <Loader />
+        <>
+          <br />
+          <Loader />
+        </>
       ) : error || errorUpdate ? (
         <Message variant='secondary'>{error || errorUpdate}</Message>
       ) : count === 0 ? (

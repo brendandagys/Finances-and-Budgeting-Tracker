@@ -65,40 +65,54 @@ const AccountUpdateScreen = () => {
     <>
       <h1 className='text-center'>Accounts</h1>
       <br />
+
+      <div className='alert alert-light text-center mx-auto mb-5'>
+        <small>
+          Track your net worth! Update the values of your accounts and view your
+          progress in the chart below.
+        </small>
+      </div>
+
+      <div className='text-center'>
+        <h3>Net Worth: {sum}</h3>
+      </div>
+      <br />
+      {loadingAll ? (
+        <>
+          <Loader />
+          <br />
+          <br />
+        </>
+      ) : errorAll ? (
+        <Message variant='info'>{errorAll}</Message>
+      ) : accountUpdatesAll === '' ? (
+        <Message variant='info'>
+          Populate some values below to see a line chart of your net worth
+          trend!
+        </Message>
+      ) : (
+        <Row style={{ height: '480px' }} className='mb-4'>
+          <Col className='text-center' xs={12}>
+            <MyLineChart
+              data={accountUpdatesAll}
+              stroke={'green'}
+              bottomMargin={47}
+              dy={27}
+              ml={8}
+            />
+          </Col>
+        </Row>
+      )}
+
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant='secondary'>{error}</Message>
       ) : (
         <>
-          {loadingAll ? (
-            <>
-              <Loader />
-              <br />
-            </>
-          ) : errorAll ? (
-            <Message variant='info'>{errorAll}</Message>
-          ) : accountUpdatesAll === '' ? (
-            <Message variant='info'>
-              Populate some values below to see a line chart of your net worth
-              trend!
-            </Message>
-          ) : (
-            <Row style={{ height: '480px' }} className='mb-4'>
-              <Col className='text-center' xs={12}>
-                <h3>Net Worth</h3>
-                <MyLineChart
-                  data={accountUpdatesAll}
-                  stroke={'green'}
-                  bottomMargin={47}
-                  dy={27}
-                  ml={8}
-                />
-              </Col>
-            </Row>
-          )}
-          <hr />
-
+          <div className='text-center'>
+            <small>Account Values on Date</small>
+          </div>
           <input
             type='date'
             className='form-control mb-2 text-center'
@@ -120,9 +134,6 @@ const AccountUpdateScreen = () => {
               updateChart={getAllAccountUpdates}
             />
           ))}
-          <div className='mt-5 text-center'>
-            <h1>{sum}</h1>
-          </div>
         </>
       )}
     </>

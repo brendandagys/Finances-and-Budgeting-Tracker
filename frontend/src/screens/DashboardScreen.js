@@ -242,8 +242,29 @@ const DashboardScreen = () => {
       <h1 className='text-center'>Dashboard</h1>
       <br />
 
+      <div className='alert alert-light text-center mx-auto'>
+        <small>
+          View customized spending patterns in the daily, weekly, and monthly
+          charts below!
+        </small>
+      </div>
+
+      <Container>
+        <Row>
+          <Datepicker
+            dateValue={fromDate}
+            setDateValue={setFromDate}
+            label='From'
+          />
+          <Datepicker dateValue={toDate} setDateValue={setToDate} label='To' />
+        </Row>
+      </Container>
+
       {loading ? (
-        <Loader />
+        <>
+          <br />
+          <Loader />
+        </>
       ) : error ? (
         <Message variant='secondary'>{error}</Message>
       ) : purchases.length === 0 ? (
@@ -251,18 +272,6 @@ const DashboardScreen = () => {
       ) : (
         <>
           <Container>
-            <Row>
-              <Datepicker
-                dateValue={fromDate}
-                setDateValue={setFromDate}
-                label='From'
-              />
-              <Datepicker
-                dateValue={toDate}
-                setDateValue={setToDate}
-                label='To'
-              />
-            </Row>
             <Row>
               {applicableCategories.map((name) => (
                 <Col key={name} className='text-center px-0 m-2'>
