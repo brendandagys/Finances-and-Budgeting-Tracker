@@ -242,7 +242,7 @@ const DashboardScreen = () => {
       <h1 className='text-center'>Dashboard</h1>
       <br />
 
-      <div className='alert alert-primary text-center mx-auto'>
+      <div className='alert alert-light text-center mx-auto'>
         <small>
           View customized spending patterns in the daily, weekly, and monthly
           charts below!

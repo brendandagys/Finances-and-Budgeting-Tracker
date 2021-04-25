@@ -43,14 +43,14 @@ const AccountUpdateForm = React.forwardRef(
                 }
                 // updateTotal()
               }}
-              onBlur={(e) => {
+              onBlur={async (e) => {
                 if (
                   e.target.value.trim() !== '' &&
                   !e.target.value.includes('-')
                 ) {
                   updateTotal()
                   setUpdated('true')
-                  dispatch(
+                  await dispatch(
                     createAccountUpdate(
                       dateFilter,
                       accountId,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Spinner } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -10,11 +10,13 @@ import {
 import AccountUpdateForm from '../components/AccountUpdateForm'
 import { getCurrentDate } from '../components/PurchaseForm'
 import MyLineChart from '../components/LineChart'
+import moment from 'moment'
 
 const AccountUpdateScreen = () => {
   const [dateFilter, setDateFilter] = useState(() => getCurrentDate())
   const [dateUpdated, setDateUpdated] = useState(true) // Run on first render
-  const [sum, setSum] = useState(null)
+  const [sum, setSum] = useState(0)
+  const [sumColor, setSumColor] = useState('#5A5A5A')
 
   const dispatch = useDispatch()
 
@@ -31,6 +33,8 @@ const AccountUpdateScreen = () => {
   } = useSelector((state) => state.accountUpdateListAll)
 
   const updateTotal = useCallback(() => {
+    setSumColor('#5A5A5A')
+
     if (!error) {
       itemsRef.current = itemsRef.current.slice(0, accountUpdates.length)
       const checkSum = itemsRef.current.reduce(
@@ -43,13 +47,35 @@ const AccountUpdateScreen = () => {
             : parseFloat(b.value)),
         0
       )
-      if (!isNaN(checkSum) && checkSum !== 0) {
-        setSum('$' + checkSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))
-      } else setSum('')
+
+      if (!isNaN(checkSum)) setSum(checkSum)
+      else setSum(0)
     }
   }, [accountUpdates, error])
 
   useEffect(() => dispatch(getAllAccountUpdates()), [dispatch])
+
+  useEffect(() => {
+    if (accountUpdatesAll.length > 0) {
+      if (
+        accountUpdatesAll.filter((netWorthOnDate) => {
+          return (
+            netWorthOnDate.date === moment().add(-1, 'day').format('YYYY-MM-DD')
+          )
+        })[0].Amount < sum
+      ) {
+        setSumColor('green')
+      } else if (
+        accountUpdatesAll.filter((netWorthOnDate) => {
+          return (
+            netWorthOnDate.date === moment().add(-1, 'day').format('YYYY-MM-DD')
+          )
+        })[0].Amount > sum
+      ) {
+        setSumColor('red')
+      } else setSumColor('#5A5A5A')
+    }
+  }, [sum, accountUpdatesAll])
 
   useEffect(() => {
     const fetchData = async () => dispatch(getAccountUpdates(dateFilter))
@@ -74,7 +100,25 @@ const AccountUpdateScreen = () => {
       </div>
 
       <div className='text-center'>
-        <h3>Net Worth: {sum}</h3>
+        <h3>
+          Net Worth:{' '}
+          <span style={{ color: sumColor }}>
+            {sum === 0 ? (
+              <Spinner
+                animation='border'
+                role='status'
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  margin: 'auto',
+                  display: 'inline-block',
+                }}
+              ></Spinner>
+            ) : (
+              '$' + sum.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+            )}
+          </span>
+        </h3>
       </div>
       <br />
       {loadingAll ? (
