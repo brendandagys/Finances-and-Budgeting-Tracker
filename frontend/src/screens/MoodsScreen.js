@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Modal, Button, Form, Row, Col, Table } from 'react-bootstrap'
 import { getMoods, createMood } from '../actions/moodActions'
-import Loader from '../components/Loader'
+// import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Calendar from '../components/calendar/Calendar'
 
@@ -14,7 +14,7 @@ const MoodsScreen = () => {
 
   const dispatch = useDispatch()
 
-  const { loading, error, moods } = useSelector((state) => state.moodList)
+  const { error, moods } = useSelector((state) => state.moodList)
 
   const toggleShow = () => {
     setShow((show) => !show)
@@ -167,9 +167,7 @@ const MoodsScreen = () => {
 
       <br />
 
-      {loading ? (
-        <Loader />
-      ) : error ? (
+      {error ? (
         <Message variant='secondary'>{error}</Message>
       ) : (
         <Row>
