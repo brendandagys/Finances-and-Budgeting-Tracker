@@ -66,7 +66,7 @@ const AccountUpdateScreen = () => {
       <h1 className='text-center'>Accounts</h1>
       <br />
 
-      <div className='alert alert-light text-center mx-auto mb-5'>
+      <div className='alert alert-info text-center mx-auto mb-5'>
         <small>
           Track your net worth! Update the values of your accounts and view your
           progress in the chart below.
