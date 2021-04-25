@@ -152,7 +152,7 @@ const PurchaseListScreen = () => {
       <h1 className='text-center'>Purchases</h1>
       <br />
 
-      <div className='alert alert-info text-center mx-auto'>
+      <div className='alert alert-primary text-center mx-auto'>
         <small>
           Filter and view all of your purchases! See a breakdown of what you're
           spending your money on.

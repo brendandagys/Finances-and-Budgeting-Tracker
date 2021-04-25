@@ -82,7 +82,7 @@ const MoodsScreen = () => {
       <h1 className='text-center'>Moods</h1>
       <br />
 
-      <div className='alert alert-info text-center mx-auto'>
+      <div className='alert alert-primary text-center mx-auto'>
         <small>
           Click on a calendar date to set a mood based on how you felt that day.
           See patterns in your mood over time!

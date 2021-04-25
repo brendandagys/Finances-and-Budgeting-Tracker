@@ -77,7 +77,7 @@ const PurchaseCategoryTable = () => {
             <h2 style={{ textAlign: 'center' }}>Purchase Categories</h2>
           </div>
           <div
-            className='alert alert-info text-center mx-auto'
+            className='alert alert-primary text-center mx-auto'
             style={{ maxWidth: '600px' }}
           >
             <small>
