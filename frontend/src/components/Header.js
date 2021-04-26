@@ -72,6 +72,11 @@ const Header = () => {
                   <i className='fas fa-cloud-moon'></i> Moods
                 </Nav.Link>
               </LinkContainer>
+              <LinkContainer to='/widgets'>
+                <Nav.Link className='my-auto'>
+                  <i className='fas fa-calculator'></i> Widgets
+                </Nav.Link>
+              </LinkContainer>
               <LinkContainer to='/settings'>
                 <Nav.Link className='my-auto'>
                   <i className='fas fa-cogs'></i> Settings
