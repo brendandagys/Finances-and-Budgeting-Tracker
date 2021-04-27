@@ -145,6 +145,7 @@ const Calculator = () => {
         </button>
         <button
           ref={deleteRef}
+          style={{ fontSize: '1.3rem' }}
           data-delete
           onClick={(e) => {
             calculator.delete()
