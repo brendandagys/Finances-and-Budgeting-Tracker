@@ -56,7 +56,7 @@ const AccountUpdateScreen = () => {
   useEffect(() => dispatch(getAllAccountUpdates()), [dispatch])
 
   useEffect(() => {
-    if (accountUpdatesAll.length > 0) {
+    if (accountUpdatesAll && accountUpdatesAll.length > 0) {
       if (
         accountUpdatesAll.filter((netWorthOnDate) => {
           return (
