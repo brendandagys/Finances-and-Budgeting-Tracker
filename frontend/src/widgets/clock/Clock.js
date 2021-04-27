@@ -30,26 +30,26 @@ const Clock = () => {
   }, [])
 
   return (
-    <body className='clockbody'>
-      <div class='clock'>
-        <div ref={hourRef} class='hand hour' data-hour-hand></div>
-        <div ref={minuteRef} class='hand minute' data-minute-hand></div>
-        <div ref={secondRef} class='hand second' data-second-hand></div>
+    <div className='clockbody'>
+      <div className='clock'>
+        <div ref={hourRef} className='hand hour' data-hour-hand></div>
+        <div ref={minuteRef} className='hand minute' data-minute-hand></div>
+        <div ref={secondRef} className='hand second' data-second-hand></div>
 
-        <div class='number number1'>1</div>
-        <div class='number number2'>2</div>
-        <div class='number number3'>3</div>
-        <div class='number number4'>4</div>
-        <div class='number number5'>5</div>
-        <div class='number number6'>6</div>
-        <div class='number number7'>7</div>
-        <div class='number number8'>8</div>
-        <div class='number number9'>9</div>
-        <div class='number number10'>10</div>
-        <div class='number number11'>11</div>
-        <div class='number number12'>12</div>
+        <div className='number number1'>1</div>
+        <div className='number number2'>2</div>
+        <div className='number number3'>3</div>
+        <div className='number number4'>4</div>
+        <div className='number number5'>5</div>
+        <div className='number number6'>6</div>
+        <div className='number number7'>7</div>
+        <div className='number number8'>8</div>
+        <div className='number number9'>9</div>
+        <div className='number number10'>10</div>
+        <div className='number number11'>11</div>
+        <div className='number number12'>12</div>
       </div>
-    </body>
+    </div>
   )
 }
 
