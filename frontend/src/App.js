@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
@@ -12,6 +12,20 @@ import SettingsScreen from './screens/SettingsScreen'
 import WidgetsScreen from './screens/WidgetsScreen'
 import MoodsScreen from './screens/MoodsScreen'
 import { fetchUser } from './actions/authActions'
+import { range } from 'lodash'
+
+function useWindowSize() {
+  const [size, setSize] = useState([0, 0])
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight])
+    }
+    window.addEventListener('resize', updateSize)
+    updateSize()
+    return () => window.removeEventListener('resize', updateSize)
+  }, [])
+  return size
+}
 
 const App = () => {
   const dispatch = useDispatch()
@@ -23,7 +37,11 @@ const App = () => {
   return (
     <BrowserRouter>
       <Header />
-      <main className='py-3'>
+      <main
+        className={
+          range(992, 1200).includes(useWindowSize()[0]) ? 'py-5' : 'py-3'
+        }
+      >
         <Container>
           <Route path='/' component={PurchaseFormScreen} exact />
           <Route path='/purchases' component={PurchaseListScreen} exact />
