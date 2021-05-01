@@ -114,9 +114,9 @@ const AccountTable = () => {
             <thead>
               <tr>
                 <th style={{ verticalAlign: 'middle' }}>Name</th>
-                <th style={{ verticalAlign: 'middle' }}>Currency</th>
+                <th style={{ verticalAlign: 'middle' }}>$$$</th>
                 <th style={{ verticalAlign: 'middle' }}>Credit?</th>
-                <th style={{ verticalAlign: 'middle' }}>Allow Purchases?</th>
+                <th style={{ verticalAlign: 'middle' }}>Buy?</th>
                 <th></th>
               </tr>
             </thead>
