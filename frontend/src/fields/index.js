@@ -6,10 +6,21 @@ export const MyInput = React.forwardRef(({ label, ...props }, ref) => {
   // which we can spread on <input>. We can use field meta to show an error
   // message if the field is invalid and it has been touched (i.e. visited)
   const [field, meta] = useField(props)
+
+  var labelStyle = props.centerlabel === 'true' ? { textAlign: 'center' } : {}
+
   return (
     <div className='form-group'>
       {props.hidelabel === 'true' || (
-        <label htmlFor={props.id || props.name}>{label}</label>
+        <label
+          ref={(node) => {
+            if (node) node.style.setProperty('display', 'block')
+          }}
+          style={labelStyle}
+          htmlFor={props.id || props.name}
+        >
+          {label}
+        </label>
       )}
       <input
         {...field}

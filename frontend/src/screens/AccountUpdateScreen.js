@@ -11,6 +11,11 @@ import AccountUpdateForm from '../components/AccountUpdateForm'
 import { getCurrentDate } from '../components/PurchaseForm'
 import MyLineChart from '../components/LineChart'
 
+import { exchangeRates } from 'exchange-rates-api'
+
+const getExchangeRate = async (base) =>
+  await exchangeRates().latest().base(base).symbols('CAD').fetch()
+
 const AccountUpdateScreen = () => {
   const [dateFilter, setDateFilter] = useState(() => getCurrentDate())
   const [dateUpdated, setDateUpdated] = useState(true) // Run on first render
@@ -31,21 +36,31 @@ const AccountUpdateScreen = () => {
     accountUpdates: accountUpdatesAll,
   } = useSelector((state) => state.accountUpdateListAll)
 
-  const updateTotal = useCallback(() => {
+  const updateTotal = useCallback(async () => {
     setSumColor('#5A5A5A')
 
     if (!error) {
       itemsRef.current = itemsRef.current.slice(0, accountUpdates.length)
-      const checkSum = itemsRef.current.reduce(
-        (a, b) =>
+
+      var USD_TO_CAD = await getExchangeRate('USD')
+      var EUR_TO_CAD = await getExchangeRate('EUR')
+
+      const checkSum = itemsRef.current.reduce((a, b) => {
+        let conversionFactor =
+          b.attributes.currency.value === 'USD'
+            ? USD_TO_CAD
+            : b.attributes.currency.value === 'EUR'
+            ? EUR_TO_CAD
+            : 1
+        return (
           a +
           (b.value === ''
             ? 0
             : b.attributes.credit.value === 'true'
-            ? -1 * parseFloat(b.value)
-            : parseFloat(b.value)),
-        0
-      )
+            ? -1 * parseFloat(b.value) * conversionFactor
+            : parseFloat(b.value) * conversionFactor)
+        )
+      }, 0)
 
       if (!isNaN(checkSum)) setSum(checkSum)
       else setSum(0)
@@ -187,6 +202,7 @@ const AccountUpdateScreen = () => {
               dateFilter={dateFilter}
               updateTotal={updateTotal}
               credit={account.credit ? 'true' : 'false'}
+              currency={account.currency}
               updateChart={getAllAccountUpdates}
             />
           ))}

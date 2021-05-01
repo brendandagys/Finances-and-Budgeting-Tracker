@@ -31,7 +31,7 @@ const getAccountById = asyncHandler(async (req, res) => {
 // @route   POST /api/accounts
 // @access  Private
 const createAccount = asyncHandler(async (req, res) => {
-  const { name, credit, allowPurchases } = req.body
+  const { name, credit, allowPurchases, currency } = req.body
 
   const accountExists = await Account.findOne({
     user: req.user.id,
@@ -49,6 +49,7 @@ const createAccount = asyncHandler(async (req, res) => {
     name: name.trim(),
     credit,
     allowPurchases,
+    currency,
   })
 
   const createdAccount = await account.save()
@@ -59,7 +60,7 @@ const createAccount = asyncHandler(async (req, res) => {
 // @route   PATCH /api/accounts
 // @access  Private
 const updateAccount = asyncHandler(async (req, res) => {
-  const { name, credit, allowPurchases } = req.body
+  const { name, credit, allowPurchases, currency } = req.body
 
   const account = await Account.findById(req.params.id)
 
@@ -67,6 +68,7 @@ const updateAccount = asyncHandler(async (req, res) => {
     account.name = name.trim()
     account.credit = credit
     account.allowPurchases = allowPurchases
+    account.currency = currency
 
     const updatedAccount = await account.save()
     res.json(updatedAccount)

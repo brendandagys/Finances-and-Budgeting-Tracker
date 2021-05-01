@@ -7,6 +7,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
+    "exchange-rates-api": "^1.1.0",
     "formik": "^2.2.6",
     "http-proxy-middleware": "^1.0.6",
     "lodash": "^4.17.21",

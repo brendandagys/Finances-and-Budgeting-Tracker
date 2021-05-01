@@ -4,7 +4,7 @@ import Message from './Message'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import { MyInput, MyCheckbox } from '../fields'
+import { MyInput, MyCheckbox, MySelect } from '../fields'
 import { Table, Button, Modal } from 'react-bootstrap'
 import {
   getAccounts,
@@ -114,6 +114,7 @@ const AccountTable = () => {
             <thead>
               <tr>
                 <th style={{ verticalAlign: 'middle' }}>Name</th>
+                <th style={{ verticalAlign: 'middle' }}>Currency</th>
                 <th style={{ verticalAlign: 'middle' }}>Credit?</th>
                 <th style={{ verticalAlign: 'middle' }}>Allow Purchases?</th>
                 <th></th>
@@ -122,8 +123,17 @@ const AccountTable = () => {
             <tbody>
               {accounts.map((account) => (
                 <tr key={account._id}>
-                  <td style={{ verticalAlign: 'middle', paddingLeft: '15px' }}>
+                  <td
+                    style={{
+                      verticalAlign: 'middle',
+                      paddingLeft: '15px',
+                      fontWeight: 'bold',
+                    }}
+                  >
                     {account.name}
+                  </td>
+                  <td style={{ verticalAlign: 'middle' }}>
+                    {account.currency}
                   </td>
                   <td style={{ verticalAlign: 'middle' }}>
                     {account.credit ? 'Yes' : 'No'}
@@ -177,6 +187,7 @@ const AccountTable = () => {
               credit: credit === undefined ? false : credit,
               allowPurchases:
                 allowPurchases === undefined ? true : allowPurchases,
+              currency: 'CAD',
             }}
             validationSchema={Yup.object({
               name: Yup.string(),
@@ -191,19 +202,35 @@ const AccountTable = () => {
               toggleShow()
             }}
           >
-            <Form id='account-form'>
-              <MyInput
-                ref={modalRef}
-                label=''
-                name='name'
-                type='text'
-                placeholder='Account...'
-              />
+            {({ setFieldValue }) => {
+              return (
+                <Form id='account-form'>
+                  <MyInput
+                    ref={modalRef}
+                    label=''
+                    name='name'
+                    type='text'
+                    placeholder='Account...'
+                  />
 
-              <MyCheckbox name='credit'>Credit?</MyCheckbox>
+                  <MySelect
+                    label='Currency'
+                    name='currency'
+                    onChange={(e) => setFieldValue('currency', e.target.value)}
+                  >
+                    <option value='CAD'>CAD</option>
+                    <option value='USD'>USD</option>
+                    <option value='EUR'>EUR</option>
+                  </MySelect>
 
-              <MyCheckbox name='allowPurchases'>Allow Purchases?</MyCheckbox>
-            </Form>
+                  <MyCheckbox name='credit'>Credit?</MyCheckbox>
+
+                  <MyCheckbox name='allowPurchases'>
+                    Allow Purchases?
+                  </MyCheckbox>
+                </Form>
+              )
+            }}
           </Formik>
         </Modal.Body>
         <Modal.Footer style={{ backgroundColor: '#F5F5F5' }}>

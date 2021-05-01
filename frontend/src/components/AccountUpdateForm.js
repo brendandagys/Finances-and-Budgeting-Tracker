@@ -6,7 +6,16 @@ import { createAccountUpdate } from '../actions/accountUpdateActions'
 
 const AccountUpdateForm = React.forwardRef(
   (
-    { accountId, name, value, dateFilter, updateTotal, credit, updateChart },
+    {
+      accountId,
+      name,
+      value,
+      dateFilter,
+      updateTotal,
+      credit,
+      currency,
+      updateChart,
+    },
     ref
   ) => {
     const [updated, setUpdated] = useState('false')
@@ -19,9 +28,12 @@ const AccountUpdateForm = React.forwardRef(
           return (
             <MyInput
               ref={ref}
+              style={{ textAlign: 'center' }}
+              centerlabel='true'
               name='value'
               label={name}
               credit={credit}
+              currency={currency}
               type='number'
               step='0.01'
               placeholder=''
