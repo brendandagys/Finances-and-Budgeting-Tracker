@@ -13,7 +13,7 @@ const Header = () => {
         return
       case false:
         return (
-          <Navbar.Brand href='/auth/google'>
+          <Navbar.Brand href='/auth/google' className='text-center'>
             <img
               alt='Google Sign In Button'
               src={googleSignInButton}
