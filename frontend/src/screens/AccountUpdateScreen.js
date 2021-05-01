@@ -10,7 +10,6 @@ import {
 import AccountUpdateForm from '../components/AccountUpdateForm'
 import { getCurrentDate } from '../components/PurchaseForm'
 import MyLineChart from '../components/LineChart'
-import moment from 'moment'
 
 const AccountUpdateScreen = () => {
   const [dateFilter, setDateFilter] = useState(() => getCurrentDate())
@@ -56,26 +55,23 @@ const AccountUpdateScreen = () => {
   useEffect(() => dispatch(getAllAccountUpdates()), [dispatch])
 
   useEffect(() => {
-    if (accountUpdatesAll && accountUpdatesAll.length > 0) {
-      if (
-        accountUpdatesAll.filter((netWorthOnDate) => {
-          return (
-            netWorthOnDate.date === moment().add(-1, 'day').format('YYYY-MM-DD')
-          )
-        })[0].Amount < sum
-      ) {
-        setSumColor('green')
-      } else if (
-        accountUpdatesAll.filter((netWorthOnDate) => {
-          return (
-            netWorthOnDate.date === moment().add(-1, 'day').format('YYYY-MM-DD')
-          )
-        })[0].Amount > sum
-      ) {
-        setSumColor('red')
-      } else setSumColor('#5A5A5A')
+    if (accountUpdatesAll && accountUpdatesAll.length > 1) {
+      var applicableUpdateObjects = accountUpdatesAll.filter(
+        (netWorthOnDate) => {
+          return netWorthOnDate.date <= dateFilter
+        }
+      )
+
+      if (applicableUpdateObjects.length > 1) {
+        var secondLastAmount = applicableUpdateObjects.slice(-2)[0].Amount
+        var lastAmount = applicableUpdateObjects.slice(-1)[0].Amount
+      }
+
+      if (lastAmount > secondLastAmount) setSumColor('green')
+      else if (lastAmount < secondLastAmount) setSumColor('red')
+      else setSumColor('#5A5A5A')
     }
-  }, [sum, accountUpdatesAll])
+  }, [sum, accountUpdatesAll, dateFilter])
 
   useEffect(() => {
     const fetchData = async () => dispatch(getAccountUpdates(dateFilter))
