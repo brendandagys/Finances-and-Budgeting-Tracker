@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { Row, Col, Spinner } from 'react-bootstrap'
+import { Row, Col, Spinner, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -83,6 +83,16 @@ const AccountUpdateScreen = () => {
     updateTotal()
   }, [dispatch, dateFilter, dateUpdated, updateTotal])
 
+  const renderTooltip = (props) => (
+    <Tooltip className='ml-2' id='button-tooltip' {...props}>
+      {sumColor === 'green'
+        ? 'Green text indicates that the sum is greater than the day before.'
+        : sumColor === 'red'
+        ? 'Red text indicates that the sum is less than the day before.'
+        : 'Black text indicates that the sum is the same as the previous day.'}
+    </Tooltip>
+  )
+
   return (
     <>
       <h1 className='text-center'>Accounts</h1>
@@ -98,22 +108,28 @@ const AccountUpdateScreen = () => {
       <div className='text-center'>
         <h3>
           Net Worth:{' '}
-          <span style={{ color: sumColor }}>
-            {sum === 0 ? (
-              <Spinner
-                animation='border'
-                role='status'
-                style={{
-                  width: '30px',
-                  height: '30px',
-                  margin: 'auto',
-                  display: 'inline-block',
-                }}
-              ></Spinner>
-            ) : (
-              '$' + sum.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-            )}
-          </span>
+          <OverlayTrigger
+            placement='right'
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip}
+          >
+            <span style={{ color: sumColor }}>
+              {sum === 0 ? (
+                <Spinner
+                  animation='border'
+                  role='status'
+                  style={{
+                    width: '30px',
+                    height: '30px',
+                    margin: 'auto',
+                    display: 'inline-block',
+                  }}
+                ></Spinner>
+              ) : (
+                '$' + sum.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+              )}
+            </span>
+          </OverlayTrigger>
         </h3>
       </div>
       <br />
