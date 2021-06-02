@@ -11,10 +11,14 @@ import AccountUpdateForm from '../components/AccountUpdateForm'
 import { getCurrentDate } from '../components/PurchaseForm'
 import MyLineChart from '../components/LineChart'
 
-import { exchangeRates } from 'exchange-rates-api'
+// import { exchangeRates } from 'exchange-rates-api'
 
-const getExchangeRate = async (base) =>
-  await exchangeRates().latest().base(base).symbols('CAD').fetch()
+// const getExchangeRate = async (base) =>
+//   await exchangeRates().latest().base(base).symbols('CAD').fetch()
+
+const getExchangeRate = (base) => {
+  return base === 'USD' ? 1.2 : base === 'EUR' ? 1.47 : 1
+}
 
 const AccountUpdateScreen = () => {
   const [dateFilter, setDateFilter] = useState(() => getCurrentDate())
@@ -42,8 +46,8 @@ const AccountUpdateScreen = () => {
     if (!error) {
       itemsRef.current = itemsRef.current.slice(0, accountUpdates.length)
 
-      var USD_TO_CAD = await getExchangeRate('USD')
-      var EUR_TO_CAD = await getExchangeRate('EUR')
+      var USD_TO_CAD = getExchangeRate('USD') // Removed await when removing API
+      var EUR_TO_CAD = getExchangeRate('EUR') // Removed await when removing API
 
       const checkSum = itemsRef.current.reduce((a, b) => {
         let conversionFactor =

@@ -49,7 +49,7 @@ const Header = () => {
             <Nav className='ml-auto'>
               <LinkContainer to='/'>
                 <Nav.Link className='my-auto text-center'>
-                  <i className='fas fa-keyboard'></i> Purchase Entry
+                  <i className='fas fa-keyboard'></i> Entry
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to='/purchases'>

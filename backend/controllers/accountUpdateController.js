@@ -1,17 +1,20 @@
 import asyncHandler from 'express-async-handler'
 import moment from 'moment'
-import { exchangeRates } from 'exchange-rates-api'
+// import { exchangeRates } from 'exchange-rates-api'
 
-const USD_TO_CAD = await exchangeRates()
-  .latest()
-  .base('USD')
-  .symbols('CAD')
-  .fetch()
-const EUR_TO_CAD = await exchangeRates()
-  .latest()
-  .base('EUR')
-  .symbols('CAD')
-  .fetch()
+// const USD_TO_CAD = await exchangeRates()
+//   .latest()
+//   .base('USD')
+//   .symbols('CAD')
+//   .fetch()
+// const EUR_TO_CAD = await exchangeRates()
+//   .latest()
+//   .base('EUR')
+//   .symbols('CAD')
+//   .fetch()
+
+const USD_TO_CAD = 1.2
+const EUR_TO_CAD = 1.47
 
 import mongoose from 'mongoose'
 const AccountUpdate = mongoose.model('Account Update')
