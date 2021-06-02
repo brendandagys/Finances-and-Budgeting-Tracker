@@ -54,6 +54,8 @@ app.use('/api/moods', moodRoutes)
 app.post('/api/s3', protect, s3Upload)
 app.delete('/api/s3', protect, s3Delete)
 
+app.get('/health', (req, res) => res.send('Healthy')) // Health check
+
 const __dirname = path.resolve()
 
 if (process.env.NODE_ENV === 'production') {
