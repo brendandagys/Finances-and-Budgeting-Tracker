@@ -82,10 +82,15 @@ const createPurchase = asyncHandler(async (req, res) => {
     var account = undefined
   }
 
+  const hoursToAdd =
+    process.env.NODE_ENV === 'production'
+      ? new Date().getTimezoneOffset() / 60
+      : 0
+
   const purchase = new Purchase({
     user: req.user._id,
     userName: req.user.name,
-    timestamp: Date.parse(`${date}T${time}`),
+    timestamp: Date.parse(`${date}T${time}`) + hoursToAdd * 60 * 60 * 1000,
     category_id,
     category,
     item: item.trim(),
