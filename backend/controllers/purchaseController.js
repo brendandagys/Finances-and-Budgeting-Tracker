@@ -118,10 +118,13 @@ const updatePurchase = asyncHandler(async (req, res) => {
 
   const purchase = await Purchase.findById(req.params.id)
 
+  const hoursToAdd = process.env.NODE_ENV === 'production' ? 4 : 0
+
   if (purchase) {
     const { name: category } = await PurchaseCategory.findById(category_id)
 
-    purchase.timestamp = Date.parse(`${date}T${time}`)
+    purchase.timestamp =
+      Date.parse(`${date}T${time}`) + hoursToAdd * 60 * 60 * 1000
     purchase.category_id = category_id
     purchase.category = category
     purchase.item = item.trim()
