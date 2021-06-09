@@ -17,7 +17,7 @@ import MyLineChart from '../components/LineChart'
 //   await exchangeRates().latest().base(base).symbols('CAD').fetch()
 
 const getExchangeRate = (base) => {
-  return base === 'USD' ? 1.2 : base === 'EUR' ? 1.47 : 1
+  return base === 'USD' ? 1.21 : base === 'EUR' ? 1.47 : 1
 }
 
 const AccountUpdateScreen = () => {

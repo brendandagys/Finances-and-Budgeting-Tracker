@@ -13,7 +13,7 @@ import moment from 'moment'
 //   .symbols('CAD')
 //   .fetch()
 
-const USD_TO_CAD = 1.2
+const USD_TO_CAD = 1.21
 const EUR_TO_CAD = 1.47
 
 import mongoose from 'mongoose'
