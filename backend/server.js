@@ -18,7 +18,6 @@ import moodRoutes from './routes/moodRoutes.js'
 import { s3Upload, s3Delete } from './controllers/s3Controller.js'
 import { protect } from './middleware/authMiddleware.js'
 import dotenv from 'dotenv'
-import colors from 'colors'
 import path from 'path'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
