@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../axios'
 
 import {
   PURCHASE_CATEGORY_LIST_REQUEST,
@@ -30,31 +30,29 @@ export const getPurchaseCategories = () => async (dispatch) => {
   }
 }
 
-export const createPurchaseCategory = (purchaseCategory) => async (
-  dispatch,
-  getState
-) => {
-  try {
-    dispatch({
-      type: PURCHASE_CATEGORY_CREATE_REQUEST,
-    })
+export const createPurchaseCategory =
+  (purchaseCategory) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: PURCHASE_CATEGORY_CREATE_REQUEST,
+      })
 
-    const { data } = await axios.post(
-      '/api/purchase-categories',
-      purchaseCategory
-    )
+      const { data } = await axios.post(
+        '/api/purchase-categories',
+        purchaseCategory
+      )
 
-    dispatch({ type: PURCHASE_CATEGORY_CREATE_SUCCESS, payload: data })
-  } catch (error) {
-    dispatch({
-      type: PURCHASE_CATEGORY_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
+      dispatch({ type: PURCHASE_CATEGORY_CREATE_SUCCESS, payload: data })
+    } catch (error) {
+      dispatch({
+        type: PURCHASE_CATEGORY_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
   }
-}
 
 export const deletePurchaseCategory = (id) => async (dispatch) => {
   try {

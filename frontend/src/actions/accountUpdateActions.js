@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../axios'
 
 import {
   ACCOUNTUPDATE_LIST_REQUEST,
@@ -48,30 +48,28 @@ export const getAllAccountUpdates = () => async (dispatch) => {
   }
 }
 
-export const createAccountUpdate = (date, account_id, name, value) => async (
-  dispatch,
-  getState
-) => {
-  try {
-    dispatch({
-      type: ACCOUNTUPDATE_CREATE_REQUEST,
-    })
+export const createAccountUpdate =
+  (date, account_id, name, value) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ACCOUNTUPDATE_CREATE_REQUEST,
+      })
 
-    const { data } = await axios.post('/api/account-updates', {
-      date,
-      account_id,
-      name,
-      value,
-    })
+      const { data } = await axios.post('/api/account-updates', {
+        date,
+        account_id,
+        name,
+        value,
+      })
 
-    dispatch({ type: ACCOUNTUPDATE_CREATE_SUCCESS, payload: data })
-  } catch (error) {
-    dispatch({
-      type: ACCOUNTUPDATE_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
+      dispatch({ type: ACCOUNTUPDATE_CREATE_SUCCESS, payload: data })
+    } catch (error) {
+      dispatch({
+        type: ACCOUNTUPDATE_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
   }
-}
