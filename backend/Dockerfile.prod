@@ -2,5 +2,6 @@ FROM node:14.17-alpine
 WORKDIR /usr/src/backend
 COPY ["package.json", "package-lock.json", "./"]
 RUN npm i --production
-EXPOSE 80
+COPY . .
+EXPOSE 81
 CMD ["node", "server.js"]

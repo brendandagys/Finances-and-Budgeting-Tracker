@@ -1,0 +1,8 @@
+.env*
+node_modules
+dist
+build
+Dockerfile.prod
+Dockerfile.dev
+.dockerignore
+*.pem

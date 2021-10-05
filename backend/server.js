@@ -23,6 +23,8 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
 dotenv.config()
 
+const PORT = process.env.PORT ?? 80
+
 connectDB()
 
 configPassport()
@@ -42,44 +44,57 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session()) // Authenticate session for passport that we created
 
-app.use('/auth', authRoutes)
+app.use('/api/finances/auth', authRoutes)
 
-app.use('/api/purchases', purchaseRoutes)
-app.use('/api/purchase-categories', purchaseCategoryRoutes)
-app.use('/api/accounts', accountRoutes)
-app.use('/api/account-updates', accountUpdateRoutes)
-app.use('/api/moods', moodRoutes)
+app.use('/api/finances/purchases', purchaseRoutes)
+app.use('/api/finances/purchase-categories', purchaseCategoryRoutes)
+app.use('/api/finances/accounts', accountRoutes)
+app.use('/api/finances/account-updates', accountUpdateRoutes)
+app.use('/api/finances/moods', moodRoutes)
 
-app.post('/api/s3', protect, s3Upload)
-app.delete('/api/s3', protect, s3Delete)
+app.post('/api/finances/s3', protect, s3Upload)
+app.delete('/api/finances/s3', protect, s3Delete)
 
-app.get('/health', (req, res) => res.send('Healthy')) // Health check
+app.get('/api/finances/health', (req, res) => {
+  res.send('API server for Finances is healthy!')
+})
 
-const __dirname = path.resolve()
-
-if (process.env.NODE_ENV === 'production') {
-  // Express will serve up production assets like our main.js or main.css file
-  app.use(express.static(path.join(__dirname, '/frontend/build')))
-
-  // Express will serve up the index.html file if it doesn't recognize the route
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-  })
-} else {
-  app.get('/', (req, res) => {
-    res.send('API is running...')
-  })
-}
+app.get('*', (req, res) => {
+  res.send(
+    `API server for Finances running in ${process.env.NODE_ENV} on port ${PORT}...`
+  )
+})
 
 // Custom error middleware
 app.use(notFound)
 app.use(errorHandler)
 
-const PORT = process.env.PORT || 5000
-
-app.listen(
-  PORT,
+app.listen(PORT, () =>
   console.log(
-    `Server running in ${process.env.NODE_ENV} on port ${PORT}...`.yellow.bold
+    `API server for Finances running in ${process.env.NODE_ENV} on port ${PORT}...`
   )
 )
+
+// const __dirname = path.resolve()
+// if (process.env.NODE_ENV === 'production') {
+//   // Express will serve up production assets like our main.js or main.css file
+//   app.use(express.static(path.join(__dirname, '/frontend/build')))
+
+//   // Express will serve up the index.html file if it doesn't recognize the route
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+//   })
+// } else {
+//   app.get('/', (req, res) => {
+//     res.send('API is running...')
+//   })
+// }
+
+// const PORT = process.env.PORT || 5000
+
+// app.listen(
+//   PORT,
+//   console.log(
+//     `Server running in ${process.env.NODE_ENV} on port ${PORT}...`.yellow.bold
+//   )
+// )
