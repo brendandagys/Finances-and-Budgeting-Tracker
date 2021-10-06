@@ -9,12 +9,12 @@ router.get(
 )
 
 router.get('/google/callback', passport.authenticate('google'), (req, res) => {
-  res.redirect('/')
+  res.redirect('/finances')
 })
 
 router.get('/logout', (req, res) => {
   req.logout(), // passport attaches this function to the request object
-    res.redirect('/')
+    res.redirect('/finances')
 })
 
 router.get('/current_user', (req, res) => {

@@ -27,7 +27,7 @@ export default () =>
           process.env.NODE_ENV === 'production'
             ? process.env.GOOGLE_CLIENT_SECRET_PROD
             : process.env.GOOGLE_CLIENT_SECRET_DEV,
-        callbackURL: '/auth/google/callback',
+        callbackURL: '/api/finances/auth/google/callback',
         proxy: true,
       },
       async (accessToken, refreshToken, profile, done) => {
