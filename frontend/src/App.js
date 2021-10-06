@@ -43,13 +43,21 @@ const App = () => {
         }
       >
         <Container>
-          <Route path='/' component={PurchaseFormScreen} exact />
-          <Route path='/purchases' component={PurchaseListScreen} exact />
-          <Route path='/accounts' component={AccountUpdateScreen} exact />
-          <Route path='/dashboard' component={DashboardScreen} exact />
-          <Route path='/moods' component={MoodsScreen} exact />
-          <Route path='/settings' component={SettingsScreen} exact />
-          <Route path='/widgets' component={WidgetsScreen} exact />
+          <Route path='/finances' component={PurchaseFormScreen} exact />
+          <Route
+            path='/finances/purchases'
+            component={PurchaseListScreen}
+            exact
+          />
+          <Route
+            path='/finances/accounts'
+            component={AccountUpdateScreen}
+            exact
+          />
+          <Route path='/finances/dashboard' component={DashboardScreen} exact />
+          <Route path='/finances/moods' component={MoodsScreen} exact />
+          <Route path='/finances/settings' component={SettingsScreen} exact />
+          <Route path='/finances/widgets' component={WidgetsScreen} exact />
         </Container>
       </main>
       <Footer />

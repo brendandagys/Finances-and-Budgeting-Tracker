@@ -46,43 +46,43 @@ const Header = () => {
         fixed='top'
       >
         <Container>
-          <LinkContainer to='/'>
+          <LinkContainer to='/finances'>
             <Navbar.Brand>Finances</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
-              <LinkContainer to='/'>
+              <LinkContainer to='/finances'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-keyboard'></i> Entry
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/purchases'>
+              <LinkContainer to='/finances/purchases'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-list'></i> Purchases
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/accounts'>
+              <LinkContainer to='/finances/accounts'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-money-check-alt'></i> Accounts
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/dashboard'>
+              <LinkContainer to='/finances/dashboard'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-tachometer-alt'></i> Dashboard
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/moods'>
+              <LinkContainer to='/finances/moods'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-cloud-moon'></i> Moods
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/widgets'>
+              <LinkContainer to='/finances/widgets'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-calculator'></i> Widgets
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/settings'>
+              <LinkContainer to='/finances/settings'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-cogs'></i> Settings
                 </Nav.Link>
