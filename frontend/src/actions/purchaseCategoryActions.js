@@ -16,7 +16,7 @@ export const getPurchaseCategories = () => async (dispatch) => {
   try {
     dispatch({ type: PURCHASE_CATEGORY_LIST_REQUEST })
 
-    const { data } = await axios.get('/api/purchase-categories')
+    const { data } = await axios.get('/purchase-categories')
 
     dispatch({ type: PURCHASE_CATEGORY_LIST_SUCCESS, payload: data })
   } catch (error) {
@@ -38,7 +38,7 @@ export const createPurchaseCategory =
       })
 
       const { data } = await axios.post(
-        '/api/purchase-categories',
+        '/purchase-categories',
         purchaseCategory
       )
 
@@ -60,7 +60,7 @@ export const deletePurchaseCategory = (id) => async (dispatch) => {
       type: PURCHASE_CATEGORY_DELETE_REQUEST,
     })
 
-    await axios.delete(`/api/purchase-categories/${id}`)
+    await axios.delete(`/purchase-categories/${id}`)
 
     dispatch({ type: PURCHASE_CATEGORY_DELETE_SUCCESS })
   } catch (error) {

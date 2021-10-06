@@ -12,7 +12,10 @@ const Header = () => {
         return
       case false:
         return (
-          <Navbar.Brand href='/finances/auth/google' className='text-center'>
+          <Navbar.Brand
+            href='https://brendandagys.com/api/finances/auth/google'
+            className='text-center'
+          >
             <img
               alt='Google Sign In Button'
               src={googleSignInButton}
@@ -23,7 +26,10 @@ const Header = () => {
         )
       default:
         return (
-          <Nav.Link href='/finances/auth/logout' className='text-center'>
+          <Nav.Link
+            href='https://brendandagys.com/api/finances/auth/logout'
+            className='text-center'
+          >
             <i className='fab fa-google'></i> Log Out
           </Nav.Link>
         )

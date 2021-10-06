@@ -22,7 +22,7 @@ export const getPurchases = () => async (dispatch) => {
   try {
     dispatch({ type: PURCHASE_LIST_REQUEST })
 
-    const { data } = await axios.get('/api/purchases')
+    const { data } = await axios.get('/purchases')
 
     dispatch({ type: PURCHASE_LIST_SUCCESS, payload: data })
   } catch (error) {
@@ -40,7 +40,7 @@ export const getPurchaseDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PURCHASE_DETAILS_REQUEST })
 
-    const { data } = await axios.get(`/api/purchases/${id}`)
+    const { data } = await axios.get(`/purchases/${id}`)
 
     dispatch({ type: PURCHASE_DETAILS_SUCCESS, payload: data })
   } catch (error) {
@@ -60,7 +60,7 @@ export const createPurchase = (purchase) => async (dispatch, getState) => {
       type: PURCHASE_CREATE_REQUEST,
     })
 
-    const { data } = await axios.post('/api/purchases', purchase)
+    const { data } = await axios.post('/purchases', purchase)
 
     dispatch({ type: PURCHASE_CREATE_SUCCESS, payload: data })
   } catch (error) {
@@ -80,10 +80,7 @@ export const updatePurchase = (purchase) => async (dispatch, getState) => {
       type: PURCHASE_UPDATE_REQUEST,
     })
 
-    const { data } = await axios.patch(
-      `/api/purchases/${purchase._id}`,
-      purchase
-    )
+    const { data } = await axios.patch(`/purchases/${purchase._id}`, purchase)
 
     dispatch({ type: PURCHASE_UPDATE_SUCCESS, payload: data })
   } catch (error) {
@@ -103,7 +100,7 @@ export const deletePurchase = (id) => async (dispatch, getState) => {
       type: PURCHASE_DELETE_REQUEST,
     })
 
-    await axios.delete(`/api/purchases/${id}`)
+    await axios.delete(`/purchases/${id}`)
 
     dispatch({ type: PURCHASE_DELETE_SUCCESS, payload: id })
   } catch (error) {

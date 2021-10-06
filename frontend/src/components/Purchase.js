@@ -79,7 +79,7 @@ const Purchase = ({
                 dispatch(deletePurchase(id))
 
                 if (receiptUrl) {
-                  await axios.delete('/api/s3', {
+                  await axios.delete('/s3', {
                     data: {
                       key: receiptUrl.split('s3.amazonaws.com/')[1],
                     },

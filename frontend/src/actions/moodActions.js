@@ -13,7 +13,7 @@ export const getMoods = (date) => async (dispatch) => {
   try {
     dispatch({ type: MOOD_LIST_REQUEST })
 
-    const { data } = await axios.get(`/api/moods/${date}`)
+    const { data } = await axios.get(`/moods/${date}`)
 
     dispatch({ type: MOOD_LIST_SUCCESS, payload: data })
   } catch (error) {
@@ -33,7 +33,7 @@ export const createMood = (date, value) => async (dispatch, getState) => {
       type: MOOD_CREATE_REQUEST,
     })
 
-    const { data } = await axios.post('/api/moods', {
+    const { data } = await axios.post('/moods', {
       date,
       value,
     })
