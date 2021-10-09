@@ -44,18 +44,18 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session()) // Authenticate session for passport that we created
 
-app.use('/api/finances/auth', authRoutes)
+app.use('/api/auth', authRoutes)
 
-app.use('/api/finances/purchases', purchaseRoutes)
-app.use('/api/finances/purchase-categories', purchaseCategoryRoutes)
-app.use('/api/finances/accounts', accountRoutes)
-app.use('/api/finances/account-updates', accountUpdateRoutes)
-app.use('/api/finances/moods', moodRoutes)
+app.use('/api/purchases', purchaseRoutes)
+app.use('/api/purchase-categories', purchaseCategoryRoutes)
+app.use('/api/accounts', accountRoutes)
+app.use('/api/account-updates', accountUpdateRoutes)
+app.use('/api/moods', moodRoutes)
 
-app.post('/api/finances/s3', protect, s3Upload)
-app.delete('/api/finances/s3', protect, s3Delete)
+app.post('/api/s3', protect, s3Upload)
+app.delete('/api/s3', protect, s3Delete)
 
-app.get('/api/finances/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.send('API server for Finances is healthy!')
 })
 

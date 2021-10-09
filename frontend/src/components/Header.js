@@ -13,7 +13,7 @@ const Header = () => {
       case false:
         return (
           <Navbar.Brand
-            href='https://brendandagys.com/api/finances/auth/google'
+            href='https://brendandagys.com/api/auth/google'
             className='text-center'
           >
             <img
@@ -27,7 +27,7 @@ const Header = () => {
       default:
         return (
           <Nav.Link
-            href='https://brendandagys.com/api/finances/auth/logout'
+            href='https://brendandagys.com/api/auth/logout'
             className='text-center'
           >
             <i className='fab fa-google'></i> Log Out
@@ -46,43 +46,43 @@ const Header = () => {
         fixed='top'
       >
         <Container>
-          <LinkContainer to='/finances'>
+          <LinkContainer to='/'>
             <Navbar.Brand>Finances</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
-              <LinkContainer to='/finances'>
+              <LinkContainer to='/'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-keyboard'></i> Entry
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/finances/purchases'>
+              <LinkContainer to='/purchases'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-list'></i> Purchases
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/finances/accounts'>
+              <LinkContainer to='/accounts'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-money-check-alt'></i> Accounts
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/finances/dashboard'>
+              <LinkContainer to='/dashboard'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-tachometer-alt'></i> Dashboard
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/finances/moods'>
+              <LinkContainer to='/moods'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-cloud-moon'></i> Moods
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/finances/widgets'>
+              <LinkContainer to='/widgets'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-calculator'></i> Widgets
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/finances/settings'>
+              <LinkContainer to='/settings'>
                 <Nav.Link className='my-auto text-center'>
                   <i className='fas fa-cogs'></i> Settings
                 </Nav.Link>
