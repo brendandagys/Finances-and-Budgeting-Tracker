@@ -13,7 +13,7 @@ const Header = () => {
       case false:
         return (
           <Navbar.Brand
-            href='https://brendandagys.com/api/auth/google'
+            href='https://finances.brendandagys.com/api/auth/google'
             className='text-center'
           >
             <img
@@ -27,7 +27,7 @@ const Header = () => {
       default:
         return (
           <Nav.Link
-            href='https://brendandagys.com/api/auth/logout'
+            href='https://finances.brendandagys.com/api/auth/logout'
             className='text-center'
           >
             <i className='fab fa-google'></i> Log Out
