@@ -4,7 +4,7 @@ let axiosNewBaseURL
 
 if (process.env.NODE_ENV === 'production') {
   axiosNewBaseURL = axios.create({
-    baseURL: 'https://brendandagys.com/api',
+    baseURL: 'https://finances.brendandagys.com/api',
   })
 } else {
   axiosNewBaseURL = axios
