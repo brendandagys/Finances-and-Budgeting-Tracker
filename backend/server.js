@@ -33,7 +33,8 @@ const app = express()
 
 app.use((req, res, next) => {
   res.set({
-    'Access-Control-Allow-Origin': 'https://finances.brendandagys.com',
+    // 'Access-Control-Allow-Origin': 'https://finances.brendandagys.com',
+    'Access-Control-Allow-Origin': '*',
     Vary: 'Origin',
   })
   next()

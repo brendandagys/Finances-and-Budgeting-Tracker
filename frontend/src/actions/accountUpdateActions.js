@@ -16,7 +16,7 @@ export const getAccountUpdates = (date) => async (dispatch) => {
   try {
     dispatch({ type: ACCOUNTUPDATE_LIST_REQUEST })
 
-    const { data } = await axios.get(`/account-updates/${date}`)
+    const { data } = await axios.get(`/api/account-updates/${date}`)
 
     dispatch({ type: ACCOUNTUPDATE_LIST_SUCCESS, payload: data })
   } catch (error) {
@@ -34,7 +34,7 @@ export const getAllAccountUpdates = () => async (dispatch) => {
   try {
     dispatch({ type: ACCOUNTUPDATE_LIST_ALL_REQUEST })
 
-    const { data } = await axios.get('/account-updates')
+    const { data } = await axios.get('/api/account-updates')
 
     dispatch({ type: ACCOUNTUPDATE_LIST_ALL_SUCCESS, payload: data })
   } catch (error) {
@@ -55,7 +55,7 @@ export const createAccountUpdate =
         type: ACCOUNTUPDATE_CREATE_REQUEST,
       })
 
-      const { data } = await axios.post('/account-updates', {
+      const { data } = await axios.post('/api/account-updates', {
         date,
         account_id,
         name,

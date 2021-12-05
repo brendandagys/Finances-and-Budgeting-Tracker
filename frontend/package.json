@@ -10,7 +10,7 @@
     "axios": "^0.21.1",
     "exchange-rates-api": "^1.1.0",
     "formik": "^2.2.6",
-    "http-proxy-middleware": "^1.0.6",
+    "http-proxy-middleware": "^2.0.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "react": "^17.0.2",

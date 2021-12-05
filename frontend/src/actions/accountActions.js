@@ -22,7 +22,7 @@ export const getAccounts = () => async (dispatch) => {
   try {
     dispatch({ type: ACCOUNT_LIST_REQUEST })
 
-    const { data } = await axios.get('/accounts')
+    const { data } = await axios.get('/api/accounts')
 
     dispatch({ type: ACCOUNT_LIST_SUCCESS, payload: data })
   } catch (error) {
@@ -40,7 +40,7 @@ export const getAccountDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: ACCOUNT_DETAILS_REQUEST })
 
-    const { data } = await axios.get(`/accounts/${id}`)
+    const { data } = await axios.get(`/api/accounts/${id}`)
 
     dispatch({ type: ACCOUNT_DETAILS_SUCCESS, payload: data })
   } catch (error) {
@@ -60,7 +60,7 @@ export const createAccount = (account) => async (dispatch, getState) => {
       type: ACCOUNT_CREATE_REQUEST,
     })
 
-    const { data } = await axios.post('/accounts', account)
+    const { data } = await axios.post('/api/accounts', account)
 
     dispatch({ type: ACCOUNT_CREATE_SUCCESS, payload: data })
   } catch (error) {
@@ -80,7 +80,7 @@ export const updateAccount = (account) => async (dispatch, getState) => {
       type: ACCOUNT_UPDATE_REQUEST,
     })
 
-    const { data } = await axios.patch(`/accounts/${account._id}`, account)
+    const { data } = await axios.patch(`/api/accounts/${account._id}`, account)
 
     dispatch({ type: ACCOUNT_UPDATE_SUCCESS, payload: data })
   } catch (error) {
@@ -100,7 +100,7 @@ export const deleteAccount = (id) => async (dispatch) => {
       type: ACCOUNT_DELETE_REQUEST,
     })
 
-    await axios.delete(`/accounts/${id}`)
+    await axios.delete(`/api/accounts/${id}`)
 
     dispatch({ type: ACCOUNT_DELETE_SUCCESS })
   } catch (error) {

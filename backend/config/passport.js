@@ -37,6 +37,7 @@ export default () =>
         const existingUser = await User.findOne({ googleId: profile.id })
 
         if (existingUser) {
+          console.log(existingUser)
           return done(null, existingUser)
         }
 

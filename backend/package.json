@@ -11,7 +11,7 @@
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",
-    "client": "npm start --prefix frontend",
+    "client": "npm start --prefix ../frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/config/dataLoader",
     "data:destroy": "node backend/config/dataLoader -d",

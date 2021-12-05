@@ -5,6 +5,7 @@ module.exports = function (app) {
     ['/api', '/auth'],
     createProxyMiddleware({
       target: 'http://localhost:5000',
+      // changeOrigin: true,
     })
   )
 }
