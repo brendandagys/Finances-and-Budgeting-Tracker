@@ -29,7 +29,7 @@ const PurchaseForm = ({ purchase, toggleShow }) => {
       data: {
         data: { returnData },
       },
-    } = await axios.post('/s3', {
+    } = await axios.post('/api/s3', {
       fileName: `receipts/${auth.email}/${file.name.split('.')[0]}`,
       fileType: file.name.split('.')[1],
     })
