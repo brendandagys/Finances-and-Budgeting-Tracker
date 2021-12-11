@@ -18,7 +18,7 @@ import moodRoutes from './routes/moodRoutes.js'
 import { s3Upload, s3Delete } from './controllers/s3Controller.js'
 import { protect } from './middleware/authMiddleware.js'
 import dotenv from 'dotenv'
-import path from 'path'
+// import path from 'path'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
 dotenv.config()
