@@ -23,6 +23,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
 dotenv.config()
 
+const ORIGIN = process.env.ORIGIN ?? 'http://localhost:3000'
 const PORT = process.env.PORT ?? 80
 
 connectDB()
@@ -33,7 +34,7 @@ const app = express()
 
 app.use((req, res, next) => {
   res.set({
-    'Access-Control-Allow-Origin': 'https://finances.brendandagys.com',
+    'Access-Control-Allow-Origin': ORIGIN,
     Vary: 'Origin',
   })
   next()
@@ -64,12 +65,12 @@ app.post('/api/s3', protect, s3Upload)
 app.delete('/api/s3', protect, s3Delete)
 
 app.get('/api/health', (req, res) => {
-  res.send('API server for Finances is healthy!')
+  res.send('API server for Finances App is healthy!')
 })
 
 app.get('*', (req, res) => {
   res.send(
-    `API server for Finances running in ${process.env.NODE_ENV} on port ${PORT}...`
+    `API server for Finances App running in ${process.env.NODE_ENV} on port ${PORT}...`
   )
 })
 
