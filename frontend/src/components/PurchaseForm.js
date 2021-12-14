@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import axios from '../axios'
+import axios from 'axios'
 import Loader from './Loader'
 import Message from './Message'
 import { Spinner } from 'react-bootstrap'

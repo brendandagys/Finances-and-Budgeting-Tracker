@@ -1,4 +1,4 @@
-import axios from '../axios'
+import axios from 'axios'
 
 import {
   MOOD_LIST_REQUEST,
