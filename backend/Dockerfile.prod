@@ -3,5 +3,5 @@ WORKDIR /usr/src/backend
 COPY ["package.json", "package-lock.json", "./"]
 RUN npm i --production
 COPY . .
-EXPOSE 81
+EXPOSE 1081
 CMD ["node", "server.js"]
